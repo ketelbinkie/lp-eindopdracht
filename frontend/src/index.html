@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../js/hello.js"></script>
+</head>
+
+<body>
+<div>
+
+    <form action="" id="check_user">
+       <div>
+           <label for="txt-name">Name:</label>
+           <input  type="text" id="txt-name" name="name:" required/>
+       </div>
+        <div>
+            <label for="txt-password">Password:</label>
+            <input  type="text" id="txt-password" name="password:" required/>
+        </div>
+
+        <div>
+            <input type="submit" id ="btn-lookup" value="check password" />
+        </div>
+     </form>
+
+    <div id="password-check-results">
+        <em>Password not checked yet</em>
+    </div>
+
+</div>
+</body>
+</html>
