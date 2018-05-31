@@ -1,0 +1,54 @@
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+
+
+div {
+    /*border: 1px solid yellow;*/
+}
+
+@font-face {
+    font-family: 'Indie Flower';
+    /*font-family: sansation;*/
+    /*src: url(../fonts/Bombing.ttf);*/
+    font-weight: bold;
+}
+
+h1{
+    font-family: 'Indie Flower', sans-serif;
+    /*font-family: sansation sans-serif;*/
+    font-size: 240px;
+    text-align: center;
+    margin-bottom: 1px;
+    color: maroon;
+}
+
+h2{
+    font-size: 40px;
+    text-align: center;
+    margin-top: 20px;
+    color: black;
+}
+
+h3{
+    font-size: 60px;
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: 1px;
+    color: darkblue;
+
+}
+#container{
+    width: 1200px;
+}
+
+.col1,.col2{
+    border: 1px solid red;
+}
+
+.col1{
+    float: left;
+}
+.col2{
+    width: 900px;
+    float: right;
+}
+
