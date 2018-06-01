@@ -17,4 +17,4 @@ log/
 target/
 
 scan/*
-*/application.properties
+application.properties
