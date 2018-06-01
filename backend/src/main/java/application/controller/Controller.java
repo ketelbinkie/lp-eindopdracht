@@ -36,6 +36,12 @@ public class Controller {
 
         return null;
     }
+//
+//    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public ResponseEntity add(
+//            @Valid @RequestBody User user) {
+//        return new ResponseEntity<>(genreService.add(genre), HttpStatus.CREATED);
+//    }
 
     @RequestMapping(value = "/sum")
     public Sum sum(

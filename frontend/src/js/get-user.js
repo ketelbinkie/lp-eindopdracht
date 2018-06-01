@@ -7,9 +7,9 @@ $(document).ready(function () {
             name = $('#txt-name').val(),
             password = $('#txt-password').val();
 
-        var requestURL = 'http://localhost:8082/hello?';
+        var requestURL = 'http://localhost:8080/hello?';
 
-        var userCeck = ''
+
         $.getJSON(requestURL,
             {'name': name,}
             , function (data) {
