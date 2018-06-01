@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="js/get-user.js"></script>
+    <title>Welkom</title>
+</head>
+<body>
+<pre>
+<script>
+    var result;
+    if (localStorage.getItem('welcomeName')) {
+        result = localStorage.getItem('welcomeName');
+    } else {
+        result = [];
+    }
+</script>
+</pre>
+
+
+
+<div id = container>
+    <div class="table">
+        <div class="row">
+            <div class="col1"> <img src="images/logovvHoogezand.jpg" alt="logo vvHoogezand" title="logo vvHoogezand" width=63%/></div>
+            <div class="col2">
+                <div>
+                    <h2><script>
+
+                        document.writeln(result);
+                        </script></h2>
+                <h2>Welkom bij uw sportvereniging</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

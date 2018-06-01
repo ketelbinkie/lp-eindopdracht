@@ -14,7 +14,11 @@ $(document).ready(function () {
             {'name': name,}
             , function (data) {
                 if (name === data.username.toLowerCase()&&password===data.password) {
-                    $results.html('<p>Hello ' + data.username + ' your password is correct</p>');
+
+
+                    localStorage.setItem('welcomeName',data.username);
+                    // $results.html('<p>Hello ' + data.username + ' your password is correct</p>');
+                    window.open("../src/welkom.html","_self")
                 } else {
                     $results.html('<p>Sorry your password is incorrect</p>');
                 }
