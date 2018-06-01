@@ -1,4 +1,4 @@
-package application.controller.utils;
+package nl.hanze.application.controller.utils;
 
 public class Sum {
     private int a;
