@@ -13,6 +13,8 @@
     var result;
     if (localStorage.getItem('welcomeName')) {
         result = localStorage.getItem('welcomeName');
+        // verwijderen naam van localStorage
+        localStorage.removeItem('welcomeName');
     } else {
         result = [];
     }

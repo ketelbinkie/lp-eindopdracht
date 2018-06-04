@@ -15,7 +15,6 @@ $(document).ready(function () {
             , function (data) {
                 if (name === data.username.toLowerCase()&&password===data.password) {
 
-
                     localStorage.setItem('welcomeName',data.username);
                     // $results.html('<p>Hello ' + data.username + ' your password is correct</p>');
                     window.open("../src/welkom.html","_self")

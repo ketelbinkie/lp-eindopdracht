@@ -44,6 +44,18 @@ public class Controller {
         return new ResponseEntity<User>(userService.save(user),HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/users/{id}")
+    @ResponseBody
+    public ResponseEntity<String> del(@PathVariable("id") int id) {
+
+        try {
+            userService.deleteUser(id);
+            return ResponseEntity.status(HttpStatus.OK).body("DELETE Success!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
+
     @RequestMapping(value = "/sum")
     public Sum sum(
             @RequestParam(value = "a") int a,
