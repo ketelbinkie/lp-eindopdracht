@@ -9,4 +9,5 @@ public interface UserService {
     void deleteUser(int id);
     User save(User user);
     List<User> findAll();
+    User findUserByUserName(String name);
 }

@@ -4,12 +4,10 @@ import nl.hanze.application.entities.User;
 import nl.hanze.application.repositories.UserRepository;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Repository
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
@@ -27,6 +25,11 @@ public class UserServiceImpl implements UserService {
     public List<User> findAll() {
         return userRepository.findAll();
     }
+
+    public User findUserByUserName(String name){
+        return userRepository.findByUsernameEquals(name);
+    }
+
 
     public void deleteUser(int id){
         userRepository.deleteUsersById(id);

@@ -7,9 +7,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
+    User findByUsernameEquals(String userName);
+
+
     @Modifying
     @Transactional
     @Query("delete from User u where u.id = ?1")

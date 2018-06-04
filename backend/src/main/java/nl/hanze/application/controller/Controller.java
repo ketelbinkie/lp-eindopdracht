@@ -38,6 +38,15 @@ public class Controller {
         return null;
     }
 
+    @RequestMapping(value = "/finduser")
+    public User findUser(
+            @RequestParam(value = "user") String name) {
+        return userService.findUserByUserName(name);
+
+    }
+
+
+
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<User> add(
             @Valid @RequestBody User user) {
