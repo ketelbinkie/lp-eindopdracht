@@ -45,8 +45,6 @@ public class Controller {
 
     }
 
-
-
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<User> add(
             @Valid @RequestBody User user) {
@@ -58,7 +56,7 @@ public class Controller {
     public ResponseEntity<String> del(@PathVariable("id") int id) {
 
         try {
-            userService.deleteUser(id);
+            userService.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("DELETE Success!");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
