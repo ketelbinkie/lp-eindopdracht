@@ -30,8 +30,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameEquals(name);
     }
 
-
-    public void deleteUser(int id){
-        userRepository.deleteUsersById(id);
+    public void deleteById(int id){
+        userRepository.deleteById(id);
      }
 }
