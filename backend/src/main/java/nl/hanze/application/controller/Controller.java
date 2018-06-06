@@ -1,6 +1,5 @@
 package nl.hanze.application.controller;
 
-import nl.hanze.application.controller.utils.Sum;
 import nl.hanze.application.entities.User;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,13 +62,6 @@ public class Controller {
         }
     }
 
-    @RequestMapping(value = "/sum")
-    public Sum sum(
-            @RequestParam(value = "a") int a,
-            @RequestParam(value = "b") int b) {
-
-        return new Sum(a, b);
-    }
 }
 
 
