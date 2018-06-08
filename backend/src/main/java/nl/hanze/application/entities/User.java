@@ -1,8 +1,10 @@
 package nl.hanze.application.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 
-
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name = "user")
 public class User {
@@ -18,9 +20,21 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "user_role_id")
-    private Integer roleId;
+    @OneToOne()
+    @JoinColumn(name = "person_id")
+    private Person person;
 
+    @OneToOne()
+    @JoinColumn(name = "role_id")
+    private Role role;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
@@ -38,19 +52,19 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
-        return id;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
-    public Integer getRoleId() {
-        return roleId;
+    public Role getRole() {
+        return role;
     }
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
