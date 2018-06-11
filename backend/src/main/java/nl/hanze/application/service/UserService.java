@@ -1,7 +1,7 @@
 package nl.hanze.application.service;
 
 
-import nl.hanze.application.entities.User;
+import nl.hanze.application.domain.User;
 
 import java.util.List;
 
@@ -10,4 +10,5 @@ public interface UserService {
     User save(User user);
     List<User> findAll();
     User findUserByUserName(String name);
+    boolean checkUserNamePasswordIsCorrect(String username,String password);
 }

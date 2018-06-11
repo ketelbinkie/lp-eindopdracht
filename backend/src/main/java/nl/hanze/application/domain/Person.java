@@ -1,14 +1,13 @@
-package nl.hanze.application.entities;
+package nl.hanze.application.domain;
 
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "person", schema = "soccerpracticerating", catalog = "")
+@Table(name = "person", schema = "soccerpracticerating")
 public class Person {
 
     @Id

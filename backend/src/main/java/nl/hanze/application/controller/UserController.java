@@ -1,6 +1,6 @@
 package nl.hanze.application.controller;
 
-import nl.hanze.application.entities.User;
+import nl.hanze.application.domain.User;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,12 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class Controller {
+public class UserController {
 
     private final UserService userService;
 
     @Autowired
-    public Controller( UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
@@ -35,6 +35,13 @@ public class Controller {
         }
 
         return null;
+    }
+
+    @RequestMapping(value = "/login")
+    public boolean login(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password") String password) {
+        return userService.checkUserNamePasswordIsCorrect(username,password);
     }
 
     @RequestMapping(value = "/finduser")

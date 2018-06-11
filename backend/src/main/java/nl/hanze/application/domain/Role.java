@@ -1,4 +1,4 @@
-package nl.hanze.application.entities;
+package nl.hanze.application.domain;
 
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "role", schema = "soccerpracticerating", catalog = "")
+@Table(name = "role", schema = "soccerpracticerating")
 public class Role {
 
     @Id

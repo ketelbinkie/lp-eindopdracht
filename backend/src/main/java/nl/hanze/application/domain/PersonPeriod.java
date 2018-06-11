@@ -1,4 +1,4 @@
-package nl.hanze.application.entities;
+package nl.hanze.application.domain;
 
 import lombok.Data;
 
@@ -7,7 +7,7 @@ import java.sql.Date;
 
 @Data
 @Entity
-@Table(name = "person_period", schema = "soccerpracticerating", catalog = "")
+@Table(name = "person_period", schema = "soccerpracticerating")
 public class PersonPeriod {
 
     @Id

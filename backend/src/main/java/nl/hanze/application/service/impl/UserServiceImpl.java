@@ -1,6 +1,6 @@
 package nl.hanze.application.service.impl;
 
-import nl.hanze.application.entities.User;
+import nl.hanze.application.domain.User;
 import nl.hanze.application.repositories.UserRepository;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    public User findUserByUserName(String name){
+    public User findUserByUserName(String name) {
         return userRepository.findByUsernameEquals(name);
     }
 
-    public void deleteById(int id){
+    public void deleteById(int id) {
         userRepository.deleteById(id);
-     }
+    }
+
+    public boolean checkUserNamePasswordIsCorrect(String username, String password) {
+        return userRepository.findByUsernameEqualsAndPasswordEquals(username, password) != null;
+    }
 }

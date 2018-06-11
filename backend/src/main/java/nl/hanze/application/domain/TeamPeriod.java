@@ -1,4 +1,4 @@
-package nl.hanze.application.entities;
+package nl.hanze.application.domain;
 
 import lombok.Data;
 
