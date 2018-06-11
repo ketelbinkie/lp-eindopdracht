@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -33,4 +34,6 @@ public class PersonPeriod {
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @OneToMany(mappedBy = "personPeriod")
+    private List<Rating> ratings;
 }

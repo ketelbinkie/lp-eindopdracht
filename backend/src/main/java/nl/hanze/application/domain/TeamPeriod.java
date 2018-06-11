@@ -29,10 +29,14 @@ public class TeamPeriod {
     @JoinColumn(name = "team_name_id", referencedColumnName = "id", nullable = false)
     private TeamName teamName;
 
-   @OneToMany(mappedBy = "teamPeriod")
+    @OneToMany(mappedBy = "teamPeriod")
     private List<PersonPeriod> personPeriods;
 
-
+    @OneToMany
+    @JoinTable(name = "teamperiod_enquetes",
+            joinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")},
+            inverseJoinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")})
+    private List<Enquete> enquetes;
 
 }
 
