@@ -1,11 +1,16 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "person", schema = "soccerpracticerating")
 public class Person {
@@ -26,8 +31,56 @@ public class Person {
     @Column(name = "gender", nullable = false, length = 1)
     private String gender;
 
-//    @OneToMany(mappedBy = "person")
-//    private List<PersonPeriod> persons;
+    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    @JsonManagedReference
+    private List<PersonPeriod> periods;
 
-
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public void setId(int id) {
+//        this.id = id;
+//    }
+//
+//    public String getFirstname() {
+//        return firstname;
+//    }
+//
+//    public void setFirstname(String firstname) {
+//        this.firstname = firstname;
+//    }
+//
+//    public String getLastname() {
+//        return lastname;
+//    }
+//
+//    public void setLastname(String lastname) {
+//        this.lastname = lastname;
+//    }
+//
+//    public Timestamp getDateOfBirth() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(Timestamp dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
+//
+//    public String getGender() {
+//        return gender;
+//    }
+//
+//    public void setGender(String gender) {
+//        this.gender = gender;
+//    }
+//
+//    public List<PersonPeriod> getPeriods() {
+//        return periods;
+//    }
+//
+//    public void setPeriods(List<PersonPeriod> periods) {
+//        this.periods = periods;
+//    }
 }

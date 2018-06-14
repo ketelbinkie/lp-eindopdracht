@@ -1,5 +1,6 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -17,6 +18,8 @@ public class TeamName {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @OneToMany(mappedBy = "teamName")
+    @OneToMany(mappedBy = "teamName",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    @JsonManagedReference
     private List<TeamPeriod> teamPeriods;
 }

@@ -37,4 +37,12 @@ public class UserServiceImpl implements UserService {
     public boolean checkUserNamePasswordIsCorrect(String username, String password) {
         return userRepository.findByUsernameEqualsAndPasswordEquals(username, password) != null;
     }
+
+    public User findUserBycredential(String username, String password){
+        return userRepository.findByUsernameEqualsAndPasswordEquals(username, password);
+    }
+
+
+
+
 }

@@ -37,6 +37,20 @@ public class UserController {
         return null;
     }
 
+
+    @RequestMapping(value = "/checkcreds")
+    public User cechCreds(
+            @RequestParam(value = "username") String username,
+            @RequestParam(value = "password") String password) {
+        User user = userService.findUserBycredential(username,password);
+        if(user!=null){
+            user.setPassword("***********");
+            return user;
+        }
+        return null;
+    }
+
+
     @RequestMapping(value = "/login")
     public boolean login(
             @RequestParam(value = "username") String username,

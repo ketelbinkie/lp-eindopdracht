@@ -7,7 +7,7 @@ $(document).ready(function () {
             username = $('#txt-username').val(),
             password = $('#txt-password').val();
 
-        var requestURL = 'http://localhost:8080/checkcreds?';
+        var requestURL = 'http://localhost:8080/login?';
 
 
         $.getJSON(requestURL,
@@ -17,9 +17,8 @@ $(document).ready(function () {
             }
             , function (data) {
                 console.log(data);
-                if (data!==null) {
-                    localStorage.setItem('name',data.person.firstname + " " +data.person.lastname);
-
+                if (data) {
+                    localStorage.setItem('welcomeName', username.toString());
                     window.open("../src/welkom.html", "_self")
                 } else {
                     $results.html('<p>Sorry your password is incorrect</p>');

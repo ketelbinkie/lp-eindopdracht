@@ -11,4 +11,5 @@ public interface UserService {
     List<User> findAll();
     User findUserByUserName(String name);
     boolean checkUserNamePasswordIsCorrect(String username,String password);
+    public User findUserBycredential(String username, String password);
 }

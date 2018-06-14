@@ -78,15 +78,16 @@
             </button>
             <a class="navbar-brand" href="#">
                 <script>
-                    document.writeln(result);
+                    var user = localStorage.getItem("name");
+                    document.writeln(user);
                 </script>
             </a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">WHO</a></li>
-                <li><a href="#">WHAT</a></li>
-                <li><a href="#">WHERE</a></li>
+                <li><a href="#">Gebruiker</a></li>
+                <li><a href="#">Enqûete</a></li>
+                <li><a href="#">Team</a></li>
             </ul>
         </div>
     </div>
@@ -98,6 +99,8 @@
         <form class="form-horizontal" action="" id="check_user">
             <div class="row">
                 <h1>Welkom</h1>
+
+
             </div> <!--row-->
         </form>
         <div id="password-check-results">

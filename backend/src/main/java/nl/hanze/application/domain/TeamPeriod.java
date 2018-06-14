@@ -1,5 +1,7 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -25,18 +27,22 @@ public class TeamPeriod {
     @Column(name = "enddate", nullable = true)
     private Date enddate;
 
-    @ManyToOne
-    @JoinColumn(name = "team_name_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "team_name_id", referencedColumnName = "id")
+    @JsonBackReference
     private TeamName teamName;
 
-    @OneToMany(mappedBy = "teamPeriod")
-    private List<PersonPeriod> personPeriods;
 
-    @OneToMany
-    @JoinTable(name = "teamperiod_enquetes",
-            joinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")})
-    private List<Enquete> enquetes;
+
+//    @OneToMany(mappedBy = "teamPeriod")
+//    @JsonBackReference
+//    private List<PersonPeriod> personPeriods;
+
+//    @OneToMany
+//    @JoinTable(name = "teamperiod_enquetes",
+//            joinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")},
+//            inverseJoinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")})
+//    private List<Enquete> enquetes;
 
 }
 
