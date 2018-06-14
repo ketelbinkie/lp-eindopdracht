@@ -26,4 +26,14 @@ $(document).ready(function () {
             });
 
     })
+
+
 })
+
+
+$(function () {
+    $('#profile').on('click', function (e) {
+        e.preventDefault();
+        $('#a').load("login.html");
+    });
+});

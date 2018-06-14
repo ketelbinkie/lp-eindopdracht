@@ -1,43 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <meta charset="UTF-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="js/get-user.js"></script>
-    <title>Welkom</title>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Bootstrap Theme Simply Me</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        var result;
+        if (localStorage.getItem('welcomeName')) {
+            result = localStorage.getItem('welcomeName');
+            // verwijderen naam van localStorage
+            localStorage.removeItem('welcomeName');
+        } else {
+            result = [];
+        }
+    </script>
+    <style>
+        body {
+            font: 20px Montserrat, sans-serif;
+            line-height: 1.8;
+            color: #f5f6f7;
+        }
+
+        p {
+            font-size: 16px;
+        }
+
+        .margin {
+            margin-bottom: 45px;
+        }
+
+        .bg-1 {
+            background-color: #E65250;
+            color: #ffffff;
+        }
+
+        .bg-4 {
+            background-color: #2f2f2f; /* Black Gray */
+            color: #fff;
+        }
+
+        .container-fluid {
+            padding-top: 70px;
+            padding-bottom: 70px;
+        }
+
+        .navbar {
+            padding-top: 15px;
+            padding-bottom: 15px;
+            border: 0;
+            border-radius: 0;
+            margin-bottom: 0;
+            font-size: 12px;
+            letter-spacing: 5px;
+        }
+
+        .navbar-nav li a:hover {
+            color: #1abc9c !important;
+        }
+    </style>
 </head>
 <body>
-<pre>
-<script>
-    var result;
-    if (localStorage.getItem('welcomeName')) {
-        result = localStorage.getItem('welcomeName');
-        // verwijderen naam van localStorage
-        localStorage.removeItem('welcomeName');
-    } else {
-        result = [];
-    }
-</script>
-</pre>
 
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <script>
+                    document.writeln(result);
+                </script>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">WHO</a></li>
+                <li><a href="#">WHAT</a></li>
+                <li><a href="#">WHERE</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-
-<div id = container>
-    <div class="table">
-        <div class="row">
-            <div class="col1"> <img src="images/logovvHoogezand.jpg" alt="logo vvHoogezand" title="logo vvHoogezand" width=63%/></div>
-            <div class="col2">
-                <div>
-                    <h2><script>
-
-                        document.writeln(result);
-                        </script></h2>
-                <h2>Welkom bij uw sportvereniging</h2>
-                </div>
-            </div>
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+    <div class="container">
+        <form class="form-horizontal" action="" id="check_user">
+            <div class="row">
+                <h1>Welkom</h1>
+            </div> <!--row-->
+        </form>
+        <div id="password-check-results">
+            <em></em>
         </div>
     </div>
 </div>
+
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+    <p>Marko and David Webdesign</a></p>
+</footer>
+
 </body>
 </html>
