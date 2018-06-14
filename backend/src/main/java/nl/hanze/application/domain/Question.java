@@ -22,9 +22,9 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "answertype_id", nullable = false, referencedColumnName = "id")
     private AnswerType answerType;
-
-    @OneToMany(mappedBy = "question")
-    private List<Rating> ratings;
+//
+//    @OneToMany(mappedBy = "question")
+//    private List<Rating> ratings;
 
     @OneToMany
     @JoinTable(name = "enquete_questions",

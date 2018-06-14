@@ -17,10 +17,10 @@ import java.util.List;
         @Column(name = "answertype", nullable = true, length = 255)
         private String answertype;
 
-        @Column(name = "answersubtyp", nullable = true, length = 45)
-        private String answersubtyp;
-
-        @OneToMany(mappedBy = "answerType")
-        private List<Question> questions;
+        @Column(name = "answersubtype", nullable = true, length = 45)
+        private String answersubtype;
+//
+//        @OneToMany(mappedBy = "answerType")
+//        private List<Question> questions;
 
     }
