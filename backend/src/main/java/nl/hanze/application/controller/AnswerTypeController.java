@@ -2,6 +2,7 @@ package nl.hanze.application.controller;
 
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 import nl.hanze.application.domain.AnswerType;
+import nl.hanze.application.domain.User;
 import nl.hanze.application.service.AnswerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,6 +34,11 @@ public class AnswerTypeController {
         }
     }
 
+    @GetMapping(value = "/answertype/findanswertype")
+    public AnswerType findAnswerType(
+            @RequestParam(value = "id") int id) {
+        return answerTypeService.findById(id);
+    }
 
     @PostMapping(value = "/answertype/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<AnswerType> add(

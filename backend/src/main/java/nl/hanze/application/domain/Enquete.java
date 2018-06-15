@@ -1,6 +1,7 @@
 package nl.hanze.application.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -23,12 +24,14 @@ public class Enquete {
     @JoinTable(name = "enquete_questions",
             joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
             inverseJoinColumns ={@JoinColumn(name = "question_id", referencedColumnName = "id")})
+    @JsonManagedReference
     private List<Question> questions;
 
     @OneToMany
     @JoinTable(name = "teamperiod_enquetes",
             joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
             inverseJoinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")})
+    @JsonManagedReference
     private List<TeamPeriod> teamPeriods;
 
 }
