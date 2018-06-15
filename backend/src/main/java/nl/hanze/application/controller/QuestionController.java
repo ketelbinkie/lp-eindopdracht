@@ -42,7 +42,6 @@ public class QuestionController {
         return questionService.findById(id);
     }
 
-
     @PostMapping(value = "/question/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<Question> add(
             @Valid @RequestBody Question question) {
