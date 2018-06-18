@@ -25,32 +25,37 @@
                 var $results = $('#question-add-result'),
                     question = $('#txt-question').val(),
                     category = $('#txt-category').val();
-                let answertype = $('#sel-answertype').val();
+                    let answertype = $('#sel-answertype').val();
 
                 console.log(question+', '+category+', '+answertype);
 
-                $.ajax({
-                    url : "http://localhost:8080/question/add",
-                    type: "POST",
-                    data: JSON.stringify({question: question, category: category, answerType:{id: answertype}}),
-                    contentType: "application/json; charset=utf-8",
-                    dataType   : "json",
-                    success    : function(){
-                        console.log("gelukt!");
-                    }
-                });
 
-            })
+                $.ajax({
+                    url: "http://localhost:8080/question/add",
+                    type: "POST",
+                    data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (data, textStatus, xhr) {
+                        alert(xhr.status);
+                        $( "#question-add-result" ).empty().append( data);
+                    },
+                    error: function (data, textStatus, xhr) {
+                        alert(data.responseText);
+                        $( "#question-add-result" ).empty().append( data.responseText);
+
+                    }
+                })
+            });
         })
+
     </script>
 
     <script>
         $(document).ready(function () {
             let select = $('#sel-answertype');
 
-            select.empty();
-
-            select.append('<option selected="false" disabled>Voer antwoordsoort in</option>');
+            select.append('<option selected disabled>Voer antwoordsoort in</option>');
 
             const requestURL = 'http://localhost:8080/answertype/all';
 
@@ -105,6 +110,9 @@
 
         .navbar-nav li a:hover {
             color: #1abc9c !important;
+        }
+        #question-add-result {
+            background-color: black;
         }
     </style>
 </head>
@@ -172,7 +180,7 @@
                             <!--<select type="text" class="form-control" id="sel-answertype"-->
                                     <!--name="answertype" required>-->
                                 <!--<option value="" selected disabled>Voer antwoordsoort in</option>>-->
-                            <select class="form-control" id="sel-answertype" name="answertype" required>
+                            <select required class="form-control" id="sel-answertype" name="answertype">
                             </select>
                         </div>
                     </div>

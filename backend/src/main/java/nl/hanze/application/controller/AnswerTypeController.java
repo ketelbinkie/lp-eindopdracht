@@ -41,9 +41,8 @@ public class AnswerTypeController {
     }
 
     @PostMapping(value = "/answertype/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<AnswerType> add(
-            @Valid @RequestBody AnswerType answerType) {
-        return new ResponseEntity<AnswerType>(answerTypeService.save(answerType),HttpStatus.CREATED);
+    public void add(@Valid @RequestBody AnswerType answerType){
+        answerTypeService.save(answerType);
     }
 
     @DeleteMapping("/answertype/{id}")
