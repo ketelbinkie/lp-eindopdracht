@@ -18,8 +18,6 @@ $(document).ready(function () {
             , function (data) {
                 console.log(data);
                 if (data !== null) {
-                    var privateName = ID();
-                    localStorage.setItem('sessionid',privateName);
                     localStorage.setItem('name', data.person.firstname + " " + data.person.lastname);
 
                     localStorage.setItem('testObject', JSON.stringify(data));
@@ -43,10 +41,3 @@ $(function () {
         $('#a').load("login.html");
     });
 });
-
-var ID = function () {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
-    return '_' + Math.random().toString(36).substr(2, 9);
-};

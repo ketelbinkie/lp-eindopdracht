@@ -1,54 +1,62 @@
-@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
-
-
-div {
-    /*border: 1px solid yellow;*/
+body {
+    font: 20px Montserrat, sans-serif;
+    line-height: 1.8;
+    color: #f5f6f7;
 }
 
-@font-face {
-    font-family: 'Indie Flower';
-    /*font-family: sansation;*/
-    /*src: url(../fonts/Bombing.ttf);*/
-    font-weight: bold;
+p {
+    font-size: 16px;
 }
 
-h1{
-    font-family: 'Indie Flower', sans-serif;
-    /*font-family: sansation sans-serif;*/
-    font-size: 240px;
-    text-align: center;
-    margin-bottom: 1px;
-    color: maroon;
+.margin {
+    margin-bottom: 45px;
 }
 
-h2{
-    font-size: 40px;
-    text-align: center;
-    margin-top: 20px;
-    color: black;
+.h3 small{
+    color: antiquewhite;
+    padding-right: 10px;
 }
 
-h3{
-    font-size: 60px;
-    text-align: center;
-    margin-top: 5px;
-    margin-bottom: 1px;
-    color: darkblue;
-
-}
-#container{
-    width: 1200px;
+.bg-1 {
+    background-color: #E65250;
+    color: #ffffff;
 }
 
-.col1,.col2{
-    border: 1px solid red;
+.bg-4 {
+    background-color: #2f2f2f; /* Black Gray */
+    color: #fff;
 }
 
-.col1{
-    float: left;
+.container-fluid {
+    padding-top: 70px;
+    padding-bottom: 70px;
 }
-.col2{
-    width: 900px;
-    float: right;
+
+.navbar {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border: 0;
+    border-radius: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    letter-spacing: 5px;
+}
+
+.navbar-nav li a:hover {
+    color: #1abc9c !important;
+}
+
+.dl-horizontal dt{
+    text-align: left;
+    white-space: normal;
+    width: 200px;
+}
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #ea6260;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: maroon;
 }
 

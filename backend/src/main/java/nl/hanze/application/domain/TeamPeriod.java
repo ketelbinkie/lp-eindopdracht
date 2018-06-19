@@ -29,7 +29,6 @@ public class TeamPeriod {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_name_id", referencedColumnName = "id")
-    @JsonBackReference
     private TeamName teamName;
 
 

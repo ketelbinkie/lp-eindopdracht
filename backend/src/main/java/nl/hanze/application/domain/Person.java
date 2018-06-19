@@ -30,11 +30,11 @@ public class Person {
 
     @Column(name = "gender", nullable = false, length = 1)
     private String gender;
-
-    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Column(nullable = true)
-    @JsonManagedReference
-    private List<PersonPeriod> periods;
+//
+//    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @Column(nullable = true)
+//    @JsonManagedReference
+//    private List<PersonPeriod> periods;
 
 //    public int getId() {
 //        return id;

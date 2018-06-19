@@ -24,9 +24,11 @@ public class PersonPeriod {
     private Date enddate;
 
 
+//    @Column(name = "person_id")
+//    private int personId;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
-    @JsonBackReference
     private Person person;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -37,6 +39,5 @@ public class PersonPeriod {
     @JoinColumn(name = "role_id")
     private Role role;
 
-    @OneToMany(mappedBy = "personPeriod")
-    private List<Rating> ratings;
+//
 }

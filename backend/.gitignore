@@ -15,3 +15,4 @@ application.properties
 # Maven
 log/
 target/
+application.properties
