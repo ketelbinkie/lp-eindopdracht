@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Theme Made By www.w3schools.com - No Copyright -->
-    <title>Bootstrap Theme Simply Me</title>
+    <title>TrainerScreen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/login.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+
     <script>
         var result;
         if (localStorage.getItem('welcomeName')) {
@@ -19,8 +20,27 @@
         } else {
             result = [];
         }
+
+        $.ajax({
+            url: 'http://localhost:8080/getpersonsbytrainerid?trainerid=3',
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $('#table-content').bootstrapTable({
+                    data: data
+                });
+                console.log("no errors");
+            },
+            error: function (requestObject, error, errorThrown) {
+                console.log("error thrown, add handler to exit gracefully");
+            },
+            timeout: 3000 //to do: research and develop further in combination with error handling
+        });
+        console.log("no errors, script head");
     </script>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/get-trainer-person-overview.js"></script>
+    <script></script>
 
 </head>
 <body>
@@ -58,8 +78,12 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="h3">Team: <small>JO7-1</small></div>
-                    <div class="h3">Periode: <small>2017/2018-najaar</small></div>
+                    <div class="h3">Team:
+                        <small>JO7-1</small>
+                    </div>
+                    <div class="h3">Periode:
+                        <small>2017/2018-najaar</small>
+                    </div>
                 </div>
                 <div class="col-md-2">
                     <img src="images/vvHoogezandsmall.png" style="float: right"/>
@@ -68,33 +92,17 @@
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <table class="table table-hover table-striped">
+
+                    <table id="table-content" class="table table-hover">
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Firstname</th>
-                            <th>Lastname</th>
+                            <!--<tr onclick="window.location='http://www.google.com';">-->
+                            <th data-field="person.number">#</th>
+                            <th data-field="person.firstname">Voornaam</th>
+                            <th data-field="person.lastname">Achternaam</th>
                         </tr>
                         </thead>
-                        <tbody>
-                        <tr onclick="window.location='http://www.google.com';">
-                            <td>3</td>
-                            <td>David</td>
-                            <td>Groen</td>
-                        </tr>
-                        <tr onclick="window.location='http://www.google.com';">
-                            <td>7</td>
-                            <td>Marko</td>
-                            <td>Ketelapper</td>
-                        </tr>
-                        <tr onclick="window.location='http://www.google.com';">
-                            <td>9</td>
-                            <td>Robin</td>
-                            <td>Douma</td>
-                        </tr>
-                        </tbody>
                     </table>
-
                 </div>
             </div> <!--row-->
         </form>

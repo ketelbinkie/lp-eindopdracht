@@ -52,9 +52,17 @@ p {
     width: 200px;
 }
 
-.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+
+.table > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     background-color: #ea6260;
+    border:0;
+
 }
+.fixed-table-container,.table > tbody tr > td,.table > thead> tr > th{
+    border:0;
+
+}
+
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
     background-color: maroon;

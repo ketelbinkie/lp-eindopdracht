@@ -1,6 +1,5 @@
 package nl.hanze.application.controller;
 
-import nl.hanze.application.domain.Person;
 import nl.hanze.application.domain.PersonPeriod;
 import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,19 +25,36 @@ public class PersonController {
     }
 
 
-    @RequestMapping(value = "/findPersonPeriods")
-    public ResponseEntity personPeriods(
-            @RequestParam(value = "teamPeriodId") Integer id) {
-        List<PersonPeriod> periods = personService.findPersonPeriodByTeamPeriodId(id);
-        return new ResponseEntity<>(periods, HttpStatus.OK);
-    }
+/*niet nodig ivm met personByTrainerPeriod */
 
-//    @RequestMapping(value = "/getpersononbytrainerid")
-//    public ResponseEntity personByTrainerPeriod(
-//            @RequestParam(value = "trainerid") Integer trainerId) {
-//        Person trainer = personService.findPersonP(trainerId)
-//
+//    @RequestMapping(value = "/findPersonPeriods")
+//    public ResponseEntity personPeriods(
+//            @RequestParam(value = "teamPeriodId") Integer id) {
+//        List<PersonPeriod> periods = personService.findPersonPeriodByTeamPeriodId(id);
+//        return new ResponseEntity<>(periods, HttpStatus.OK);
 //    }
+
+
+    /**
+     * When given a trainer ID a list of persons which shares the same team period as the trainer wil be returned
+     *
+     * @param trainerId
+     * @return list of persons which shares the same period as the trainer with the requested ID
+     *
+     */
+
+
+    @RequestMapping(value = "/getpersonsbytrainerid")
+    public ResponseEntity personByTrainerPeriod(
+            @RequestParam(value = "trainerid") Integer trainerId) {
+        try {
+            List<PersonPeriod> periods = personService.findPersonByTrainerPeriod(trainerId);
+            return  new ResponseEntity<>(periods, HttpStatus.OK);
+        }catch (Exception e){
+            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+        }
+
+    }
 
 
 

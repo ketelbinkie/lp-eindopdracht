@@ -30,57 +30,9 @@ public class Person {
 
     @Column(name = "gender", nullable = false, length = 1)
     private String gender;
-//
-//    @OneToMany(mappedBy = "person",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Column(nullable = true)
-//    @JsonManagedReference
-//    private List<PersonPeriod> periods;
 
-//    public int getId() {
-//        return id;
-//    }
-//
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-//
-//    public String getFirstname() {
-//        return firstname;
-//    }
-//
-//    public void setFirstname(String firstname) {
-//        this.firstname = firstname;
-//    }
-//
-//    public String getLastname() {
-//        return lastname;
-//    }
-//
-//    public void setLastname(String lastname) {
-//        this.lastname = lastname;
-//    }
-//
-//    public Timestamp getDateOfBirth() {
-//        return dateOfBirth;
-//    }
-//
-//    public void setDateOfBirth(Timestamp dateOfBirth) {
-//        this.dateOfBirth = dateOfBirth;
-//    }
-//
-//    public String getGender() {
-//        return gender;
-//    }
-//
-//    public void setGender(String gender) {
-//        this.gender = gender;
-//    }
-//
-//    public List<PersonPeriod> getPeriods() {
-//        return periods;
-//    }
-//
-//    public void setPeriods(List<PersonPeriod> periods) {
-//        this.periods = periods;
-//    }
+    @Column(name = "number", nullable = false, length = 1)
+    private Integer number;
+
+
 }

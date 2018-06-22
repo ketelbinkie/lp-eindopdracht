@@ -7,7 +7,8 @@ import java.util.List;
 
 public interface PersonService {
 
-    List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id);
-    List<PersonPeriod> findPersonP(int id);
+//    List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id);
+    List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception;
+
 
 }

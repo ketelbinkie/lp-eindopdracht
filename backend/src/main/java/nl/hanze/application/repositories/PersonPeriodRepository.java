@@ -14,9 +14,9 @@ import java.util.List;
 public interface PersonPeriodRepository extends JpaRepository<PersonPeriod, Integer> {
 
     List<PersonPeriod> findAllByTeamPeriodId(Integer id);
-   
-    PersonPeriod findAllByTeamPeriodId(int id);
+    PersonPeriod findByPersonId(int personId);
+//    PersonPeriod findAllByTeamPeriodId(int id);
 
-    @Query("SELECT p FROM PersonPeriod p WHERE p.person = :person")
-    public List<PersonPeriod> find(Person person);
+//    @Query("SELECT p FROM PersonPeriod p WHERE p.person = :person")
+//    public List<PersonPeriod> find(Person person);
 }

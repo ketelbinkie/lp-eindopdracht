@@ -14,17 +14,26 @@ public class PersonServiceImpl implements PersonService {
     private final PersonPeriodRepository personRepository;
 
     @Autowired
-    public PersonServiceImpl(PersonPeriodRepository personRepository) {
+    public PersonServiceImpl(PersonPeriodRepository personRepository ) {
         this.personRepository = personRepository;
     }
 
 
-    public List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id) {
-        return personRepository.findAllByTeamPeriodId(id);
-    }
+//    public List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id) {
+//        return personRepository.findAllByTeamPeriodId(id);
+//    }
 
     @Override
-    public List<PersonPeriod> findPersonP(int id) {
-        return null;
+    public List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception {
+       PersonPeriod trainerPeriod = personRepository.findByPersonId(trainerId);
+       if(!trainerPeriod.getRole().getRole().equals("beoordelaar")){
+           throw new Exception("Error Wrong argument, given id is not of a person with the trainer role");
+       }
+
+        List<PersonPeriod> periods = personRepository.findAllByTeamPeriodId(trainerPeriod.getTeamPeriod().getId());
+
+       periods.remove(trainerPeriod);
+       return periods;
     }
+
 }

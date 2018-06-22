@@ -8,24 +8,28 @@ $(document).ready(function () {
             password = $('#txt-password').val();
 
         var requestURL = 'http://localhost:8080/checkcreds?';
-
+        var sessionid = ID();
 
         $.getJSON(requestURL,
             {
+                'sessionid': sessionid,
                 'username': username,
                 'password': password
             }
             , function (data) {
                 console.log(data);
                 if (data !== null) {
-                    var privateName = ID();
-                    localStorage.setItem('sessionid',privateName);
+
+                    localStorage.setItem('sessionid',sessionid);
                     localStorage.setItem('name', data.person.firstname + " " + data.person.lastname);
-
                     localStorage.setItem('testObject', JSON.stringify(data));
+                    localStorage.setItem('trainer_person_id',data.person.id)
+                   if(data.role.id ===3){
+                       window.open("../src/trainer.html", "_self")
+                   }else{
+                       window.open("../src/maintainQuestion.html", "_self")
 
-
-                    window.open("../src/welkom.html", "_self")
+                   }
                 } else {
                     $results.html('<p>Sorry your password is incorrect</p>');
                 }
