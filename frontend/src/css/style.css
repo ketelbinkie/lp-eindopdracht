@@ -68,12 +68,13 @@ p {
     background-color: maroon;
 }
 
-#melding {
+#message {
     background-color: black;
 }
 
-#multiselect_rightAll > i{
-    color: #1abc9c;
+#multiselect_rightAll, #multiselect_rightSelected, #multiselect_leftSelected, #multiselect_leftAll
+{
+    color: #ea6260;
 }
 
 
