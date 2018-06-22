@@ -34,14 +34,22 @@
             method: 'GET',
             dataType: 'json',
             success: function (data) {
+                localStorage.setItem("teamperiod",data[0].teamPeriod);
                 $('#table-content').bootstrapTable({
                     data: data
                 });
+
+
+
                 console.log("no errors");
                 var tableRow = $('.table > tbody > tr');
                 tableRow.click(function () {
                     var rows = this.childNodes;
-                   alert(rows[1].innerHTML + " " +rows[2].innerHTML)
+                    localStorage.setItem("toBeRatedId",rows[0].innerHTML )
+                    localStorage.setItem("toBeRatedVoornaam",rows[1].innerHTML )
+                    localStorage.setItem("toBeRatedAchternaam",rows[2].innerHTML )
+                    window.location='personrating.html'
+
 
                 });
             },

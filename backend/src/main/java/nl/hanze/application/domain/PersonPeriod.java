@@ -39,5 +39,9 @@ public class PersonPeriod {
     @JoinColumn(name = "role_id")
     private Role role;
 
+
+
+
+
 //
 }

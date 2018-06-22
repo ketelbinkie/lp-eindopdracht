@@ -1,5 +1,6 @@
 package nl.hanze.application.controller;
 
+import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.domain.PersonPeriod;
 import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,14 @@ public class PersonController {
         }
 
     }
+
+    @RequestMapping(value = "/person/personenquete")
+    public ResponseEntity personEnqueteByPersonId(
+            @RequestParam(value = "personId") Integer personId) {
+       PersonEnquete enquete = personService.findPersonEnqueteByPersonId(personId);
+        return  new ResponseEntity<>(enquete, HttpStatus.OK);
+    }
+
 
 
 

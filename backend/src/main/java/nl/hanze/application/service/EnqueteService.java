@@ -1,7 +1,8 @@
 package nl.hanze.application.service;
 
 
-import nl.hanze.application.domain.Enquete;;
+import nl.hanze.application.domain.Enquete;
+import nl.hanze.application.domain.PersonEnquete;;
 
 import java.util.List;
 

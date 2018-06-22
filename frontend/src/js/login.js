@@ -3,7 +3,7 @@ $(document).ready(function () {
     $('#check_user').submit(function (e) {
         e.preventDefault();
 
-        var $results = $('#password-check-results'),
+        var $results = $('#message'),
             username = $('#txt-username').val(),
             password = $('#txt-password').val();
 
@@ -18,7 +18,7 @@ $(document).ready(function () {
             }
             , function (data) {
                 console.log(data);
-                if (data !== null) {
+                if (data.id!== 0) {
 
                     localStorage.setItem('sessionid',sessionid);
                     localStorage.setItem('name', data.person.firstname + " " + data.person.lastname);

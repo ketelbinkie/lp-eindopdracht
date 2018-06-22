@@ -8,6 +8,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,21 +23,40 @@ public class Enquete {
     @Column(name = "name", nullable = true, length = 45)
     private String name;
 
-    @OneToMany
+//    @OneToMany
+//    @JoinTable(name = "enquete_questions",
+//            joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
+//            inverseJoinColumns ={@JoinColumn(name = "question_id", referencedColumnName = "id")})
+////    @JsonManagedReference
+//    @JsonBackReference(value="enquete_question")
+//    private List<Question> questions;
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JoinTable(name = "enquete_questions",
-            joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "question_id", referencedColumnName = "id")})
-//    @JsonManagedReference
-    @JsonBackReference(value="enquete_question")
+            joinColumns = @JoinColumn(name = "enquete_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
+    )
     private List<Question> questions;
 
     @OneToMany
-    @JoinTable(name = "teamperiod_enquetes",
-            joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
-            inverseJoinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")})
-    @JsonBackReference
-//    @JsonManagedReference
-    private List<TeamPeriod> teamPeriods;
+    @JoinTable(
+            name="response",
+            joinColumns = @JoinColumn( name="enquete_questions_enquete_id"),
+            inverseJoinColumns = @JoinColumn( name="id")
+    )
+    public Set<Response> responses;
+
+
+//    @OneToMany
+//    @JoinTable(name = "teamperiod_enquetes",
+//            joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
+//            inverseJoinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")})
+//    @JsonBackReference
+////    @JsonManagedReference
+//    private List<TeamPeriod> teamPeriods;
 
 }
 

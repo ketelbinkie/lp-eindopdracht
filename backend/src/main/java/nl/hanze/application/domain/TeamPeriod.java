@@ -22,7 +22,7 @@ public class TeamPeriod {
     private String periodName;
 
     @Column(name = "startdate", nullable = true)
-    private Date startdate; 
+    private Date startdate;
 
     @Column(name = "enddate", nullable = true)
     private Date enddate;
@@ -30,6 +30,7 @@ public class TeamPeriod {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_name_id", referencedColumnName = "id")
     private TeamName teamName;
+
 
 
 

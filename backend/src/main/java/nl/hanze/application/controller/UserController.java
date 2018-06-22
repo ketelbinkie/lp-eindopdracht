@@ -56,7 +56,7 @@ public class UserController {
             user.setPassword("***********");
             return user;
         }
-        return null;
+        return new User() ;
     }
 
 
