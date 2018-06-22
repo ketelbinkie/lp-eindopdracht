@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Samenstellen enquete</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/multiselect.js"></script>
+
+    <script>
+        <!-- Ophalen naam van de ingelogde gebruiker -->
+        var result;
+        result = localStorage.getItem(name);
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            // console.log("1e log");
+
+            $('#add_question').submit(function (e) {
+                e.preventDefault();
+
+                var $results = $('#melding'),
+                    question = $('#txt-question').val(),
+                    category = $('#txt-category').val();
+                    let answertype = $('#sel-answertype').val();
+
+                // console.log(question+', '+category+', '+answertype);
+
+
+                $.ajax({
+                    url: "http://localhost:8080/question/add",
+                    type: "POST",
+                    data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "text",
+                    success: function (data, textStatus, xhr) {
+                        alert(xhr.status);
+                        $( "#question-add-result" ).empty().append( data);
+                        $results.empty().append(textStatus.toString());
+                    },
+                    error: function (data, textStatus, xhr) {
+                        alert(data.responseText);
+                        $( "#question-add-result" ).empty().append( data.responseText);
+
+                    }
+                })
+            });
+        })
+
+    </script>
+    <script>
+        $('#multiselect').multiselect();
+    </script>
+
+    <script>
+        // Ophalen en presenteren van de beschikbare enquetes
+        $(document).ready(function () {
+            let select = $('#sel-enquete');
+
+            select.append('<option selected disabled>Kies enquête</option>');
+
+            const requestURL = 'http://localhost:8080/enquete/all';
+
+            // Populate dropdown with list of provinces
+            $.getJSON(requestURL, function (data) {
+                $.each(data, function (key, val) {
+                    select.append($('<option></option>').attr('value', val.id).text(val.name));
+                    console.log(val.id)
+                })
+            })
+        });
+    </script>
+    <script>
+        // Ophalen en presenteren van de beschikbare vragen in de 'Beschikbare vragen'
+        $(document).ready(function () {
+            let select = $('#multiselect_from');
+
+            const requestURL = 'http://localhost:8080/question/all';
+
+            // Populate dropdown with list of provinces
+            $.getJSON(requestURL, function (data) {
+                $.each(data, function (key, val) {
+                    select.append($('<option></option>').attr('value', val.id).text(val.question));
+                    console.log(val.id + val.question)
+                })
+            })
+        });
+    </script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">
+                <script>
+                    document.writeln(result);
+                </script>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Gebruiker</a></li>
+                <li><a href="#">Enquête</a></li>
+                <li><a href="#">Team</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+    <div class="container">
+        <form class="form-horizontal" action="" id="add_question_to_enquete">
+            <div class="row">
+                <div class="col-md-10">
+                <h2 style="margin-bottom: 30px">Samenstellen enquête</h2>
+                </div>
+                <div class="col-md-2">
+                    <img src="images/vvHoogezandsmall.png" style="float: right"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group">
+                    <label class="control-label col-md-2" for="sel-enquete" style="text-align: left">Kies enquête:</label>
+                    <div class="col-md-3">
+                        <select required class="form-control" id="sel-enquete" name="enquete">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="text-align: left">
+                <div class="col-md-5">
+                    <h3 style="margin-bottom: 30px">Beschikbare vragen</h3>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5">
+                    <h3 style="margin-bottom: 30px">Geselecteerde vragen</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                   <select name="from" id="multiselect_from" class="form-control" size="8" multiple="multiple">
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button>
+                    <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button>
+                    <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                    <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button>
+                </div>
+                <div class="col-md-5">
+                    <select name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple">
+                    </select>
+                </div>
+                <div class="col-md-offset-9 col-md-3">
+                    <button type="cancel" class="btn btn-default">Annuleren</button>
+                    <button type="submit" class="btn btn-default">Opslaan</button>
+                </div>
+            </div> <!--row-->
+        </form>
+        <div id="melding">
+            <em></em>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+    <p>Marko and David Webdesign</a></p>
+</footer>
+
+</body>
+</html>

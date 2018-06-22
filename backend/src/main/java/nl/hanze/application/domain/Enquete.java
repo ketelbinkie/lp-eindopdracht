@@ -1,6 +1,8 @@
 package nl.hanze.application.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
@@ -13,7 +15,7 @@ import java.util.List;
 public class Enquete {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, length = 11)
     private int id;
 
@@ -24,14 +26,16 @@ public class Enquete {
     @JoinTable(name = "enquete_questions",
             joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
             inverseJoinColumns ={@JoinColumn(name = "question_id", referencedColumnName = "id")})
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonBackReference(value="enquete_question")
     private List<Question> questions;
 
     @OneToMany
     @JoinTable(name = "teamperiod_enquetes",
             joinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")},
             inverseJoinColumns ={@JoinColumn(name = "team_period_id", referencedColumnName = "id")})
-    @JsonManagedReference
+    @JsonBackReference
+//    @JsonManagedReference
     private List<TeamPeriod> teamPeriods;
 
 }

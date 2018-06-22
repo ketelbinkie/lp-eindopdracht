@@ -3,14 +3,11 @@ package nl.hanze.application.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
-    @Getter
-    @Setter
+    @Data
     @Entity
     @Table(name = "answer_type", schema = "soccerpracticerating")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
@@ -18,6 +15,7 @@ import java.util.List;
         public AnswerType() {}
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name = "id", nullable = false, length = 11)
         private int id;
 

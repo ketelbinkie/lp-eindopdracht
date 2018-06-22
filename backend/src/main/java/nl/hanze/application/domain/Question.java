@@ -20,6 +20,7 @@ public class Question {
     public Question() {}
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false, length = 11)
     private int id;
 
