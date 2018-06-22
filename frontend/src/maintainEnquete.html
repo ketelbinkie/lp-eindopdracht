@@ -27,7 +27,7 @@
             $('#add_question').submit(function (e) {
                 e.preventDefault();
 
-                var $results = $('#melding'),
+                var $results = $('#message'),
                     question = $('#txt-question').val(),
                     category = $('#txt-category').val();
                     let answertype = $('#sel-answertype').val();
@@ -57,24 +57,22 @@
 
     </script>
     <script>
-        $('#multiselect').multiselect();
-    </script>
-
-    <script>
         // Ophalen en presenteren van de beschikbare enquetes
         $(document).ready(function () {
             let select = $('#sel-enquete');
 
             select.append('<option selected disabled>Kies enquête</option>');
 
-            const requestURL = 'http://localhost:8080/enquete/all';
-
-            // Populate dropdown with list of provinces
-            $.getJSON(requestURL, function (data) {
-                $.each(data, function (key, val) {
-                    select.append($('<option></option>').attr('value', val.id).text(val.name));
-                    console.log(val.id)
-                })
+            $.ajax({
+                url: "http://localhost:8080/enquete/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        select.append($('<option></option>').attr('value', val.id).text(val.name));
+                        console.log(val.id)
+                    })
+                },
             })
         });
     </script>
@@ -83,14 +81,16 @@
         $(document).ready(function () {
             let select = $('#multiselect_from');
 
-            const requestURL = 'http://localhost:8080/question/all';
-
-            // Populate dropdown with list of provinces
-            $.getJSON(requestURL, function (data) {
-                $.each(data, function (key, val) {
-                    select.append($('<option></option>').attr('value', val.id).text(val.question));
-                    console.log(val.id + val.question)
-                })
+            $.ajax({
+                url: "http://localhost:8080/question/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        select.append($('<option></option>').attr('value', val.id).text(val.question));
+                        console.log(val.id + val.question)
+                    })
+                },
             })
         });
     </script>
@@ -170,12 +170,12 @@
                     </select>
                 </div>
                 <div class="col-md-offset-9 col-md-3">
-                    <button type="cancel" class="btn btn-default">Annuleren</button>
-                    <button type="submit" class="btn btn-default">Opslaan</button>
+                    <button type="cancel" class="btn btn-default" id ="Annuleren">Annuleren</button>
+                    <button type="submit" class="btn btn-default" id ="Opslaan">Opslaan</button>
                 </div>
             </div> <!--row-->
         </form>
-        <div id="melding">
+        <div id="message">
             <em></em>
         </div>
     </div>
