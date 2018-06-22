@@ -14,68 +14,71 @@
         var result;
         result = localStorage.getItem(name);
     </script>
+
     <script>
-        $(document).ready(function () {
+    $(document).ready(function () {
+        $('#Opslaan').click(function (e) {
+            e.preventDefault();
 
-            console.log("1e log");
+            var $results = $('#message'),
+                question = $('#txt-question').val(),
+                category = $('#txt-category').val();
+            let answertype = $('#sel-answertype').val();
 
-            $('#add_question').submit(function (e) {
-                e.preventDefault();
+            console.log(question + ', ' + category + ', ' + answertype);
 
-                var $results = $('#melding'),
-                    question = $('#txt-question').val(),
-                    category = $('#txt-category').val();
-                    let answertype = $('#sel-answertype').val();
+            $.ajax({
+                url: "http://localhost:8080/question/add",
+                type: "POST",
+                data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (data, textStatus, xhr) {
+                    // alert(xhr.status);
+                    $("#message").empty().append(data);
+                },
+                error: function (data, textStatus, xhr) {
+                    // alert(data.responseText);
+                    $results.empty().append(data.responseText);
 
-                console.log(question+', '+category+', '+answertype);
+                }
+            })
+        })
+        $('#Annuleren').click(function (e) {
 
-
-                $.ajax({
-                    url: "http://localhost:8080/question/add",
-                    type: "POST",
-                    data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "text",
-                    success: function (data, textStatus, xhr) {
-                        // alert(xhr.status);
-                        $( "#melding" ).empty().append( data);
-                    },
-                    error: function (data, textStatus, xhr) {
-                        // alert(data.responseText);
-                        $results.empty().append( data.responseText);
-
-                    }
-                })
-            });
+            alert("Annuleren")
+            e.preventDefault();
         })
 
-    </script>
+        });
 
+    </script>
     <script>
         $(document).ready(function () {
             let select = $('#sel-answertype');
 
             select.append('<option selected disabled>Voer antwoordsoort in</option>');
 
-            const requestURL = 'http://localhost:8080/answertype/all';
-
-            // Populate dropdown with list of provinces
-            $.getJSON(requestURL, function (data) {
-                $.each(data, function (key, val) {
-                    select.append($('<option></option>').attr('value', val.id).text(val.answertype +", "+val.answersubtype));
-                    console.log(val.id)
-                })
+            $.ajax({
+                url: "http://localhost:8080/answertype/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        select.append($('<option></option>').attr('value', val.id).text(val.answertype + ", " + val.answersubtype));
+                        console.log("id, "+val.id)
+                    })
+                },
             })
         });
     </script>
     <style>
-        #melding {
+        #message {
             background-color: black;
         }
     </style>
 </head>
 <body>
-
 <!-- Navbar -->
 <nav class="navbar navbar-default">
     <div class="container">
@@ -138,20 +141,20 @@
                             <!--<select type="text" class="form-control" id="sel-answertype"-->
                                     <!--name="answertype" required>-->
                                 <!--<option value="" selected disabled>Voer antwoordsoort in</option>>-->
-                            <select required class="form-control" id="sel-answertype" name="answertype">
+                            <select class="form-control" id="sel-answertype" name="answertype" required="required">
                             </select>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-11">
-                            <button type="cancel" class="btn btn-default">Annuleren</button>
-                            <button type="submit" class="btn btn-default">Opslaan</button>
+                            <button type="cancel" class="btn btn-default" id="Annuleren">Annuleren</button>
+                            <button type="submit" class="btn btn-default" id="Opslaan">Opslaan</button>
                         </div>
                     </div>
                 </div>
             </div> <!--row-->
         </form>
-        <div id="melding">
+        <div id="message">
             <em></em>
         </div>
     </div>
