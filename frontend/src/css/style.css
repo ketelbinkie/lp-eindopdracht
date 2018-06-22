@@ -72,4 +72,8 @@ p {
     background-color: black;
 }
 
+#multiselect_rightAll > i{
+    color: #1abc9c;
+}
+
 
