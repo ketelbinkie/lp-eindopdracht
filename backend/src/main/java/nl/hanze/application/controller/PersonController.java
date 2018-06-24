@@ -1,5 +1,6 @@
 package nl.hanze.application.controller;
 
+import nl.hanze.application.CombinedEnquete;
 import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.domain.PersonPeriod;
 import nl.hanze.application.service.PersonService;
@@ -60,7 +61,7 @@ public class PersonController {
     @RequestMapping(value = "/person/personenquete")
     public ResponseEntity personEnqueteByPersonId(
             @RequestParam(value = "personId") Integer personId) {
-       PersonEnquete enquete = personService.findPersonEnqueteByPersonId(personId);
+       List<CombinedEnquete> enquete = personService.findPersonEnqueteByPersonId(personId);
         return  new ResponseEntity<>(enquete, HttpStatus.OK);
     }
 

@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>login</title>
+    <title>rating</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="js/login.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="css/rating.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
     <link rel="stylesheet" href="css/style.css">
+
+
+    <script src="js/rating.js"></script>
+    <script>
+        let toBeRatedId =
+        $.ajax({
+
+            url: 'http://localhost:8080/person/personenquete?personId='+localStorage.getItem("toBeRatedId"),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+               createTable(data)
+            },
+            error: function (requestObject, error, errorThrown) {
+                console.log("error thrown, add handler to exit gracefully");
+            },
+            timeout: 3000 //to do: research and develop further in combination with error handling
+        });
+    </script>
+    <link rel="stylesheet" href="css/test.css">
+
+
 </head>
 <body>
 
@@ -24,7 +52,7 @@
             </button>
             <a class="navbar-brand" href="#">
                 <script>
-                    var user = localStorage.getItem("toBeRatedVoornaam") + " " + localStorage.getItem("toBeRatedAchternaam");
+                    let user = localStorage.getItem("toBeRatedVoornaam") + " " + localStorage.getItem("toBeRatedAchternaam");
                     document.writeln(user);
                 </script>
             </a>
@@ -49,28 +77,9 @@
                     <img class="visible-xs img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>
                 </div>
                 <div class="col-sm-8">
-                    <h2 style="margin-bottom: 30px">Please Login</h2>
-
-                    <div class="form-group">
-                        <label class="control-label col-md-4" for="txt-username">Gebruikersnaam:</label>
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" id="txt-username"
-                                   placeholder="Voer gebruikersnaam in"
-                                   name="username" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-md-4" for="txt-password">Wachtwoord:</label>
-                        <div class="col-md-6">
-                            <input type="password" class="form-control" id="txt-password"
-                                   placeholder="Voer password in"
-                                   name="password" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-8">
-                            <button type="submit" class="btn btn-default">Login</button>
-                        </div>
+                    <table id="rating-table" class="table table-hover"></table>
+                    <div>
+                        <button id="save-rating" type="button" class="btn btn-info">Opslaan</button>
                     </div>
                 </div>
             </div> <!--row-->
@@ -84,7 +93,7 @@
 
 <!-- Footer -->
 <footer class="container-fluid bg-4 text-center">
-    <p>Marko and David Webdesign</a></p>
+    <p>Marko and David Webdesign</p>
 </footer>
 
 </body>

@@ -1,13 +1,17 @@
 package nl.hanze.application.service.impl;
 
+import nl.hanze.application.CombinedEnquete;
 import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.domain.PersonPeriod;
+import nl.hanze.application.domain.Question;
+import nl.hanze.application.domain.Response;
 import nl.hanze.application.repositories.PersonEnqueteRepository;
 import nl.hanze.application.repositories.PersonPeriodRepository;
 import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("personService")
@@ -41,10 +45,31 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonEnquete findPersonEnqueteByPersonId(Integer personId) {
+    public List<CombinedEnquete> findPersonEnqueteByPersonId(Integer personId) {
         PersonPeriod period = personPeriodRepository.findByPersonId(personId);
-        return personEnqueteRepository.findPersonEnqueteByPersonPeriod(period);
+        PersonEnquete personEnquete = personEnqueteRepository.findPersonEnqueteByPersonPeriod(period);
 
+
+        List<CombinedEnquete> enquete = new ArrayList<>();
+
+
+
+        for (Question q : personEnquete.getEnquetes().getQuestions()){
+            CombinedEnquete ce = new CombinedEnquete();
+            ce.setQuestionId(q.getId());
+            ce.setQuestion(q.getQuestion());
+            ce.setQuestionCategory(q.getCategory());
+            for (Response r :  personEnquete.getEnquetes().getResponses()){
+                if(q.getId()==Integer.parseInt(r.getQuestionId())){
+                    ce.setAnswer(r.getAnswer());
+                }
+
+            }
+            enquete.add(ce);
+
+        }
+
+        return enquete;
     }
 
 }

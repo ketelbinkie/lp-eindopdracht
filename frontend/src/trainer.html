@@ -12,14 +12,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
 
     <script>
-        $(document).ready(function () {
-            $('.table > tbody > tr').click(function () {
-                alert('click')
-            });
-        });
-    </script>
-
-    <script>
         var result;
         if (localStorage.getItem('welcomeName')) {
             result = localStorage.getItem('welcomeName');
@@ -34,23 +26,18 @@
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                localStorage.setItem("teamperiod",data[0].teamPeriod);
+                localStorage.setItem("teamperiod", data[0].teamPeriod);
                 $('#table-content').bootstrapTable({
                     data: data
                 });
-
-
-
                 console.log("no errors");
                 var tableRow = $('.table > tbody > tr');
                 tableRow.click(function () {
                     var rows = this.childNodes;
-                    localStorage.setItem("toBeRatedId",rows[0].innerHTML )
-                    localStorage.setItem("toBeRatedVoornaam",rows[1].innerHTML )
-                    localStorage.setItem("toBeRatedAchternaam",rows[2].innerHTML )
-                    window.location='personrating.html'
-
-
+                    localStorage.setItem("toBeRatedId", rows[0].innerHTML)
+                    localStorage.setItem("toBeRatedVoornaam", rows[1].innerHTML)
+                    localStorage.setItem("toBeRatedAchternaam", rows[2].innerHTML)
+                    window.location = 'personrating.html'
                 });
             },
             error: function (requestObject, error, errorThrown) {
@@ -115,7 +102,6 @@
                     <table id="table-content" class="table table-hover">
                         <thead>
                         <tr>
-
                             <th data-field="person.id">Lid nr.</th>
                             <th data-field="person.firstname">Voornaam</th>
                             <th data-field="person.lastname">Achternaam</th>
