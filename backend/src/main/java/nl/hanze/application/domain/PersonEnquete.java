@@ -4,6 +4,7 @@ package nl.hanze.application.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -22,11 +23,11 @@ public class PersonEnquete {
     @JoinColumn(name = "person_period_id", referencedColumnName = "id")
     private PersonPeriod personPeriod;
 
-//    @OneToMany
-//    @JoinTable(
-//            name="response",
-//            joinColumns = @JoinColumn( name="pp_enquete_id"),
-//            inverseJoinColumns = @JoinColumn( name="id")
-//    )
-//    public Set<Response> responses;
+    @OneToMany
+    @JoinTable(
+            name="response",
+            joinColumns = @JoinColumn( name="pp_enquete_id"),
+            inverseJoinColumns = @JoinColumn( name="id")
+    )
+    public Set<Response> responses;
 }

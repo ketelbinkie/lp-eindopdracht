@@ -7,6 +7,11 @@ $(document).ready(function () {
         $('#rating-table > tbody  > tr').each(function() {
             console.log("id: " + this.cells[0].textContent +' aantal sterren: ' + $('input[name=rating'+this.cells[0].textContent+']:checked').val());
 
+
+
+
+
+
         });
 
 

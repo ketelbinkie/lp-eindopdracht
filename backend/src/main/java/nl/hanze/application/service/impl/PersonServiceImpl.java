@@ -59,7 +59,7 @@ public class PersonServiceImpl implements PersonService {
             ce.setQuestionId(q.getId());
             ce.setQuestion(q.getQuestion());
             ce.setQuestionCategory(q.getCategory());
-            for (Response r :  personEnquete.getEnquetes().getResponses()){
+            for (Response r :  personEnquete.getResponses()){
                 if(q.getId()==Integer.parseInt(r.getQuestionId())){
                     ce.setAnswer(r.getAnswer());
                 }

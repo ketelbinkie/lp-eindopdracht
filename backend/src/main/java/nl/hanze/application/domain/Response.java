@@ -3,10 +3,7 @@ package nl.hanze.application.domain;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -24,5 +21,7 @@ public class Response {
     @Column(name = "answer", nullable = true, length = 45)
     private String answer;
 
-
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "pp_enquete_id", referencedColumnName = "id")
+//    private Person person;
 }
