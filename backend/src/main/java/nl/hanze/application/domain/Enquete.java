@@ -41,13 +41,13 @@ public class Enquete {
     )
     private List<Question> questions;
 
-    @OneToMany
-    @JoinTable(
-            name="response",
-            joinColumns = @JoinColumn( name="enquete_questions_enquete_id"),
-            inverseJoinColumns = @JoinColumn( name="id")
-    )
-    public Set<Response> responses;
+//    @OneToMany
+//    @JoinTable(
+//            name="response",
+//            joinColumns = @JoinColumn( name="enquete_questions_enquete_id"),
+//            inverseJoinColumns = @JoinColumn( name="id")
+//    )
+//    public Set<Response> responses;
 
 
 //    @OneToMany
