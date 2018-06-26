@@ -13,49 +13,51 @@
     <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="js/multiselect.js"></script>
+    <script src="js/test.js"></script>
 
     <script>
         <!-- Ophalen naam van de ingelogde gebruiker -->
         var result;
         result = localStorage.getItem(name);
     </script>
-    <script>
-        $(document).ready(function () {
+    <!--<script>-->
+        <!--$(document).ready(function () {-->
 
-            // console.log("1e log");
+            <!--// console.log("1e log");-->
 
-            $('#add_question').submit(function (e) {
-                e.preventDefault();
+            <!--$('#add_question').submit(function (e) {-->
+                <!--e.preventDefault();-->
 
-                var $results = $('#message'),
-                    question = $('#txt-question').val(),
-                    category = $('#txt-category').val();
-                    let answertype = $('#sel-answertype').val();
+                <!--let $results = $('#message'),-->
+                    <!--enquete = $('#sel-enquete').val();-->
 
-                // console.log(question+', '+category+', '+answertype);
+<!--alert(enquete);-->
+                <!--list(questions)-->
+
+                <!--// console.log(question+', '+category+', '+answertype);-->
 
 
-                $.ajax({
-                    url: "http://localhost:8080/question/add",
-                    type: "POST",
-                    data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "text",
-                    success: function (data, textStatus, xhr) {
-                        alert(xhr.status);
-                        $( "#question-add-result" ).empty().append( data);
-                        $results.empty().append(textStatus.toString());
-                    },
-                    error: function (data, textStatus, xhr) {
-                        alert(data.responseText);
-                        $( "#question-add-result" ).empty().append( data.responseText);
+                <!--$.ajax({-->
+                    <!--url: "http://localhost:8080/question/add",-->
+                    <!--type: "POST",-->
+                    <!--data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),-->
+                    <!--contentType: "application/json; charset=utf-8",-->
+                    <!--dataType: "text",-->
+                    <!--success: function (data, textStatus, xhr) {-->
+                        <!--alert(xhr.status);-->
+                        <!--$( "#question-add-result" ).empty().append( data);-->
+                        <!--$results.empty().append(textStatus.toString());-->
+                    <!--},-->
+                    <!--error: function (data, textStatus, xhr) {-->
+                        <!--alert(data.responseText);-->
+                        <!--$( "#question-add-result" ).empty().append( data.responseText);-->
 
-                    }
-                })
-            });
-        })
+                    <!--}-->
+                <!--})-->
+            <!--});-->
+        <!--})-->
 
-    </script>
+    <!--</script>-->
     <script>
         // Ophalen en presenteren van de beschikbare enquetes
         $(document).ready(function () {
@@ -125,7 +127,7 @@
 <!-- First Container -->
 <div class="container-fluid bg-1 text-center">
     <div class="container">
-        <form class="form-horizontal" action="" id="add_question_to_enquete">
+        <form class="form-horizontal" action="" id="add_questions_to_enquete">
             <div class="row">
                 <div class="col-md-10">
                 <h2 style="margin-bottom: 30px">Samenstellen enquête</h2>

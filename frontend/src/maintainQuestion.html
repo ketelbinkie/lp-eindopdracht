@@ -34,8 +34,9 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
                 success: function (data, textStatus, xhr) {
-                    // alert(xhr.status);
-                    $("#message").empty().append(data);
+                    //formulier velden terugzetten naar default-waarde
+                    $('#add_question')[0].reset();
+                    $results.empty().append(data);
                 },
                 error: function (data, textStatus, xhr) {
                     // alert(data.responseText);

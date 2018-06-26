@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -52,4 +54,24 @@ public class EnqueteController {
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
+
+    @PutMapping (value = "/enquete/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public String save (
+            @Valid @RequestBody Enquete enquete,
+
+            BindingResult errors,
+            ModelMap modelMap
+    ) {
+        if (!errors.hasErrors()) {
+
+            final Enquete savedEnquete = enqueteService.save(enquete);
+
+            return "OK";
+        } else {
+            // BLABLA
+            return "NOK";
+        }
+    }
+
+
 }
