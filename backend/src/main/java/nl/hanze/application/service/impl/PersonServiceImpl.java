@@ -45,15 +45,16 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<CombinedEnquete> findPersonEnqueteByPersonId(Integer personId) {
+    public PersonEnquete findPersonEnqueteByPersonId(Integer personId) {
+        PersonPeriod period = personPeriodRepository.findByPersonId(personId);
+        return personEnqueteRepository.findPersonEnqueteByPersonPeriod(period);
+    }
+
+    public List<CombinedEnquete> findCombinedPersonEnqueteByPersonId(Integer personId) {
         PersonPeriod period = personPeriodRepository.findByPersonId(personId);
         PersonEnquete personEnquete = personEnqueteRepository.findPersonEnqueteByPersonPeriod(period);
 
-
         List<CombinedEnquete> enquete = new ArrayList<>();
-
-
-
         for (Question q : personEnquete.getEnquetes().getQuestions()){
             CombinedEnquete ce = new CombinedEnquete();
             ce.setQuestionId(q.getId());
@@ -63,12 +64,9 @@ public class PersonServiceImpl implements PersonService {
                 if(q.getId()==Integer.parseInt(r.getQuestionId())){
                     ce.setAnswer(r.getAnswer());
                 }
-
             }
             enquete.add(ce);
-
         }
-
         return enquete;
     }
 

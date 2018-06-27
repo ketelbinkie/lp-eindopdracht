@@ -21,19 +21,33 @@
     <script src="js/rating.js"></script>
     <script>
         let toBeRatedId =
-        $.ajax({
+            $.ajax({
 
-            url: 'http://localhost:8080/person/personenquete?personId='+localStorage.getItem("toBeRatedId"),
-            method: 'GET',
-            dataType: 'json',
-            success: function (data) {
-               createTable(data)
-            },
-            error: function (requestObject, error, errorThrown) {
-                console.log("error thrown, add handler to exit gracefully");
-            },
-            timeout: 3000 //to do: research and develop further in combination with error handling
-        });
+                url: 'http://localhost:8080/person/personenquete?personId=' + localStorage.getItem("toBeRatedId"),
+                method: 'GET',
+                dataType: 'json',
+
+
+                success: function (data) {
+                    localStorage.setItem('personEnquete', JSON.stringify(data));
+
+                    // var repsonses = new Object();
+                    // repsonses=data.responses;
+
+
+                   // let json = "\"id\":"+data.id+",\"enquetes\":{\"id\":"+data.enquetes.id+"},\"personPeriod\":{\"id\":"+data.personPeriod.id+"},repsonses: \""
+                   //
+                   //  data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
+                   //  JSON.stringify({id:data.id,enquetes:{id:data.enquetes.id},personPeriod:{id:data.personPeriod.id},responses:data.responses});
+
+
+                    createTable(data)
+                },
+                error: function (requestObject, error, errorThrown) {
+                    console.log("error thrown, add handler to exit gracefully");
+                },
+                timeout: 3000 //to do: research and develop further in combination with error handling
+            });
     </script>
     <link rel="stylesheet" href="css/test.css">
 
@@ -84,7 +98,7 @@
                 </div>
             </div> <!--row-->
         </form>
-        <div id="password-check-results">
+        <div id="rating-update-results">
             <em></em>
         </div>
     </div>
