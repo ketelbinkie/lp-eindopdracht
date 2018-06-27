@@ -22,6 +22,7 @@ $(document).ready(function () {
         for (let i = 0; i < from.length; i++) {
             var opt = from[i];
             if (opt.selected === true) {
+                // var idCategory = opt.value+"/"+opt.category;
                 to.append($('<option></option>').attr('value', opt.value).text(opt.innerText));
 
                 opt.remove()

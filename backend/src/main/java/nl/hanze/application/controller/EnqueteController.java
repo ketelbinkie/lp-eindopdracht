@@ -1,7 +1,9 @@
 package nl.hanze.application.controller;
 
 import nl.hanze.application.domain.Enquete;
+import nl.hanze.application.domain.Question;
 import nl.hanze.application.service.EnqueteService;
+import nl.hanze.application.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,10 +21,12 @@ public class EnqueteController {
 
 
     private final EnqueteService enqueteService;
+    private final QuestionService questionService;
 
     @Autowired
-    public EnqueteController(EnqueteService enqueteService) {
+    public EnqueteController(EnqueteService enqueteService, QuestionService questionService) {
         this.enqueteService = enqueteService;
+        this.questionService = questionService;
     }
 
     @GetMapping(value = "/enquete/all")
@@ -56,7 +60,7 @@ public class EnqueteController {
     }
 
     @PutMapping (value = "/enquete/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public String save (
+    public ResponseEntity<String> save (
             @Valid @RequestBody Enquete enquete,
 
             BindingResult errors,
@@ -64,12 +68,34 @@ public class EnqueteController {
     ) {
         if (!errors.hasErrors()) {
 
+
+            for(int i = 0; i< enquete.getQuestions().size(); i++){
+                // bepalen question id van de question in de enquete
+                int questionId = enquete.getQuestions().get(i).getId();
+
+                // ophalen van de betreffende question uit de db om het bijbehorende anwertype te bepalen
+                Question enqueteQuestion = new Question();
+                enqueteQuestion = questionService.findById(questionId);
+                int answertypId = enqueteQuestion.getAnswerType().getId();
+
+                // het answertype toevoegen aan de question van de enquete
+                enquete.getQuestions().get(i).getAnswerType().setId(answertypId);
+            }
+
             final Enquete savedEnquete = enqueteService.save(enquete);
 
-            return "OK";
+            String messagePart;
+            if(enquete.getQuestions().size()>1){
+                    messagePart = "Vragen zijn ";
+                }else{
+                    messagePart = "Vraag is ";
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body(messagePart+"succesvol aan de enquête '"+ enquete.getName()+"' toegevoegd!");
+
         } else {
-            // BLABLA
-            return "NOK";
+
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Er is iets foutgegaan!");
         }
     }
 

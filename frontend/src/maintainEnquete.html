@@ -34,7 +34,7 @@
                 success: function (data) {
                     $.each(data, function (key, val) {
                         select.append($('<option></option>').attr('value', val.id).text(val.name));
-                        console.log(val.id)
+                        console.log("get enquete: "+val.id)
                     })
                 },
             })
@@ -51,8 +51,9 @@
                 // data: ,
                 success: function (data) {
                     $.each(data, function (key, val) {
-                        select.append($('<option></option>').attr('value', val.id).text(val.question));
-                        console.log(val.id + val.question)
+                        var idCategory = val.id+"+"+val.category;
+                        select.append($('<option></option>').attr('value', idCategory).text(val.question));
+                        console.log("get questions: "+val.id +", "+ val.category)
                     })
                 },
             })

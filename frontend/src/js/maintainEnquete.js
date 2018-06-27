@@ -6,7 +6,9 @@ $(document).ready(function () {
             $results = $('#message');
 
         let enqueteId = $('#sel-enquete').val();
+        let enqueteNaam = $('#sel-enquete option:selected').text();
 
+        alert($('#sel-enquete'));
             if(enqueteId!=null) {
 
                 var to = $('#multiselect_to')[0];
@@ -16,36 +18,24 @@ $(document).ready(function () {
 
                         var enquete_question = new Object();
 
-                        enquete_question.id = opt.value;
+                        var arr = opt.value.split('+');
+
+                        enquete_question.id = arr[0];
                         enquete_question.question = opt.text;
-                        enquete_question.category = "";
+                        enquete_question.category = arr[1];
 
                         var question_anwertype = new Object();
                         question_anwertype.id = "1";
                         enquete_question.answerType = question_anwertype;
 
-
                         selectedquestions.push(enquete_question);
-                        alert(enquete_question);
-                        alert(JSON.stringify(selectedquestions));
                     }
 
-                    // var myString = JSON.stringify(selectedquestions);
-
                     $.ajax({
-                        url: "http://localhost:8080/enquete/save",//<Todo> goede url invullen
+                        url: "http://localhost:8080/enquete/save",
                         type: "PUT",
-                        data: JSON.stringify({"id": enqueteId, "name":"", "questions":selectedquestions}),
+                        data: JSON.stringify({"id": enqueteId, "name":enqueteNaam, "questions":selectedquestions}),
 
-                        // data: JSON.stringify({"id": enqueteId, "name":"", "questions":[{
-                        //         "id": 6,
-                        //         "question":"Dribbelen",
-                        //         "category": "",
-                        //         "answerType":
-                        //             {
-                        //                 "id": 2
-                        //             }
-                        //     }]}),
                         contentType: "application/json; charset=utf-8",
                         // dataType: "text",
                         success: function (data, textStatus, xhr) {
