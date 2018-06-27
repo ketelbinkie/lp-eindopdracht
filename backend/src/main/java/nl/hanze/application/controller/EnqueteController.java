@@ -64,12 +64,12 @@ public class EnqueteController {
     @PutMapping(value = "/reponse/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> add(@Valid @RequestBody PersonEnquete personEnquete) {
 
-        PersonEnquete currentPersonEnquete = personService.findPersonEnqueteByPersonId(personEnquete.getPersonPeriod().getPerson().getId());
-        if(currentPersonEnquete.getResponses().toString().equals(personEnquete.getResponses().toString())){
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body("Het is wel de bedoeling dat je wat wijzigt! Er is dus geen wijziging doorgevoerd.");
-        }
         try {
             if (personEnquete != null) {
+                PersonEnquete currentPersonEnquete = personService.findPersonEnqueteByPersonId(personEnquete.getPersonPeriod().getPerson().getId());
+                if(currentPersonEnquete.getResponses().toString().equals(personEnquete.getResponses().toString())){
+                    return ResponseEntity.status(HttpStatus.ACCEPTED).body("Het is wel de bedoeling dat je wat wijzigt! Er is dus geen wijziging doorgevoerd.");
+                }
                 enqueteService.save(personEnquete);
                 return ResponseEntity.status(HttpStatus.OK).body("Beoordeling is succesvol verwerkt!");
             } else {

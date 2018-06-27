@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+import static nl.hanze.application.session.Session.isActiveSession;
+
 @RestController
 @CrossOrigin
 public class PersonController {
@@ -28,7 +30,7 @@ public class PersonController {
     }
 
 
-/*niet nodig ivm met personByTrainerPeriod */
+    /*niet nodig ivm met personByTrainerPeriod */
 
 //    @RequestMapping(value = "/findPersonPeriods")
 //    public ResponseEntity personPeriods(
@@ -43,20 +45,24 @@ public class PersonController {
      *
      * @param trainerId
      * @return list of persons which shares the same period as the trainer with the requested ID
-     *
      */
 
 
     @RequestMapping(value = "/getpersonsbytrainerid")
     public ResponseEntity personByTrainerPeriod(
-            @RequestParam(value = "trainerid") Integer trainerId) {
-        try {
-            List<PersonPeriod> periods = personService.findPersonByTrainerPeriod(trainerId);
-            return  new ResponseEntity<>(periods, HttpStatus.OK);
-        }catch (Exception e){
-            return  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
-        }
+            @RequestParam(value = "trainerid") Integer trainerId,
+            @RequestParam(value = "sessionid") String sessionId) {
 
+        if (isActiveSession(sessionId)) {
+            try {
+                List<PersonPeriod> periods = personService.findPersonByTrainerPeriod(trainerId);
+                return new ResponseEntity<>(periods, HttpStatus.OK);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
+            }
+        }else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: not authorized");
+        }
     }
 
 //    @RequestMapping(value = "/person/personenquete")
@@ -70,7 +76,7 @@ public class PersonController {
     public ResponseEntity personEnqueteByPersonId(
             @RequestParam(value = "personId") Integer personId) {
         PersonEnquete personEnquete = personService.findPersonEnqueteByPersonId(personId);
-        return  new ResponseEntity<>(personEnquete, HttpStatus.OK);
+        return new ResponseEntity<>(personEnquete, HttpStatus.OK);
     }
 
 
@@ -92,17 +98,12 @@ public class PersonController {
 //    }
 
 
-
 //    @RequestMapping(value = "/person/personrespons")
 //    public ResponseEntity responseByPersonPeriodId(
 //            @RequestParam(value = "personPeriodId") Integer personPeriodId) {
 //        List<CombinedEnquete> enquete = personService.findPersonEnqueteByPersonId(personId);
 //        return  new ResponseEntity<>(enquete, HttpStatus.OK);
 //    }
-
-
-
-
 
 
 }
