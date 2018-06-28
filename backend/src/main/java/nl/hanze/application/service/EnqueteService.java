@@ -11,5 +11,6 @@ public interface EnqueteService {
     Enquete save(Enquete enquete);
     List<Enquete> findAll();
     Enquete findById(int id);
+    PersonEnquete save(PersonEnquete personEnquete);
 
 }

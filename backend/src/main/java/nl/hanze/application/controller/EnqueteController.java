@@ -2,8 +2,10 @@ package nl.hanze.application.controller;
 
 import nl.hanze.application.domain.Enquete;
 import nl.hanze.application.domain.Question;
+import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.service.EnqueteService;
 import nl.hanze.application.service.QuestionService;
+import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,19 +24,22 @@ public class EnqueteController {
 
     private final EnqueteService enqueteService;
     private final QuestionService questionService;
+    private final PersonService personService;
 
     @Autowired
-    public EnqueteController(EnqueteService enqueteService, QuestionService questionService) {
+    public EnqueteController(EnqueteService enqueteService, QuestionService questionService, PersonService persionService) {
         this.enqueteService = enqueteService;
         this.questionService = questionService;
+        this.personService = persionService;
     }
 
     @GetMapping(value = "/enquete/all")
-    public @ResponseBody List<Enquete> getAllEnquetes() {
-        List<Enquete> enqueteList =  enqueteService.findAll();
-        if(!enqueteList.isEmpty()){
+    public @ResponseBody
+    List<Enquete> getAllEnquetes() {
+        List<Enquete> enqueteList = enqueteService.findAll();
+        if (!enqueteList.isEmpty()) {
             return enqueteList;
-        }else{
+        } else {
             return null;
         }
     }
@@ -48,13 +53,33 @@ public class EnqueteController {
     @PostMapping(value = "/enquete/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> add(@Valid @RequestBody Enquete enquete) {
         try {
-            if(enquete != null) {
-                    enqueteService.save(enquete);
-                    return ResponseEntity.status(HttpStatus.OK).body("Enquete is succesvol toegevoegd!");
-                }else{
+            if (enquete != null) {
+                enqueteService.save(enquete);
+                return ResponseEntity.status(HttpStatus.OK).body("Enquete is succesvol toegevoegd!");
+            } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Enquete is niet toegevoegd!");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
+            return ResponseEntity.unprocessableEntity().body(e.getMessage());
+        }
+    }
+
+
+    @PutMapping(value = "/reponse/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> add(@Valid @RequestBody PersonEnquete personEnquete) {
+
+        try {
+            if (personEnquete != null) {
+                PersonEnquete currentPersonEnquete = personService.findPersonEnqueteByPersonId(personEnquete.getPersonPeriod().getPerson().getId());
+                if(currentPersonEnquete.getResponses().toString().equals(personEnquete.getResponses().toString())){
+                    return ResponseEntity.status(HttpStatus.ACCEPTED).body("Het is wel de bedoeling dat je wat wijzigt! Er is dus geen wijziging doorgevoerd.");
+                }
+                enqueteService.save(personEnquete);
+                return ResponseEntity.status(HttpStatus.OK).body("Beoordeling is succesvol verwerkt!");
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Beoordeling kon niet worden verwerkt!");
+            }
+        } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
