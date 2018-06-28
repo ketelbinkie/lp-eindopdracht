@@ -2,7 +2,6 @@ package nl.hanze.application.service.impl;
 
 
 import nl.hanze.application.domain.Question;
-import nl.hanze.application.domain.User;
 import nl.hanze.application.repositories.QuestionRepository;
 import nl.hanze.application.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;

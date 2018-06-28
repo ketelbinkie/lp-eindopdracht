@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Opvoeren enquete vragen</title>
+    <title>Opvoeren team periodes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -21,21 +21,37 @@
             e.preventDefault();
 
             var $results = $('#message'),
-                question = $('#txt-question').val(),
-                category = $('#txt-category').val();
-            let answertype = $('#sel-answertype').val();
+                periodeName = $('#txt-periodname').val(),
+                startDate = $('#date-start'),
+                endDate = $('#date-end');
+            let teamId = $('#sel-team').val();
 
-            console.log(question + ', ' + category + ', ' + answertype);
+            // Controleren of Einddatum na Startdatum ligt, anders foutmelding
+            if (startDate["0"].value > endDate["0"].value){
+                $results.empty().append("Startdatum moet voor einddatum liggen!");
+            }
+
+            var teamPeriod = new Object();
+
+            teamPeriod.periodName = periodeName;
+            teamPeriod.startdate = startDate["0"].value;
+            teamPeriod.enddate = endDate["0"].value;
+
+            var teamName = new Object();
+            teamName.id = teamId;
+            teamPeriod.teamName = teamName;
+
+            alert(JSON.stringify(teamPeriod));
 
             $.ajax({
-                url: "http://localhost:8080/question/add",
+                url: "http://localhost:8080/teamperiod/add",
                 type: "POST",
-                data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
+                data: JSON.stringify(teamPeriod),
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
                 success: function (data, textStatus, xhr) {
                     //formulier velden terugzetten naar default-waarde
-                    $('#add_question')[0].reset();
+                    $('#add_teamPeriod')[0].reset();
                     $results.empty().append(data);
                 },
                 error: function (data, textStatus, xhr) {
@@ -55,18 +71,19 @@
 
     </script>
     <script>
+        // Ophalen en presenteren van de beschikbare teamnamen in de 'Team'
         $(document).ready(function () {
-            let select = $('#sel-answertype');
+            let select = $('#sel-team');
 
-            select.append('<option selected disabled>Voer antwoordsoort in</option>');
+            select.append('<option selected disabled>Selecteer team</option>');
 
             $.ajax({
-                url: "http://localhost:8080/answertype/all",
+                url: "http://localhost:8080/teamname/all",
                 type: "GET",
                 // data: ,
                 success: function (data) {
                     $.each(data, function (key, val) {
-                        select.append($('<option></option>').attr('value', val.id).text(val.answertype + ", " + val.answersubtype));
+                        select.append($('<option></option>').attr('value', val.id).text(val.name));
                         console.log("id, "+val.id)
                     })
                 },
@@ -103,7 +120,7 @@
 <!-- First Container -->
 <div class="container-fluid bg-1 text-center">
     <div class="container">
-        <form class="form-horizontal" action="" id="add_question">
+        <form class="form-horizontal" action="" id="add_teamPeriod">
             <div class="row">
                 <div class="col-md-4">
                     <img class="visible-lg" src="images/vvHoogezand.png"/>
@@ -112,35 +129,41 @@
                     <img class="visible-xs img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>
                 </div>
                 <div class="col-md-8" >
-                    <h2 style="margin-bottom: 30px">Opvoeren enquete vragen</h2>
+                    <h2 style="margin-bottom: 30px">Opvoeren team periode</h2>
 
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="txt-question">Vraag:</label>
+                        <label class="control-label col-md-4" for="sel-team">Team:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="txt-question"
-                                   placeholder="Voer vraag in"
+                            <select class="form-control selectpicker" id="sel-team" data-live-search="true" name="team" required="required">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="txt-periodname">Periode:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="txt-periodname"
+                                   placeholder="Voer periodenaam in"
                                    name="question" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="txt-category">Categorie:</label>
+                        <label class="control-label col-md-4" for="date-start">Startdatum:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="txt-category"
-                                   placeholder="Voer categorie in"
+                            <input type="date" class="form-control" id="date-start"
+                                   placeholder="Voer startdatum in"
+                                   name="category" >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="date-end">Einddatum:</label>
+                        <div class="col-md-6">
+                            <input type="date" class="form-control" id="date-end"
+                                   placeholder="Voer einddatum in"
                                    name="category" >
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="control-label col-md-4" for="sel-answertype">Antwoordsoort:</label>
-                        <div class="col-md-6">
-                            <!--<select type="text" class="form-control" id="sel-answertype"-->
-                                    <!--name="answertype" required>-->
-                                <!--<option value="" selected disabled>Voer antwoordsoort in</option>>-->
-                            <select class="form-control" id="sel-answertype" name="answertype" required="required">
-                            </select>
-                        </div>
-                    </div>
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-11">
                             <button type="cancel" class="btn btn-default" id="Annuleren">Annuleren</button>
