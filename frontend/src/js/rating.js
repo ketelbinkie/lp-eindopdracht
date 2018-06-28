@@ -25,25 +25,20 @@ $(document).ready(function () {
         personEnquete.responses = responses
         console.log(personEnquete)
 
-        restRerviceCall("reponse/add","PUT", personEnquete)
-
+        restUpdateRating("reponse/add", personEnquete)
     })
-
 });
 
-
-function restRerviceCall(url,RequestMethod, body) {
-    var $results = $('#rating-update-results');
-
-
+function restUpdateRating(url, body) {
+    let $results = $('#message');
     $.ajax({
         url: "http://localhost:8080/" + url,
-        type: RequestMethod,
+        type: "PUT",
         data: JSON.stringify(body),
         contentType: "application/json; charset=utf-8",
         dataType: "text",
         success: function (data, textStatus, xhr) {
-            $results.html('<p>'+data+'</p>');
+            $results.html('<p>' + data + '</p>');
         },
         error: function (data, textStatus, xhr) {
             // alert(data.responseText);
@@ -51,7 +46,6 @@ function restRerviceCall(url,RequestMethod, body) {
         }
     })
 }
-
 
 function createTable(data) {
     let questions = data.enquetes.questions;
@@ -94,4 +88,25 @@ function createTable(data) {
     }
     bodyContent.append('<tbody><form>')
 
+}
+
+
+function createRatingTable() {
+    let $results = $('#message');
+    $.ajax({
+        url: 'http://localhost:8080/person/personenquete',
+        method: 'GET',
+        data: {
+            personId: localStorage.getItem("toBeRatedId")
+        },
+        dataType: 'json',
+        success: function (data) {
+            localStorage.setItem('personEnquete', JSON.stringify(data));
+            createTable(data)
+        },
+        error: function (requestObject, error, errorThrown) {
+            console.log("error thrown, add handler to exit gracefully");
+        },
+        timeout: 3000 //to do: research and develop further in combination with error handling
+    });
 }

@@ -3,12 +3,12 @@ $(document).ready(function () {
     $('#check_user').submit(function (e) {
         e.preventDefault();
 
-        var $results = $('#message'),
+        let $results = $('#message'),
             username = $('#txt-username').val(),
             password = $('#txt-password').val();
 
-        var requestURL = 'http://localhost:8080/checkcreds?';
-        var sessionid = ID();
+        let requestURL = 'http://localhost:8080/checkcreds?';
+        let sessionid = ID();
 
         $.getJSON(requestURL,
             {
@@ -27,7 +27,7 @@ $(document).ready(function () {
                    if(data.role.id ===3){
                        window.open("../src/trainer.html", "_self")
                    }else{
-                       window.open("../src/maintainQuestion.html", "_self")
+                       window.open("../src/admin.html", "_self")
 
                    }
                 } else {
@@ -38,7 +38,7 @@ $(document).ready(function () {
     })
 
 
-})
+});
 
 
 $(function () {
@@ -48,7 +48,7 @@ $(function () {
     });
 });
 
-var ID = function () {
+let ID = function () {
     // Math.random should be unique because of its seeding algorithm.
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
