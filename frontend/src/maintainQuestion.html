@@ -9,12 +9,12 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/annuleren.js"></script>
     <script>
         <!-- Ophalen naam van de ingelogde gebruiker -->
         var result;
         result = localStorage.getItem(name);
     </script>
-
     <script>
     $(document).ready(function () {
         $('#Opslaan').click(function (e) {
@@ -41,18 +41,10 @@
                 error: function (data, textStatus, xhr) {
                     // alert(data.responseText);
                     $results.empty().append(data.responseText);
-
                 }
             })
         })
-        $('#Annuleren').click(function (e) {
-
-            alert("Annuleren")
-            e.preventDefault();
-        })
-
-        });
-
+    });
     </script>
     <script>
         $(document).ready(function () {
