@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>AdminScreen</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--external-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
+
+    <!--own scripts:-->
+    <script src="js/get-trainer-person-overview.js"></script>
+    <script src="js/common.js"></script>
+
+    <!--own CSS:-->
+    <link rel="stylesheet" href="css/style.css">
+
+    <script>
+        $(function () {
+            $("#includedContent").load("navbar-admin.html");
+        });
+        window.onload = function () {
+            document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+        };
+    </script>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-default" id="includedContent">
+
+</nav>
+
+<!-- First Container -->
+<div class="container-fluid bg-1">
+    <div class="container">
+        <form class="form-horizontal" action="" id="check_user">
+            <div class="row">
+                <div class="col-lg-4 text-center">
+                    <h2 style="text-align: center">Gebruiker</h2>
+                    <img src="images/user1.png" class="img-circle"/>
+                    <div class="btn-group">
+                        <div>
+                            <button id="add-user" type="button" class="btn btn-block" style="margin: 5px">Gebruiker
+                                opvoeren
+                            </button>
+                        </div>
+                        <div>
+                            <button id="user-to-team" type="button" class="btn btn-block" style="margin: 5px">Gebruiker
+                                koppelen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <h2 style="text-align: center">Enquête</h2>
+                    <img src="images/survey.jpg" class="img-circle"/>
+                    <div class="btn-group">
+                        <div>
+                            <button id="maintain-enquete" type="button" class="btn btn-block" style="margin: 5px">
+                                Samenstellen enquête
+                            </button>
+                        </div>
+                        <div>
+                            <button id="maintain-question" type="button" class="btn btn-block" style="margin: 5px">
+                                Opvoeren vragen
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 text-center">
+                    <h2 style="text-align: center">Team</h2>
+                    <img src="images/team.jpg" class="img-circle"/>
+                    <div class="btn-group">
+                        <div>
+                            <button id="add-team" type="button" class="btn btn-block" style="margin: 5px">Team
+                                opvoeren
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!--row-->
+        </form>
+        <div id="message">
+            <em></em>
+        </div>
+    </div>
+</div>
+
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+    <p>Marko and David Webdesign</a></p>
+</footer>
+
+</body>
+
+</html>

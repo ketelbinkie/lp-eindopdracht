@@ -54,7 +54,7 @@ public class UserController {
 
         if (user != null) {
             user.setPassword("***********");
-            return user;
+                return user;
         }
         return new User() ;
     }

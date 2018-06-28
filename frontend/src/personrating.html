@@ -5,77 +5,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-
+    <!--external scripts-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.js"></script>
 
+    <!--external styles-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="css/rating.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.10.1/bootstrap-table.min.css">
+
+    <!--own java script filer-->
+    <script src="js/common.js"></script>
+    <script src="js/rating.js"></script>
+
+    <!--own CSS-->
     <link rel="stylesheet" href="css/style.css">
 
 
-    <script src="js/rating.js"></script>
     <script>
-        let toBeRatedId =
-            $.ajax({
-
-                url: 'http://localhost:8080/person/personenquete?personId=' + localStorage.getItem("toBeRatedId"),
-                method: 'GET',
-                dataType: 'json',
-
-
-                success: function (data) {
-                    localStorage.setItem('personEnquete', JSON.stringify(data));
-
-                    // var repsonses = new Object();
-                    // repsonses=data.responses;
-
-
-                   // let json = "\"id\":"+data.id+",\"enquetes\":{\"id\":"+data.enquetes.id+"},\"personPeriod\":{\"id\":"+data.personPeriod.id+"},repsonses: \""
-                   //
-                   //  data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
-                   //  JSON.stringify({id:data.id,enquetes:{id:data.enquetes.id},personPeriod:{id:data.personPeriod.id},responses:data.responses});
-
-
-                    createTable(data)
-                },
-                error: function (requestObject, error, errorThrown) {
-                    console.log("error thrown, add handler to exit gracefully");
-                },
-                timeout: 3000 //to do: research and develop further in combination with error handling
-            });
+        $(function () {
+            $("#includedContent").load("navbar-trainer.html");
+        });
+        window.onload = function () {
+            document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+        };
+        createRatingTable();
     </script>
-
-
 </head>
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <script>
-                    let user = localStorage.getItem("toBeRatedVoornaam") + " " + localStorage.getItem("toBeRatedAchternaam");
-                    document.writeln(user);
-                </script>
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">uitloggen</a></li>
-            </ul>
-        </div>
-    </div>
+<nav class="navbar navbar-default" id="includedContent">
+
 </nav>
 
 <!-- First Container -->
@@ -97,7 +61,7 @@
                 </div>
             </div> <!--row-->
         </form>
-        <div id="rating-update-results">
+        <div id="message">
             <em></em>
         </div>
     </div>
