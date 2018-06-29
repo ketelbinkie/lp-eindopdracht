@@ -1,6 +1,7 @@
 package nl.hanze.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
@@ -10,11 +11,13 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name = "team_period")
+@Table(name = "team_period", schema = "soccerpracticerating")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TeamPeriod {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
