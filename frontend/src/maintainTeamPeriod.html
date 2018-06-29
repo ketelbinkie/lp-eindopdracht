@@ -10,11 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="js/annuleren.js"></script>
-    <script>
-        <!-- Ophalen naam van de ingelogde gebruiker -->
-        var result;
-        result = localStorage.getItem(name);
-    </script>
+    <script src="js/common.js"></script>
 
     <script>
     $(document).ready(function () {
@@ -25,7 +21,8 @@
                 periodeName = $('#txt-periodname').val(),
                 startDate = $('#date-start'),
                 endDate = $('#date-end');
-            let teamId = $('#sel-team').val();
+            let teamId = $('#sel-team').val(),
+                allTeams = $('#sel-all-teams').val();
 
             // Controleren of Einddatum na Startdatum ligt, anders foutmelding
             if (startDate["0"].value > endDate["0"].value){
@@ -37,6 +34,7 @@
             teamPeriod.periodName = periodeName;
             teamPeriod.startdate = startDate["0"].value;
             teamPeriod.enddate = endDate["0"].value;
+
 
             var teamName = new Object();
             teamName.id = teamId;
@@ -84,32 +82,22 @@
             })
         });
     </script>
+    <style>
+        #lbl-sel-all-teams{
+            font-size: 15px;
+        }
+    </style>
 </head>
 <body>
 <!-- Navbar -->
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <script>
-                    document.writeln(result);
-                </script>
-            </a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Gebruiker</a></li>
-                <li><a href="#">Enquête</a></li>
-                <li><a href="#">Team</a></li>
-            </ul>
-        </div>
-    </div>
+<nav class="navbar navbar-default" id="includedContent">
+
 </nav>
+<script>
+    $("#includedContent").load ("navbar-admin.html", function () {
+        document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+    });
+</script>
 
 <!-- First Container -->
 <div class="container-fluid bg-1 text-center">
@@ -130,9 +118,12 @@
                         <div class="col-md-6">
                             <select class="form-control selectpicker" id="sel-team" data-live-search="true" name="team" required="required">
                             </select>
-                        </div>
-                    </div>
 
+                            <!--<label class="form-check-label" for="sel-all-teams" id="lbl-sel-all-teams" >alle teams selecteren: </label>-->
+                            <!--<input type="checkbox" class="form-check-input" id="sel-all-teams">-->
+
+                    </div>
+                    </div>
                     <div class="form-group">
                         <label class="control-label col-md-4" for="txt-periodname">Periode:</label>
                         <div class="col-md-6">
