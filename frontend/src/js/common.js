@@ -1,7 +1,7 @@
 function logout() {
     let $results = $('#message');
     $.ajax({
-        url: "http://localhost:8080/logout",
+        url: "http://localhost:8080/users/logout",
         type: "GET",
         data: {sessionid: localStorage.getItem("sessionid")},
         contentType: "application/json; charset=utf-8",

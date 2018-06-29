@@ -1,6 +1,8 @@
 package nl.hanze.application.service.impl;
 
+import nl.hanze.application.domain.Role;
 import nl.hanze.application.domain.User;
+import nl.hanze.application.repositories.RoleRepository;
 import nl.hanze.application.repositories.UserRepository;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     public User save(User user) {
@@ -43,6 +47,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    public List<Role> findAllRoles(){return roleRepository.findAll();}
 
 
 }

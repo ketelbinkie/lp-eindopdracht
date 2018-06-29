@@ -20,14 +20,6 @@
     <!--own CSS:-->
     <link rel="stylesheet" href="css/style.css">
 
-    <script>
-        $(function () {
-            $("#includedContent").load("navbar-admin.html");
-        });
-        window.onload = function () {
-            document.getElementById('user-name').innerHTML = localStorage.getItem("name");
-        };
-    </script>
 </head>
 <body>
 
@@ -35,6 +27,11 @@
 <nav class="navbar navbar-default" id="includedContent">
 
 </nav>
+<script>
+    $("#includedContent").load ("navbar-admin.html", function () {
+        document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+    });
+</script>
 
 <!-- First Container -->
 <div class="container-fluid bg-1">

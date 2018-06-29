@@ -1,9 +1,8 @@
 package nl.hanze.application.controller;
 
-import nl.hanze.application.domain.Person;
+import nl.hanze.application.domain.Role;
 import nl.hanze.application.domain.User;
 import nl.hanze.application.service.UserService;
-import nl.hanze.application.session.Session.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static nl.hanze.application.session.Session.getLoggedInUser;
-import static nl.hanze.application.session.Session.logoutUser;
-import static nl.hanze.application.session.Session.setLoggedInUser;
+import static nl.hanze.application.session.Session.*;
 
 @RestController
 @CrossOrigin
@@ -30,21 +27,21 @@ public class UserController {
     }
 
 
-    @RequestMapping(value = "/loggedin")
+    @RequestMapping(value = "/users/loggedin")
     public User loggedIn(
             @RequestParam(value = "sessionid") String sessionId) {
         return getLoggedInUser(sessionId);
     }
 
 
-    @RequestMapping(value = "/logout")
+    @RequestMapping(value = "/users/logout")
     public boolean logOut(
             @RequestParam(value = "sessionid") String sessionId) {
         logoutUser(sessionId);
         return getLoggedInUser(sessionId) == null;
     }
 
-    @RequestMapping(value = "/checkcreds")
+    @RequestMapping(value = "/users/checkcreds")
     public User cechCreds(
             @RequestParam(value = "sessionid") String sessionId,
             @RequestParam(value = "username") String username,
@@ -59,24 +56,24 @@ public class UserController {
         return new User() ;
     }
 
-
-    @RequestMapping(value = "/login")
-    public boolean login(
-            @RequestParam(value = "username") String username,
-            @RequestParam(value = "password") String password) {
-        return userService.checkUserNamePasswordIsCorrect(username, password);
-    }
-
-    @RequestMapping(value = "/finduser")
+    @RequestMapping(value = "/users/finduser")
     public User findUser(
             @RequestParam(value = "user") String name) {
         return userService.findUserByUserName(name);
 
     }
 
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/users/roles")
+    public List<Role> findUser(){
+        return userService.findAllRoles();
+
+    }
+
+    @PostMapping(value = "/users/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<User> add(
             @Valid @RequestBody User user) {
+
+    System.out.println("test");
         return new ResponseEntity<User>(userService.save(user), HttpStatus.CREATED);
     }
 
@@ -91,6 +88,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+    //    @RequestMapping(value = "/login")
+//    public boolean login(
+//            @RequestParam(value = "username") String username,
+//            @RequestParam(value = "password") String password) {
+//        return userService.checkUserNamePasswordIsCorrect(username, password);
+//    }
+
 
 }
 

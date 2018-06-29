@@ -7,7 +7,7 @@ $(document).ready(function () {
             username = $('#txt-username').val(),
             password = $('#txt-password').val();
 
-        let requestURL = 'http://localhost:8080/checkcreds?';
+        let requestURL = 'http://localhost:8080/users/checkcreds?';
         let sessionid = ID();
 
         $.getJSON(requestURL,
