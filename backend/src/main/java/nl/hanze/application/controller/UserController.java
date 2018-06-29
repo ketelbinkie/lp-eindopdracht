@@ -73,7 +73,11 @@ public class UserController {
     public ResponseEntity<User> add(
             @Valid @RequestBody User user) {
 
-    System.out.println("test");
+
+
+
+
+        System.out.println("test");
         return new ResponseEntity<User>(userService.save(user), HttpStatus.CREATED);
     }
 
