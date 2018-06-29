@@ -36,8 +36,9 @@ public class PersonController {
 
     /**
      * When given a trainer ID a list of persons which shares the same team period as the trainer wil be returned
-     *
-     * @param trainerId
+     * @param trainerId id of trainer
+     * @param sessionId session id
+     * @param teamNameId teamnameid
      * @return list of persons which shares the same period as the trainer with the requested ID
      */
 
