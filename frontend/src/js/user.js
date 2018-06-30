@@ -20,11 +20,11 @@ function addUserToDatabase(){
 
     var vusername = $('#user-username').val(),
         vpassword =$('#user-password').val(),
-        vrole = $('#user-sel-role').val(),
+        vroleid = $('#user-sel-role').val(),
         vfirstname = $('#user-firstname').val(),
         vlastname = $('#user-lastname').val(),
         vdatebirth= $('#user-dateBirth').val(),
-        vgender = $('#user-gender').val();
+         vgender = $("#user-gender input[type='radio']:checked").val();
 
 
 
@@ -33,7 +33,18 @@ function addUserToDatabase(){
     $.ajax({
         url: "http://localhost:8080/users/add",
         type: "POST",
-        data: JSON.stringify({username: vusername, password: vpassword, person: {firstname: vfirstname, lastname:vlastname,dateOfBirth:vdatebirth,ggender:vgender,number:null},role:{role:vrole}}),
+        data: JSON.stringify({
+            username: vusername,
+            password: vpassword,
+            person: {
+                firstname: vfirstname,
+                lastname:vlastname,
+                dateOfBirth:vdatebirth,
+                gender:vgender,
+                number:null},
+            role:{
+                id:vroleid,}
+        }),
         contentType: "application/json; charset=utf-8",
         // dataType: "json",
         success: function (data, textStatus, xhr) {
