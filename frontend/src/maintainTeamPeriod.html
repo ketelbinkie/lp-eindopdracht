@@ -18,26 +18,43 @@
             e.preventDefault();
 
             var $results = $('#message'),
-                periodeName = $('#txt-periodname').val(),
+                season = $('#sel-season option:selected').text(),
+                periode = $('#sel-period option:selected').text(),
                 startDate = $('#date-start'),
                 endDate = $('#date-end');
             let teamId = $('#sel-team').val(),
-                allTeams = $('#sel-all-teams').val();
+                name = $('#sel-team option:selected').text(),
+                allTeams = $('#sel-all-teams').prop("checked");
 
-            // Controleren of Einddatum na Startdatum ligt, anders foutmelding
+            alert(allTeams);
+
+            // Check if Einddatum is before Startdatum
             if (startDate["0"].value > endDate["0"].value){
                 $results.empty().append("Startdatum moet voor einddatum liggen!");
             }
 
             var teamPeriod = new Object();
 
-            teamPeriod.periodName = periodeName;
+            teamPeriod.season = season;
+            teamPeriod.periodName = periode;
             teamPeriod.startdate = startDate["0"].value;
             teamPeriod.enddate = endDate["0"].value;
 
-
+            // Fill team name
             var teamName = new Object();
-            teamName.id = teamId;
+
+            // if = Checkbox 'allteams' is checked
+            // else = Checkbox 'allteams' is unchecked
+            if(allTeams){
+                teamName.id = 99999;
+                teamName.name = "allteams";
+            }
+            else {
+                teamName.id = teamId;
+                teamName.name = name
+            }
+
+            // Add teamName to team period
             teamPeriod.teamName = teamName;
 
             alert(JSON.stringify(teamPeriod));
@@ -49,21 +66,20 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "text",
                 success: function (data, textStatus, xhr) {
-                    //formulier velden terugzetten naar default-waarde
+                    //reset form to default-values
                     $('#add_teamPeriod')[0].reset();
                     $results.empty().append(data);
                 },
                 error: function (data, textStatus, xhr) {
                     // alert(data.responseText);
                     $results.empty().append(data.responseText);
-
                 }
             })
         })
     });
     </script>
     <script>
-        // Ophalen en presenteren van de beschikbare teamnamen in de 'Team'
+        // Get and present available teamnames in field 'Team'
         $(document).ready(function () {
             let select = $('#sel-team');
 
@@ -82,11 +98,21 @@
             })
         });
     </script>
-    <style>
-        #lbl-sel-all-teams{
-            font-size: 15px;
-        }
-    </style>
+    <script>
+        // enable/disable field 'sel-team' by clicking checkbox 'sel-all-teams'
+        $(function(){
+            $("#sel-all-teams").click(function(){
+                if($(this).is(":checked")) {
+                    $("#sel-team").attr("disabled", "disabled");
+                } else {
+                    $("#sel-team").removeAttr("disabled");
+                    $("#sel-team").focus();
+                }
+            });
+        });
+    </script>
+
+
 </head>
 <body>
 <!-- Navbar -->
@@ -113,23 +139,45 @@
                 <div class="col-md-8" >
                     <h2 style="margin-bottom: 30px">Opvoeren team periode</h2>
 
-                    <div class="form-group">
+                    <div class="form-group" style="height: 10px">
                         <label class="control-label col-md-4" for="sel-team">Team:</label>
                         <div class="col-md-6">
                             <select class="form-control selectpicker" id="sel-team" data-live-search="true" name="team" required="required">
                             </select>
-
-                            <!--<label class="form-check-label" for="sel-all-teams" id="lbl-sel-all-teams" >alle teams selecteren: </label>-->
-                            <!--<input type="checkbox" class="form-check-input" id="sel-all-teams">-->
-
+                        </div>
                     </div>
-                    </div>
+                     <div class="form-group" >
+                         <div class="col-md-4">
+                         </div>
+                         <div class="col-md-6">
+
+                            <label class="control-label" style="font-size: 15px" for="sel-all-teams" id="lbl-sel-all-teams" >alle teams selecteren: </label>
+                            <input type="checkbox" class="form-check-input" id="sel-all-teams">
+
+                        </div>
+                     </div>
+                     <div class="form-group">
+                         <label class="control-label col-md-4" for="sel-season">Seizoen:</label>
+                            <div class="col-md-6">
+                                <select class="form-control" id="sel-season" data-live-search="true" name="season" required="required">
+                                    <option selected disabled>Selecteer seizoen</option>
+                                    <option value="1">17/18</option>
+                                    <option value="2">18/19</option>
+                                    <option value="3">19/20</option>
+                                    <option value="4">20/21</option>
+                                    <option value="5">21/22</option>
+                                    <option value="6">22/23</option>
+                                </select>
+                            </div>
+                        </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="txt-periodname">Periode:</label>
+                        <label class="control-label col-md-4" for="sel-period">Periode:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="txt-periodname"
-                                   placeholder="Voer periodenaam in"
-                                   name="question" >
+                            <select class="form-control" id="sel-period" data-live-search="true" name="season" required="required">
+                                <option selected disabled>Selecteer periode</option>
+                                <option value="1">voorjaar</option>
+                                <option value="2">najaar</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -137,7 +185,7 @@
                         <div class="col-md-6">
                             <input type="date" class="form-control" id="date-start"
                                    placeholder="Voer startdatum in"
-                                   name="category" >
+                                   name="startdate" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -145,7 +193,7 @@
                         <div class="col-md-6">
                             <input type="date" class="form-control" id="date-end"
                                    placeholder="Voer einddatum in"
-                                   name="category" >
+                                   name="enddate" >
                         </div>
                     </div>
 
@@ -157,6 +205,7 @@
                     </div>
                 </div>
             </div> <!--row-->
+            </div>
         </form>
         <div id="message">
             <em></em>

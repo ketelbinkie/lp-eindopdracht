@@ -21,6 +21,9 @@ public class TeamPeriod {
     @Column(name = "id", nullable = false)
     private int id;
 
+    @Column(name = "season", nullable = false, length = 45)
+    private String season;
+
     @Column(name = "period_name", nullable = false, length = 45)
     private String periodName;
 
