@@ -15,16 +15,6 @@
     <link rel="stylesheet" href="css/style.css">
     <script src="js/get-trainer-person-overview.js"></script>
 
-    <script>
-        getPersonListOfTrainer();
-
-        $(function () {
-            $("#includedContent").load("navbar-trainer.html");
-        });
-        window.onload = function () {
-            document.getElementById('user-name').innerHTML = localStorage.getItem("name");
-        };
-    </script>
 </head>
 <body>
 
@@ -32,6 +22,11 @@
 <nav class="navbar navbar-default" id="includedContent">
 
 </nav>
+<script>
+    $("#includedContent").load ("navbar-trainer.html", function () {
+        document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+    });
+</script>
 <!-- First Container -->
 <div class="container-fluid bg-1">
     <div class="container">
