@@ -27,10 +27,10 @@ public class EnqueteController {
     private final PersonService personService;
 
     @Autowired
-    public EnqueteController(EnqueteService enqueteService, QuestionService questionService, PersonService persionService) {
+    public EnqueteController(EnqueteService enqueteService, QuestionService questionService, PersonService personService) {
         this.enqueteService = enqueteService;
         this.questionService = questionService;
-        this.personService = persionService;
+        this.personService = personService;
     }
 
     @GetMapping(value = "/enquete/all")
