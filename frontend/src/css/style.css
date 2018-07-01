@@ -79,9 +79,13 @@ p {
     color: #ea6260;
 }
 
-.btn{
+.btn {
     color: maroon;
 }
+    .modal-content{
+        background-color: #E65250;
+    }
+
 
 
 

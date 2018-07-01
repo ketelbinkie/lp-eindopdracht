@@ -60,3 +60,29 @@ $(document).ready(function () {
             }
     })
 });
+
+function addEnqueteToDatabase(){
+
+    var enqueteName = $('#txt-enquetename').val();
+
+    $.ajax({
+        url: "http://localhost:8080/enquete/add",
+        type: "POST",
+        data: JSON.stringify({
+            name: enqueteName
+        }),
+        contentType: "application/json; charset=utf-8",
+        // dataType: "json",
+        success: function (data, textStatus, xhr) {
+            //formulier velden terugzetten naar default-waarde
+            $('#modal_new_enquete')[0].reset();
+            $results.empty().append(data);
+        },
+        error: function (data, textStatus, xhr) {
+            // alert(data.responseText);
+            $results.empty().append(data.responseText);
+
+        }
+    })
+
+}

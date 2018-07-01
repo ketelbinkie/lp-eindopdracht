@@ -16,6 +16,7 @@
     <script src="js/multiselect.js"></script>
     <script src="js/maintainEnquete.js"></script>
     <script src="js/common.js"></script>
+    <!--<script src="js/enquete.js"></script>-->
 
     <script>
         // Ophalen en presenteren van de beschikbare enquetes
@@ -75,7 +76,7 @@
         <form class="form-horizontal" action="" id="add_questions_to_enquete">
             <div class="row">
                 <div class="col-md-10">
-                <h2 style="margin-bottom: 30px">Samenstellen enquête</h2>
+                    <h2 style="margin-bottom: 30px">Samenstellen enquête</h2>
                 </div>
                 <div class="col-md-2">
                     <img src="images/vvHoogezandsmall.png" style="float: right"/>
@@ -87,9 +88,38 @@
                     <div class="col-md-3">
                         <select required class="form-control" id="sel-enquete" name="enquete">
                         </select>
+                        <a rel="ck_modal" data-toggle="modal" style="font-size: 15px; color: #fff;"  href="#modal_new_enquete">Nieuwe enquête toevoegen</a>
                     </div>
                 </div>
             </div>
+            <!-- Modal -->
+            <div class="modal fade" id="modal_new_enquete" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Nieuwe enquête toevoegen</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-4" for="txt-enquetename">Enquête:</label>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="txt-enquetename"
+                                           placeholder="Voer enquête in"
+                                           name="enquetenaam" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="cancel" class="btn btn-default" data-dismiss="modal" id ="Modal_Annuleren">Annuleren</button>
+                            <button type="submit" class="btn btn-default" onclick="addEnqueteToDatabase()" id ="Modal_Opslaan">Opslaan</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- End Modal -->
             <div class="row" style="text-align: left">
                 <div class="col-md-5">
                     <h3 style="margin-bottom: 30px">Beschikbare vragen</h3>
@@ -103,7 +133,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                   <select name="from" id="multiselect_from" class="form-control" size="8" multiple="multiple">
+                    <select name="from" id="multiselect_from" class="form-control" size="8" multiple="multiple">
                     </select>
                 </div>
                 <div class="col-md-2">
