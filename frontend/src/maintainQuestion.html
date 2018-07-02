@@ -4,64 +4,21 @@
     <title>Opvoeren enquete vragen</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--external-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--own scripts:-->
     <script src="js/annuleren.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/question.js"></script>
 
-    <script>
-    $(document).ready(function () {
-        $('#Opslaan').click(function (e) {
-            e.preventDefault();
+    <!--own CSS:-->
+    <link rel="stylesheet" href="css/style.css">
 
-            var $results = $('#message'),
-                question = $('#txt-question').val(),
-                category = $('#txt-category').val();
-            let answertype = $('#sel-answertype').val();
-
-            console.log(question + ', ' + category + ', ' + answertype);
-
-            $.ajax({
-                url: "http://localhost:8080/question/add",
-                type: "POST",
-                data: JSON.stringify({question: question, category: category, answerType: {id: answertype}}),
-                contentType: "application/json; charset=utf-8",
-                dataType: "text",
-                success: function (data, textStatus, xhr) {
-                    //formulier velden terugzetten naar default-waarde
-                    $('#add_question')[0].reset();
-                    $results.empty().append(data);
-                },
-                error: function (data, textStatus, xhr) {
-                    // alert(data.responseText);
-                    $results.empty().append(data.responseText);
-                }
-            })
-        })
-    });
-    </script>
-    <script>
-        $(document).ready(function () {
-            let select = $('#sel-answertype');
-
-            select.append('<option selected disabled>Voer antwoordsoort in</option>');
-
-            $.ajax({
-                url: "http://localhost:8080/answertype/all",
-                type: "GET",
-                // data: ,
-                success: function (data) {
-                    $.each(data, function (key, val) {
-                        select.append($('<option></option>').attr('value', val.id).text(val.answertype + ", " + val.answersubtype));
-                        console.log("id, "+val.id)
-                    })
-                },
-            })
-        });
-    </script>
 </head>
 <body>
 <!-- Navbar -->
