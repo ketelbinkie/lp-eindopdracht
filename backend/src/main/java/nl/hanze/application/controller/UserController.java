@@ -69,16 +69,20 @@ public class UserController {
 
     }
 
-    @PostMapping(value = "/users/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<User> add(
+    @PostMapping(value = "/users/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> add(
             @Valid @RequestBody User user) {
 
-
-
-
-
-        System.out.println("test");
-        return new ResponseEntity<User>(userService.save(user), HttpStatus.CREATED);
+        try {
+            if (user != null) {
+                userService.save(user);
+                return ResponseEntity.status(HttpStatus.OK).body("Gebruiker is succesvol toegevoegd!");
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gebruker kon niet wordern toegevoegd!");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.unprocessableEntity().body(e.getMessage());
+        }
     }
 
     @DeleteMapping("/users/{id}")
