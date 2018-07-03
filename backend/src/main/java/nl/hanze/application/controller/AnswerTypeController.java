@@ -1,8 +1,7 @@
 package nl.hanze.application.controller;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import nl.hanze.application.domain.AnswerType;
-import nl.hanze.application.domain.User;
 import nl.hanze.application.service.AnswerTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

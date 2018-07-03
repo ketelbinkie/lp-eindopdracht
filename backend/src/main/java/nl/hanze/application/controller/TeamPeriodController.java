@@ -1,6 +1,5 @@
 package nl.hanze.application.controller;
 
-import com.sun.xml.internal.rngom.digested.DTextPattern;
 import nl.hanze.application.domain.TeamName;
 import nl.hanze.application.domain.TeamPeriod;
 import nl.hanze.application.service.TeamNameService;

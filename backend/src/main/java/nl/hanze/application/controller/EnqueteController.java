@@ -3,9 +3,11 @@ package nl.hanze.application.controller;
 import nl.hanze.application.domain.Enquete;
 import nl.hanze.application.domain.Question;
 import nl.hanze.application.domain.PersonEnquete;
+import nl.hanze.application.domain.Response;
 import nl.hanze.application.service.EnqueteService;
 import nl.hanze.application.service.QuestionService;
 import nl.hanze.application.service.PersonService;
+import nl.hanze.application.service.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,12 +28,16 @@ public class EnqueteController {
     private final EnqueteService enqueteService;
     private final QuestionService questionService;
     private final PersonService personService;
+    private final ResponseService responseService;
+
 
     @Autowired
-    public EnqueteController(EnqueteService enqueteService, QuestionService questionService, PersonService personService) {
+    public EnqueteController(EnqueteService enqueteService, QuestionService questionService,
+                             PersonService personService, ResponseService responseService) {
         this.enqueteService = enqueteService;
         this.questionService = questionService;
         this.personService = personService;
+        this.responseService = responseService;
     }
 
     @GetMapping(value = "/enquete/all")
@@ -39,6 +46,37 @@ public class EnqueteController {
         List<Enquete> enqueteList = enqueteService.findAll();
         if (!enqueteList.isEmpty()) {
             return enqueteList;
+        } else {
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/enquete/allchangeable")
+    public @ResponseBody
+    List<Enquete> getAllChangeableEnquetes() {
+
+        List<Enquete> alleEnquetes;
+        List<Enquete> alleAanTePassenEnquetes = new ArrayList<>();
+
+        alleEnquetes = getAllEnquetes();
+
+        for(int i=0; i < alleEnquetes.size();i++){
+            Enquete enquete;
+            enquete = findEnquete(alleEnquetes.get(i).getId());
+
+            String enqueteId = Integer.toString(enquete.getId());
+
+            List<Response> responseList;
+            responseList = responseService.findDistinctByEnqueteId(enqueteId);
+
+            if(responseList.isEmpty()){
+
+                alleAanTePassenEnquetes.add(getAllEnquetes().get(i));
+            }
+        }
+
+        if (!alleAanTePassenEnquetes.isEmpty()) {
+            return alleAanTePassenEnquetes;
         } else {
             return null;
         }
