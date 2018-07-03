@@ -21,45 +21,6 @@
     <!--own CSS:-->
     <link rel="stylesheet" href="css/style.css">
 
-    <script>
-        // Ophalen en presenteren van de beschikbare enquetes
-        $(document).ready(function () {
-            let select = $('#sel-enquete');
-
-            select.append('<option selected disabled>Kies enquête</option>');
-
-            $.ajax({
-                url: "http://localhost:8080/enquete/allchangeable",
-                type: "GET",
-                // data: ,
-                success: function (data) {
-                    $.each(data, function (key, val) {
-                        select.append($('<option></option>').attr('value', val.id).text(val.name));
-                        console.log("get enquete: "+val.id)
-                    })
-                },
-            })
-        });
-    </script>
-    <script>
-        // Ophalen en presenteren van de beschikbare vragen in de 'Beschikbare vragen'
-        $(document).ready(function () {
-            let select = $('#multiselect_from');
-
-            $.ajax({
-                url: "http://localhost:8080/question/all",
-                type: "GET",
-                // data: ,
-                success: function (data) {
-                    $.each(data, function (key, val) {
-                        var idCategory = val.id+"+"+val.category;
-                        select.append($('<option></option>').attr('value', idCategory).text(val.question));
-                        console.log("get questions: "+val.id +", "+ val.category)
-                    })
-                },
-            })
-        });
-    </script>
 </head>
 <body>
 

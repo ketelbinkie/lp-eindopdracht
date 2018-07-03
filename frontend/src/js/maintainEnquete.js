@@ -59,6 +59,40 @@ $(document).ready(function () {
                     $results.empty().append('<p>Geen enquête geselecteerd, kies een enquête!</p>');
             }
     })
+
+    // Get and present available enquetes
+    let selectEnquetes = $('#sel-enquete');
+
+        selectEnquetes.append('<option selected disabled>Kies enquête</option>');
+
+        $.ajax({
+            url: "http://localhost:8080/enquete/allchangeable",
+            type: "GET",
+            // data: ,
+            success: function (data) {
+                $.each(data, function (key, val) {
+                    selectEnquetes.append($('<option></option>').attr('value', val.id).text(val.name));
+                    console.log("get enquete: "+val.id)
+                })
+            },
+        });
+
+    // Get and present available questions in field 'Beschikbare vragen'
+    let select = $('#multiselect_from');
+
+    $.ajax({
+        url: "http://localhost:8080/question/all",
+        type: "GET",
+        // data: ,
+        success: function (data) {
+            $.each(data, function (key, val) {
+                var idCategory = val.id + "+" + val.category;
+                select.append($('<option></option>').attr('value', idCategory).text(val.question));
+                console.log("get questions: " + val.id + ", " + val.category)
+            })
+        },
+    })
+
 });
 
 function addEnqueteToDatabase(){
