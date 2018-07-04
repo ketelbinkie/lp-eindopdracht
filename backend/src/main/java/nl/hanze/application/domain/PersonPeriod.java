@@ -1,5 +1,6 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -29,9 +30,14 @@ public class PersonPeriod {
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "team_period_id", referencedColumnName = "id")
+//    private TeamPeriod teamPeriod;
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "team_period_id", referencedColumnName = "id")
-    private TeamPeriod teamPeriod;
+    @JoinColumn(name = "team_name_id", referencedColumnName = "id")
+    private TeamName teamName;
+
 
     @OneToOne()
     @JoinColumn(name = "role_id")

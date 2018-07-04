@@ -18,15 +18,13 @@ public class PersonServiceImpl implements PersonService {
     private final PersonPeriodRepository personPeriodRepository;
     private PersonEnqueteRepository personEnqueteRepository;
     private final PersonRepository personRepository;
-    private final TeamPeriodRepository teamPeriodRepository;
     private final TeamNameRepository teamNameRepository;
 
     @Autowired
-    public PersonServiceImpl(PersonPeriodRepository personPeriodRepository, PersonEnqueteRepository personEnqueteRepository, PersonRepository personRepository, TeamPeriodRepository teamPeriodRepository, TeamNameRepository teamNameRepository) {
+    public PersonServiceImpl(PersonPeriodRepository personPeriodRepository, PersonEnqueteRepository personEnqueteRepository, PersonRepository personRepository, TeamNameRepository teamNameRepository) {
         this.personPeriodRepository = personPeriodRepository;
         this.personEnqueteRepository = personEnqueteRepository;
         this.personRepository = personRepository;
-        this.teamPeriodRepository = teamPeriodRepository;
         this.teamNameRepository = teamNameRepository;
     }
 
@@ -45,10 +43,7 @@ public class PersonServiceImpl implements PersonService {
         List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
         List<PersonPeriod> personPeriods = new ArrayList<>();
         for (PersonPeriod trainerPeriod:trainerPeriods) {
-            if (!trainerPeriod.getRole().getRole().equals("beoordelaar")) {
-                throw new Exception("Error Wrong argument, given id is not of a person with the trainer role");
-            }
-            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamPeriodId(trainerPeriod.getTeamPeriod().getId());
+            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(trainerPeriod.getTeamName().getId());
             periods.remove(trainerPeriod);
             personPeriods.addAll(periods);
         }
@@ -103,11 +98,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<Person> findPersonByTeamName(String teamName) {
-        List<TeamPeriod> teamPeriods = teamPeriodRepository.findByTeamName(teamNameRepository.findByName(teamName));
-        List<PersonPeriod> personPeriods = new ArrayList<>();
-        for (TeamPeriod tPeriod : teamPeriods) {
-            personPeriods.addAll(personPeriodRepository.findByTeamPeriod(tPeriod));
-        }
+        List<PersonPeriod> personPeriods = personPeriodRepository.findByTeamName(teamNameRepository.findByName(teamName));
+
         List<Person> persons = new ArrayList<>();
         for (PersonPeriod p : personPeriods) {
             persons.add(p.getPerson());

@@ -9,6 +9,9 @@ import java.util.List;
 public interface UserService {
     void deleteById(int id);
 
+
+    User findUserByPersonId(int id);
+
     User save(User user);
 
     List<User> findAll();

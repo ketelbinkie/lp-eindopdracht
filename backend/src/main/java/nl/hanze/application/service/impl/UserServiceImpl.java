@@ -22,6 +22,7 @@ public class UserServiceImpl implements UserService {
         this.roleRepository = roleRepository;
     }
 
+
     public User save(User user) {
         return userRepository.save(user);
     }
@@ -36,6 +37,11 @@ public class UserServiceImpl implements UserService {
 
     public void deleteById(int id) {
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public User findUserByPersonId(int id) {
+        return null;
     }
 
     public boolean checkUserNamePasswordIsCorrect(String username, String password) {
