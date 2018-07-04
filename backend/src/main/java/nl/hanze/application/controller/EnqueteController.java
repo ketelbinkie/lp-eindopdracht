@@ -164,4 +164,20 @@ public class EnqueteController {
     }
 
 
+    @PostMapping(value = "/personenquete/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> addPesonEnquete(@Valid @RequestBody PersonEnquete personEnquete) {
+        try {
+            if (personEnquete != null) {
+                enqueteService.save(personEnquete);
+                return ResponseEntity.status(HttpStatus.OK).body("De geselecteerde persoon/personen zijn gekoppeld aan een beoordelingsperiode");
+            } else {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Helaas er ging wat mis.. Sorry ik ben ook maar een beginnend Java programmeur!");
+            }
+        } catch (
+                Exception e)
+
+        {
+            return ResponseEntity.unprocessableEntity().body(e.getMessage());
+        }
+    }
 }

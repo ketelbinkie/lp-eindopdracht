@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
-import static nl.hanze.application.session.Session.isActiveSession;
+import static nl.hanze.application.util.Session.isActiveSession;
 
 @RestController
 @CrossOrigin
@@ -82,15 +82,23 @@ public class PersonController {
             personList = personService.findPersonByTeamName(team);
         }
 
-//        for (Person p:personList) {
-//            if (p.getUser()!=null && p.getUser().getRole().getId()!=4){
-//                    personList.remove(p);
-//            }
-//        }
+        List<Person>personListToRemove = new ArrayList<>();
 
+        for (Person p:personList) {
+            if (p.getUser()!=null && p.getUser().getRole().getId()!=4){
+                personListToRemove.add(p);
+            }
+        }
+        personList.removeAll(personListToRemove);
         return new ResponseEntity<>(personList, HttpStatus.OK);
     }
 
+
+    @RequestMapping(value = "/trainer/all")
+    public ResponseEntity findAllTrainers() {
+      List<Person> trainers = personService.findAllTrainers();
+        return new ResponseEntity<>(trainers, HttpStatus.OK);
+    }
 
 
 

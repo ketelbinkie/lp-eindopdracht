@@ -1,4 +1,4 @@
-package nl.hanze.application.session;
+package nl.hanze.application.util;
 
 import nl.hanze.application.domain.User;
 

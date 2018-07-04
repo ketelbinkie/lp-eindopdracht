@@ -7,15 +7,14 @@ function logout() {
         contentType: "application/json; charset=utf-8",
         dataType: "text",
         success: function (data, textStatus, xhr) {
-            $results.html('<p>' + data + '</p>');
-            return data;
+            localStorage.clear()
+            window.open("../src/index.html", "_self")
         },
         error: function (data, textStatus, xhr) {
             // alert(data.responseText);
             $results.html('<p>Error: results not updated</p>');
         }
     })
-    localStorage.clear()
-    window.open("../src/index.html", "_self")
+
 
 }

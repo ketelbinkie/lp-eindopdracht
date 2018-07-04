@@ -10,6 +10,7 @@ import java.util.List;
 
 public interface PersonService {
     List<Person> findAll();
+    List<Person> findAllTrainers();
 
     //    List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id);
     List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception;

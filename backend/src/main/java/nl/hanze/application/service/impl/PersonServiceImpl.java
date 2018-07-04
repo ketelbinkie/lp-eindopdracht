@@ -7,6 +7,7 @@ import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.Retention;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -39,10 +40,23 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    public List<Person> findAllTrainers() {
+        List<Person> personList = personRepository.findAll();
+        List<Person> trainerList = new ArrayList<>();
+        for (Person person : personList) {
+            if (null!=person.getUser()&&person.getUser().getRole().getId() == 3) {
+                trainerList.add(person);
+            }
+        }
+        return trainerList;
+
+    }
+
+    @Override
     public List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception {
         List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
         List<PersonPeriod> personPeriods = new ArrayList<>();
-        for (PersonPeriod trainerPeriod:trainerPeriods) {
+        for (PersonPeriod trainerPeriod : trainerPeriods) {
             List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(trainerPeriod.getTeamName().getId());
             periods.remove(trainerPeriod);
             personPeriods.addAll(periods);

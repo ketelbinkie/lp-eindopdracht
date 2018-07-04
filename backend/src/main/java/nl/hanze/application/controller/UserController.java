@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
-import static nl.hanze.application.session.Session.*;
+import static nl.hanze.application.util.Session.*;
 
 @RestController
 @CrossOrigin
@@ -96,13 +96,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
-    //    @RequestMapping(value = "/login")
-//    public boolean login(
-//            @RequestParam(value = "username") String username,
-//            @RequestParam(value = "password") String password) {
-//        return userService.checkUserNamePasswordIsCorrect(username, password);
-//    }
-
 
 }
 

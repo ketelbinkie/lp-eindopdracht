@@ -12,4 +12,5 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     List<Person> findAllByDateOfBirthBetween(Date before, Date after);
+
 }
