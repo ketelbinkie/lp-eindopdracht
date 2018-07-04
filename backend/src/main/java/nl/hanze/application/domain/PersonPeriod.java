@@ -1,12 +1,9 @@
 package nl.hanze.application.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -38,9 +35,6 @@ public class PersonPeriod {
     @OneToOne()
     @JoinColumn(name = "role_id")
     private Role role;
-
-
-
 
 
 //

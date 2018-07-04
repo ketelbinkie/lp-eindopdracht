@@ -19,9 +19,17 @@ public class QuestionServiceImpl implements QuestionService {
         this.questionRepository = questionRepository;
     }
 
-    public Question save(Question question) {return questionRepository.save(question);}
-    public List<Question> findAll() {return questionRepository.findAll();}
-    public Question findById(int id) {return questionRepository.findById(id);}
+    public Question save(Question question) {
+        return questionRepository.save(question);
+    }
+
+    public List<Question> findAll() {
+        return questionRepository.findAll();
+    }
+
+    public Question findById(int id) {
+        return questionRepository.findById(id);
+    }
 
 }
 

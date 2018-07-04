@@ -1,10 +1,8 @@
 package nl.hanze.application.repositories;
 
-import nl.hanze.application.domain.Person;
 import nl.hanze.application.domain.PersonPeriod;
+import nl.hanze.application.domain.TeamPeriod;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +12,12 @@ import java.util.List;
 public interface PersonPeriodRepository extends JpaRepository<PersonPeriod, Integer> {
 
     List<PersonPeriod> findAllByTeamPeriodId(Integer id);
+
     PersonPeriod findByPersonId(int personId);
+
+    List<PersonPeriod> findByTeamPeriod(TeamPeriod teamPeriod);
+
+
 //    PersonPeriod findAllByTeamPeriodId(int id);
 
 //    @Query("SELECT p FROM PersonPeriod p WHERE p.person = :person")

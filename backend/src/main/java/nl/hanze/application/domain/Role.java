@@ -1,11 +1,13 @@
 package nl.hanze.application.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Data
 @Entity

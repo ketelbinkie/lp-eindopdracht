@@ -6,14 +6,13 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @Entity
 @Table(name = "person_enquete", schema = "soccerpracticerating")
 public class PersonEnquete {
 
-       @Id
+    @Id
     @Column(name = "id", nullable = false)
     private int id;
 

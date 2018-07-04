@@ -42,12 +42,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsernameEqualsAndPasswordEquals(username, password) != null;
     }
 
-    public User findUserBycredential(String username, String password){
+    public User findUserBycredential(String username, String password) {
         return userRepository.findByUsernameEqualsAndPasswordEquals(username, password);
     }
 
 
-    public List<Role> findAllRoles(){return roleRepository.findAll();}
+    public List<Role> findAllRoles() {
+        return roleRepository.findAll();
+    }
 
 
 }

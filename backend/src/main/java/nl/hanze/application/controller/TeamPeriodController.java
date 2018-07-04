@@ -30,11 +30,12 @@ public class TeamPeriodController {
     }
 
     @GetMapping(value = "/teamperiod/all")
-    public @ResponseBody List<TeamPeriod> getAllTeamPeriods() {
+    public @ResponseBody
+    List<TeamPeriod> getAllTeamPeriods() {
         List<TeamPeriod> teamPeriodList = teamPeriodService.findAll();
-        if(!teamPeriodList.isEmpty()){
+        if (!teamPeriodList.isEmpty()) {
             return teamPeriodList;
-        }else{
+        } else {
             return null;
         }
     }
@@ -48,9 +49,9 @@ public class TeamPeriodController {
     @PostMapping(value = "/teamperiod/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> add(@Valid @RequestBody TeamPeriod teamPeriod) {
         try {
-            if(teamPeriod != null){
+            if (teamPeriod != null) {
                 // Bepalen of het een 'all-teams' situatie is
-                if(teamPeriod.getTeamName().getId() == 99999 && teamPeriod.getTeamName().getName().equals("allteams")){
+                if (teamPeriod.getTeamName().getId() == 99999 && teamPeriod.getTeamName().getName().equals("allteams")) {
                     List<TeamName> allTeamsList = new ArrayList<>();
                     allTeamsList = teamNameService.findAll();
 
@@ -59,7 +60,7 @@ public class TeamPeriodController {
                     Date startdate = teamPeriod.getStartdate();
                     Date enddate = teamPeriod.getEnddate();
 
-                    for(int i =0; i<allTeamsList.size(); i++){
+                    for (int i = 0; i < allTeamsList.size(); i++) {
                         TeamPeriod teamPeriodNew = new TeamPeriod();
 
                         teamPeriodNew.setSeason(season);
@@ -79,7 +80,7 @@ public class TeamPeriodController {
                         teamPeriodService.save(teamPeriodNew);
                     }
                     return ResponseEntity.status(HttpStatus.OK).body("Teamperiode is sucesvol opgeslagen voor alle teams");
-                }else {
+                } else {
                     // Check team is present
                     if (0 != teamPeriod.getTeamName().getId()) {
                         // Check start date before end date
@@ -88,7 +89,7 @@ public class TeamPeriodController {
                             teamPeriodService.save(teamPeriod);
 
                             String teamName = teamPeriod.getTeamName().getName();
-                            return ResponseEntity.status(HttpStatus.OK).body("Teamperiode is succesvol opgeslagen voor team '"+teamName+"'!");
+                            return ResponseEntity.status(HttpStatus.OK).body("Teamperiode is succesvol opgeslagen voor team '" + teamName + "'!");
                         } else {
                             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Startdatum moet voor einddatum liggen!");
                         }
@@ -96,10 +97,10 @@ public class TeamPeriodController {
                         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Teamperiode is niet toegevoegd! Team niet gevuld!");
                     }
                 }
-            }else{
+            } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Teamperiode is niet toegevoegd!");
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }

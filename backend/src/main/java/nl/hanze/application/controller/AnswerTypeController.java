@@ -24,11 +24,12 @@ public class AnswerTypeController {
     }
 
     @GetMapping(value = "/answertype/all")
-    public @ResponseBody List<AnswerType> getAllAnswertypes() {
+    public @ResponseBody
+    List<AnswerType> getAllAnswertypes() {
         List<AnswerType> answerTypesList = answerTypeService.findAll();
-        if(!answerTypesList.isEmpty()){
+        if (!answerTypesList.isEmpty()) {
             return answerTypesList;
-        }else{
+        } else {
             return null;
         }
     }
@@ -40,7 +41,7 @@ public class AnswerTypeController {
     }
 
     @PostMapping(value = "/answertype/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void add(@Valid @RequestBody AnswerType answerType){
+    public void add(@Valid @RequestBody AnswerType answerType) {
         answerTypeService.save(answerType);
     }
 

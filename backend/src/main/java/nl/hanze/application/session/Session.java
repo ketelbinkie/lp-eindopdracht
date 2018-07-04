@@ -8,7 +8,7 @@ import java.util.Map;
 public class Session {
     private static Map<String, User> loggedInUsers = new HashMap<>();
 
-    public static boolean isActiveSession(String sessionId){
+    public static boolean isActiveSession(String sessionId) {
         return loggedInUsers.containsKey(sessionId);
     }
 
@@ -20,7 +20,7 @@ public class Session {
         loggedInUsers.put(session, loggedInUser);
     }
 
-    public static void logoutUser(String session){
+    public static void logoutUser(String session) {
         loggedInUsers.remove(session);
     }
 

@@ -51,9 +51,9 @@ public class UserController {
 
         if (user != null) {
             user.setPassword("***********");
-                return user;
+            return user;
         }
-        return new User() ;
+        return new User();
     }
 
     @RequestMapping(value = "/users/finduser")
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/users/roles")
-    public List<Role> findUser(){
+    public List<Role> findUser() {
         return userService.findAllRoles();
 
     }

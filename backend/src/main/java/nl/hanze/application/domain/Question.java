@@ -1,13 +1,11 @@
 package nl.hanze.application.domain;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 //@Data
 @Getter
@@ -17,7 +15,8 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Question {
 
-    public Question() {}
+    public Question() {
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

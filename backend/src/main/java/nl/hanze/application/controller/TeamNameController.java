@@ -21,17 +21,18 @@ public class TeamNameController {
     }
 
     @GetMapping(value = "/teamname/all")
-    public @ResponseBody List<TeamName> getAllTeamNames() {
+    public @ResponseBody
+    List<TeamName> getAllTeamNames() {
         List<TeamName> teamNamesList = teamNameService.findAll();
-        if(!teamNamesList.isEmpty()){
+        if (!teamNamesList.isEmpty()) {
             return teamNamesList;
-        }else{
+        } else {
             return null;
         }
     }
 
     @PostMapping(value = "/teamname/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void add(@Valid @RequestBody TeamName teamName){
+    public void add(@Valid @RequestBody TeamName teamName) {
         teamNameService.save(teamName);
     }
 

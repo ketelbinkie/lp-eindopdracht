@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface TeamNameService {
     List<TeamName> findAll();
+
     TeamName save(TeamName teamName);
 }

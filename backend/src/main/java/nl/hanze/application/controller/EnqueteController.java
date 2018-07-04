@@ -1,12 +1,12 @@
 package nl.hanze.application.controller;
 
 import nl.hanze.application.domain.Enquete;
-import nl.hanze.application.domain.Question;
 import nl.hanze.application.domain.PersonEnquete;
+import nl.hanze.application.domain.Question;
 import nl.hanze.application.domain.Response;
 import nl.hanze.application.service.EnqueteService;
-import nl.hanze.application.service.QuestionService;
 import nl.hanze.application.service.PersonService;
+import nl.hanze.application.service.QuestionService;
 import nl.hanze.application.service.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -60,7 +60,7 @@ public class EnqueteController {
 
         alleEnquetes = getAllEnquetes();
 
-        for(int i=0; i < alleEnquetes.size();i++){
+        for (int i = 0; i < alleEnquetes.size(); i++) {
             Enquete enquete;
             enquete = findEnquete(alleEnquetes.get(i).getId());
 
@@ -69,7 +69,7 @@ public class EnqueteController {
             List<Response> responseList;
             responseList = responseService.findDistinctByEnqueteId(enqueteId);
 
-            if(responseList.isEmpty()){
+            if (responseList.isEmpty()) {
 
                 alleAanTePassenEnquetes.add(getAllEnquetes().get(i));
             }
@@ -109,7 +109,7 @@ public class EnqueteController {
         try {
             if (personEnquete != null) {
                 PersonEnquete currentPersonEnquete = personService.findPersonEnqueteByPersonId(personEnquete.getPersonPeriod().getPerson().getId());
-                if(currentPersonEnquete.getResponses().toString().equals(personEnquete.getResponses().toString())){
+                if (currentPersonEnquete.getResponses().toString().equals(personEnquete.getResponses().toString())) {
                     return ResponseEntity.status(HttpStatus.ACCEPTED).body("Het is wel de bedoeling dat je wat wijzigt! Er is dus geen wijziging doorgevoerd.");
                 }
                 enqueteService.save(personEnquete);
@@ -122,8 +122,9 @@ public class EnqueteController {
         }
     }
 
-    @PutMapping (value = "/enquete/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<String> save (
+
+    @PutMapping(value = "/enquete/save", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<String> save(
             @Valid @RequestBody Enquete enquete,
 
             BindingResult errors,
@@ -132,7 +133,7 @@ public class EnqueteController {
         if (!errors.hasErrors()) {
 
 
-            for(int i = 0; i< enquete.getQuestions().size(); i++){
+            for (int i = 0; i < enquete.getQuestions().size(); i++) {
                 // bepalen question id van de question in de enquete
                 int questionId = enquete.getQuestions().get(i).getId();
 
@@ -148,13 +149,13 @@ public class EnqueteController {
             final Enquete savedEnquete = enqueteService.save(enquete);
 
             String messagePart;
-            if(enquete.getQuestions().size()>1){
-                    messagePart = "Vragen zijn ";
-                }else{
-                    messagePart = "Vraag is ";
+            if (enquete.getQuestions().size() > 1) {
+                messagePart = "Vragen zijn ";
+            } else {
+                messagePart = "Vraag is ";
             }
 
-            return ResponseEntity.status(HttpStatus.OK).body(messagePart+"succesvol aan de enquête '"+ enquete.getName()+"' toegevoegd!");
+            return ResponseEntity.status(HttpStatus.OK).body(messagePart + "succesvol aan de enquête '" + enquete.getName() + "' toegevoegd!");
 
         } else {
 

@@ -18,9 +18,19 @@ public class AnswerTypeServiceImpl implements AnswerTypeService {
         this.answerTypeRepository = answerTypeRepository;
     }
 
-    public AnswerType save(AnswerType answerType) {return answerTypeRepository.save(answerType);}
-    public List<AnswerType> findAll() {return answerTypeRepository.findAll();}
-    public AnswerType findById(int id) {return answerTypeRepository.findById(id);}
-    public void deleteById(int id) { answerTypeRepository.deleteById(id);
+    public AnswerType save(AnswerType answerType) {
+        return answerTypeRepository.save(answerType);
+    }
+
+    public List<AnswerType> findAll() {
+        return answerTypeRepository.findAll();
+    }
+
+    public AnswerType findById(int id) {
+        return answerTypeRepository.findById(id);
+    }
+
+    public void deleteById(int id) {
+        answerTypeRepository.deleteById(id);
     }
 }

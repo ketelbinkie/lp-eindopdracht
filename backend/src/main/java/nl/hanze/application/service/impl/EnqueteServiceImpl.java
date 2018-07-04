@@ -23,11 +23,21 @@ public class EnqueteServiceImpl implements EnqueteService {
         this.personEnqueteRepository = personEnqueteRepository;
     }
 
-    public Enquete save(Enquete enquete) {return enqueteRepository.save(enquete);}
-    public List<Enquete> findAll() {return enqueteRepository.findAll();}
-    public Enquete findById(int id) {return enqueteRepository.findById(id);}
+    public Enquete save(Enquete enquete) {
+        return enqueteRepository.save(enquete);
+    }
 
-    public PersonEnquete save(PersonEnquete personEnquete) {return personEnqueteRepository.save(personEnquete);}
+    public List<Enquete> findAll() {
+        return enqueteRepository.findAll();
+    }
+
+    public Enquete findById(int id) {
+        return enqueteRepository.findById(id);
+    }
+
+    public PersonEnquete save(PersonEnquete personEnquete) {
+        return personEnqueteRepository.save(personEnquete);
+    }
 
 }
 

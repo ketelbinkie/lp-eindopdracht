@@ -1,18 +1,17 @@
 package nl.hanze.application.controller;
 
-import nl.hanze.application.CombinedEnquete;
 import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.domain.PersonPeriod;
-import nl.hanze.application.domain.Question;
-import nl.hanze.application.domain.Response;
 import nl.hanze.application.service.PersonService;
+import nl.hanze.application.service.TeamPeriodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.List;
 
 import static nl.hanze.application.session.Session.isActiveSession;
@@ -23,22 +22,13 @@ public class PersonController {
 
 
     private final PersonService personService;
+    private final TeamPeriodService teamPeriodService;
 
     @Autowired
-    public PersonController(PersonService personService) {
+    public PersonController(PersonService personService, TeamPeriodService teamPeriodService) {
         this.personService = personService;
+        this.teamPeriodService = teamPeriodService;
     }
-
-
-    /*niet nodig ivm met personByTrainerPeriod */
-
-//    @RequestMapping(value = "/findPersonPeriods")
-//    public ResponseEntity personPeriods(
-//            @RequestParam(value = "teamPeriodId") Integer id) {
-//        List<PersonPeriod> periods = personService.findPersonPeriodByTeamPeriodId(id);
-//        return new ResponseEntity<>(periods, HttpStatus.OK);
-//    }
-
 
     /**
      * When given a trainer ID a list of persons which shares the same team period as the trainer wil be returned
@@ -60,17 +50,10 @@ public class PersonController {
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
             }
-        }else{
+        } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: not authorized");
         }
     }
-
-//    @RequestMapping(value = "/person/personenquete")
-//    public ResponseEntity personEnqueteByPersonId(
-//            @RequestParam(value = "personId") Integer personId) {
-//       List<CombinedEnquete> enquete = personService.findPersonEnqueteByPersonId(personId);
-//        return  new ResponseEntity<>(enquete, HttpStatus.OK);
-//    }
 
     @RequestMapping(value = "/person/personenquete")
     public ResponseEntity personEnqueteByPersonId(
@@ -80,30 +63,23 @@ public class PersonController {
     }
 
 
-//    @PostMapping(value = "/reponse/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-//    public ResponseEntity<String> add(@Valid @RequestBody PersonEnquete enquete) {
-//
-//        System.out.println();
-//
-//        return null;
-//    }
-//
-//
-//    @RequestMapping(value = "/response", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody List<Response> batchCreate(@RequestBody List<Response> responses) {
-//        System.out.println();
-//
-//
-//        return null;
-//    }
+    @RequestMapping(value = "/person/all")
+    public ResponseEntity getPersonParameterized(
+            @RequestParam(value = "age", required = false) Integer age,
+            @RequestParam(value = "currentTeam", required = false) String team) {
 
+        if (null == age && null == team) {
+            return new ResponseEntity<>(personService.findAll(), HttpStatus.ACCEPTED);
+        } else if (null != age && null == team) {
+            if (age >= 5) {
+                return new ResponseEntity<>(personService.findPersonOnAge(age), HttpStatus.ACCEPTED);
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Jonger dat 5 jaar wordt er niet gevoetbald!");
+            }
+        }
+        return new ResponseEntity<>(personService.findPersonByTeamName(team), HttpStatus.ACCEPTED);
 
-//    @RequestMapping(value = "/person/personrespons")
-//    public ResponseEntity responseByPersonPeriodId(
-//            @RequestParam(value = "personPeriodId") Integer personPeriodId) {
-//        List<CombinedEnquete> enquete = personService.findPersonEnqueteByPersonId(personId);
-//        return  new ResponseEntity<>(enquete, HttpStatus.OK);
-//    }
+    }
 
 
 }

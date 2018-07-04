@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Opvoeren peroon periodes</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/annuleren.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/date.format.js"></script>
+
+    <script>
+        // Get and present available teamnames in field 'Team'
+        $(document).ready(function () {
+            let filterTeam = $('#filter-team');
+            let selectTeam = $('#sel-team');
+
+            filterTeam.append('<option selected disabled>Selecteer team</option>');
+            selectTeam.append('<option selected disabled>Selecteer team</option>');
+            $.ajax({
+                url: "http://localhost:8080/teamname/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        filterTeam.append($('<option></option>').attr('value', val.id).text(val.name));
+                        selectTeam.append($('<option></option>').attr('value', val.id).text(val.name));
+                        console.log("id, " + val.id)
+                    })
+                },
+            })
+            let selectEnquete = $('#sel-enquete');
+
+            selectEnquete.append('<option selected disabled>Selecteer enquête</option>');
+            $.ajax({
+                url: "http://localhost:8080/enquete/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+                        selectEnquete.append($('<option></option>').attr('value', val.id).text(val.name));
+                        console.log("id, " + val.id)
+                    })
+                },
+            })
+
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#filter-team").change(function(){
+                $("#multiselect_pers option[value]").remove();
+                let selectEnquete = $('#multiselect_pers');
+                let teamName = $("#filter-team option:selected").text()
+                $.ajax({
+                    url: "http://localhost:8080/person/all",
+                    type: "GET",
+                    data: {
+                        currentTeam: teamName
+                    },
+                    success: function (data) {
+                        $.each(data, function (key, val) {
+
+                            selectEnquete.append($('<option></option>').attr('value', val.id).text(val.firstname + " " + val.lastname +" "+ dateFormat(val.dateOfBirth, "dd-mm-yyyy")));
+                        })
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#filter-age").change(function(){
+                $("#multiselect_pers option[value]").remove();
+                let selectPersoon = $('#multiselect_pers');
+                let age = $("#filter-age").val()
+                $.ajax({
+                    url: "http://localhost:8080/person/all",
+                    type: "GET",
+                    data: {
+                        age: age
+                    },
+                    success: function (data) {
+                        $.each(data, function (key, val) {
+
+                            selectPersoon.append($('<option></option>').attr('value', val.id).text(val.firstname + " " + val.lastname +" "+ dateFormat(val.dateOfBirth, "dd-mm-yyyy")));
+                        })
+                    }
+                });
+
+            });
+        });
+    </script>
+    <script>
+        // Ophalen en presenteren van de beschikbare vragen in de 'Beschikbare vragen'
+        $(document).ready(function () {
+            let select = $('#multiselect_pers');
+
+            $.ajax({
+                url: "http://localhost:8080/person/all",
+                type: "GET",
+                // data: ,
+                success: function (data) {
+                    $.each(data, function (key, val) {
+
+                        select.append($('<option></option>').attr('value', val.id).text(val.firstname + " " + val.lastname +" "+ dateFormat(val.dateOfBirth, "dd-mm-yyyy")));
+                    })
+                }
+            })
+        });
+    </script>
+
+    <!--<script>-->
+        <!--$(document).ready(function() {-->
+            <!--$(window).keydown(function(event){-->
+                <!--if(event.keyCode == 13) {-->
+                    <!--event.preventDefault();-->
+                    <!--return false;-->
+                <!--}-->
+            <!--});-->
+        <!--});-->
+    <!--</script>-->
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-default" id="includedContent">
+
+</nav>
+<script>
+    $("#includedContent").load("navbar-admin.html", function () {
+        document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+    });
+</script>
+
+<!-- First Container -->
+<div class="container-fluid bg-1 text-center">
+    <div class="container">
+        <form class="form-horizontal" action="" id="add_teamPeriod">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3 align="left">Selecteer een filter*</h3>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="filter-team">Team:</label>
+                        <div class="col-md-6">
+                            <select class="form-control selectpicker" id="filter-team" data-live-search="true" name="team"
+                                    required="required">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="filter-age">Leeftijd:</label>
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="filter-age"
+                                   placeholder="Voer leeftijd in"
+                                   name="filter-age">
+                        </div>
+                    </div>
+                    <p>* slechts één filter mogelijk</p>
+
+                    <h3 align="left">Selecteer personen</h3>
+                    <div class="row">
+                        <div class=" col-md-12">
+                            <select name="from" id="multiselect_pers" class="form-control" size="12"
+                                    multiple="multiple">
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!--</div>-->
+                </div>
+
+
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-offset-8  col-md-4">
+                            <img class="visible-lg" src="images/vvHoogezand.png" width="50%"/>
+                            <img class="visible-md" src="images/vvHoogezand.png"/>
+                            <!--<img class="visible-sm img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>-->
+                            <!--<img class="visible-xs img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>-->
+                        </div>
+                    </div>
+                    <h3>Creëer Beoordelingspperiode</h3>
+                    <!--<div style="border:1px solid white;padding: 10px 5px">-->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="sel-enquete">Enquete:</label>
+                        <div class="col-md-6">
+                            <select class="form-control selectpicker" id="sel-enquete" data-live-search="true"
+                                    name="enquete"
+                                    required="required">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="sel-team">Team:</label>
+                        <div class="col-md-6">
+                            <select class="form-control selectpicker" id="sel-team" data-live-search="true"
+                                    name="team"
+                                    required="required">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-4" for="sel-period">Periode:</label>
+                        <div class="col-md-6">
+                            <select class="form-control" id="sel-period" data-live-search="true" name="season"
+                                    required="required">
+                                <option selected disabled>Selecteer periode</option>
+                                <option value="1">voorjaar</option>
+                                <option value="2">najaar</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-11">
+                            <button type="cancel" class="btn btn-default" id="Annuleren">Annuleren</button>
+                            <button type="submit" class="btn btn-default" id="Opslaan">Opslaan</button>
+                        </div>
+                    </div>
+                </div>
+            </div> <!--row-->
+        </form>
+    </div>
+    </form>
+    <div id="message">
+        <em></em>
+    </div>
+</div>
+</div>
+
+
+<!-- Footer -->
+<footer class="container-fluid bg-4 text-center">
+    <p>Marko and David Webdesign</a></p>
+</footer>
+
+
+<script>
+    $(document).ready(function () {
+        $('#Opslaan').click(function (e) {
+            e.preventDefault();
+            let $results = $('#message');
+
+            $.ajax({
+                url: "http://localhost:8080/teamperiod/add",
+                type: "POST",
+                data: JSON.stringify(teamPeriod),
+                contentType: "application/json; charset=utf-8",
+                dataType: "text",
+                success: function (data, textStatus, xhr) {
+                    //reset form to default-values
+                    $('#add_teamPeriod')[0].reset();
+                    $results.empty().append(data);
+                },
+                error: function (data, textStatus, xhr) {
+                    // alert(data.responseText);
+                    $results.empty().append(data.responseText);
+                }
+            })
+        })
+    });
+</script>
+
+</body>
+</html>

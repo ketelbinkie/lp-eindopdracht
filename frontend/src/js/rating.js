@@ -7,6 +7,8 @@ $(document).ready(function () {
         var pe = localStorage.getItem("personEnquete")
         var personEnquete = $.parseJSON(pe);
         var responses = personEnquete.responses;
+        let screenResponse  = {};
+
 
         $('#rating-table > tbody  > tr').each(function () {
 

@@ -1,6 +1,5 @@
 package nl.hanze.application.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -24,7 +23,7 @@ public class User {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "person_id",nullable = false)
+    @JoinColumn(name = "person_id", nullable = false)
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
