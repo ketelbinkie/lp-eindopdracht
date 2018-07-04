@@ -1,5 +1,7 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -32,5 +34,9 @@ public class Person {
     @Column(name = "number", nullable = false, length = 1)
     private Integer number;
 
+    @OneToOne(mappedBy = "person")
+    @JsonBackReference
+
+    private User user;
 
 }

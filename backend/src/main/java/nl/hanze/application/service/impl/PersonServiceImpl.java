@@ -42,15 +42,17 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception {
-        PersonPeriod trainerPeriod = personPeriodRepository.findByPersonId(trainerId);
-        if (!trainerPeriod.getRole().getRole().equals("beoordelaar")) {
-            throw new Exception("Error Wrong argument, given id is not of a person with the trainer role");
+        List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
+        List<PersonPeriod> personPeriods = new ArrayList<>();
+        for (PersonPeriod trainerPeriod:trainerPeriods) {
+            if (!trainerPeriod.getRole().getRole().equals("beoordelaar")) {
+                throw new Exception("Error Wrong argument, given id is not of a person with the trainer role");
+            }
+            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamPeriodId(trainerPeriod.getTeamPeriod().getId());
+            periods.remove(trainerPeriod);
+            personPeriods.addAll(periods);
         }
-
-        List<PersonPeriod> periods = personPeriodRepository.findAllByTeamPeriodId(trainerPeriod.getTeamPeriod().getId());
-
-        periods.remove(trainerPeriod);
-        return periods;
+        return personPeriods;
     }
 
     @Override

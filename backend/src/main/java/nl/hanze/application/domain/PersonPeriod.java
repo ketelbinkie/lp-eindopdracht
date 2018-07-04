@@ -11,6 +11,7 @@ import java.sql.Date;
 public class PersonPeriod {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 

@@ -13,6 +13,7 @@ import java.util.List;
 public class PersonEnquete {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private int id;
 
@@ -20,7 +21,7 @@ public class PersonEnquete {
     @JoinColumn(name = "enquete_id", referencedColumnName = "id")
     private Enquete enquetes;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinColumn(name = "person_period_id", referencedColumnName = "id")
     private PersonPeriod personPeriod;
 

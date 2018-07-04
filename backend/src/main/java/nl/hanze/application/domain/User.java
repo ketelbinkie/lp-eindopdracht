@@ -1,6 +1,8 @@
 package nl.hanze.application.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,6 +26,7 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "person_id", nullable = false)
+    @JsonManagedReference
     private Person person;
 
     @ManyToOne(fetch = FetchType.LAZY)
