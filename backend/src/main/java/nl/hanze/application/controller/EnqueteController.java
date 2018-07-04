@@ -20,6 +20,9 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
+import static nl.hanze.application.util.ActivePeriodUtil.getEndDate;
+import static nl.hanze.application.util.ActivePeriodUtil.getStartDate;
+
 @RestController
 @CrossOrigin
 public class EnqueteController {
@@ -168,6 +171,9 @@ public class EnqueteController {
     public ResponseEntity<String> addPesonEnquete(@Valid @RequestBody PersonEnquete personEnquete) {
         try {
             if (personEnquete != null) {
+
+                personEnquete.getPersonPeriod().setStartdate(getStartDate());
+                personEnquete.getPersonPeriod().setEnddate(getEndDate());
                 enqueteService.save(personEnquete);
                 return ResponseEntity.status(HttpStatus.OK).body("De geselecteerde persoon/personen zijn gekoppeld aan een beoordelingsperiode");
             } else {

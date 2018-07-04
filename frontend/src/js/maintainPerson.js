@@ -11,8 +11,8 @@ $(document).ready(function () {
             let personPeriod = {
                 enquetes: {"id": enquete},
                 personPeriod: {
-                    startdate: "2018-07-01",
-                    enddate: "2018-12-31",
+                    startdate: null,
+                    enddate: null,
                     person: {id: ($(this).val())},
                     teamName: {id: teamName},
                     role: {id: 4}
@@ -24,8 +24,8 @@ $(document).ready(function () {
         let trainerPeriod = {
             enquetes: {"id": enquete},
             personPeriod: {
-                startdate: "2018-07-01",
-                enddate: "2018-12-31",
+                startdate: null,
+                enddate: null,
                 person: {id: $('#sel-trainer').val()},
                 teamName: {id: teamName},
                 role: {id: 3}
