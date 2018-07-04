@@ -7,6 +7,7 @@ $(document).ready(function () {
         var pe = localStorage.getItem("personEnquete")
         var personEnquete = $.parseJSON(pe);
         var responses = personEnquete.responses;
+        var responsesNew = [];
         let screenResponse  = {};
 
 
@@ -17,18 +18,45 @@ $(document).ready(function () {
 
             console.log("id: " + questionId + ' aantal sterren: ' + answer);
 
-            $.each(responses, function (index, value) {
-                if (value.questionId === questionId) {
-                    responses[index].answer = answer;
-                }
-            });
+            if (responses.length === 0) {
+
+                let enqueteId = personEnquete.enquetes.id;
+                responsesNew.push({
+                    questionId: questionId,
+                    enqueteId: enqueteId,
+                    answer: answer
+                });
+
+                console.log(JSON.stringify(responsesNew));
+
+                }else{
+                $.each(responses, function (index, value) {
+                    if (value.questionId === questionId) {
+                        responses[index].answer = answer;
+                    }
+                });
+            }
         });
 
-        personEnquete.responses = responses
-        console.log(personEnquete)
+        if(responsesNew.length === 0){
+            personEnquete.responses = responses;
+        }else{
+            // responses.push(responsesNew);
+            responses = responsesNew;
+            personEnquete.responses = responses;
+
+        }
+
+        console.log(JSON.stringify(personEnquete));
 
         restUpdateRating("reponse/add", personEnquete)
     })
+
+    $('#Annuleren').click(function (e) {
+        e.preventDefault();
+        window.open("../src/trainer.html", "_self")
+        })
+
 });
 
 function restUpdateRating(url, body) {
@@ -91,7 +119,6 @@ function createTable(data) {
     bodyContent.append('<tbody><form>')
 
 }
-
 
 function createRatingTable() {
     let $results = $('#message');

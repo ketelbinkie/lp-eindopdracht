@@ -31,7 +31,7 @@ $(document).ready(function () {
 
                    }
                 } else {
-                    $results.html('<p>Sorry your password is incorrect</p>');
+                    $results.html('<p>Sorry de combinatie van gebruikersnaam + wachtwoord is incorrect</p>');
                 }
             });
 
