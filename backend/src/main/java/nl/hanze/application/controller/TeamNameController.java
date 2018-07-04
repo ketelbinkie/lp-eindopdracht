@@ -3,7 +3,9 @@ package nl.hanze.application.controller;
 import nl.hanze.application.domain.TeamName;
 import nl.hanze.application.service.TeamNameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -32,8 +34,21 @@ public class TeamNameController {
     }
 
     @PostMapping(value = "/teamname/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public void add(@Valid @RequestBody TeamName teamName) {
-        teamNameService.save(teamName);
+    public ResponseEntity<String> add(@Valid @RequestBody TeamName teamName) {
+        try {
+            if(!teamName.getName().isEmpty()){
+                teamNameService.save(teamName);
+                return ResponseEntity.status(HttpStatus.OK).body("Teamnaam is succesvol opgevoerd!");
+            } else {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Geen teamnaam ingevuld!");
+            }
+        } catch (Exception e) {
+
+         if(e.getMessage().contains("name_UNIQUE")){
+             return ResponseEntity.status(HttpStatus.CONFLICT).body("Teamnaam bestaat al!");
+         }
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT).body("Er is iets foutgegaan!");
     }
 
 }

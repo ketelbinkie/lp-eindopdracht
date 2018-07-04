@@ -13,3 +13,4 @@ Wensen voor later
 * order - volgorde van vragen aangeven op het scherm ‘Enquetesamenstellen’
 * logo en kleurstyle in de database, zodat makkelijk andere club het systeem kan gebruiken
 * personen ophalen aan de hand van bijvoorbeeld een bondsnr, bijvoorbeeld door gebruik te maken van de KNVB api naar sportlink
+* teamName.Html: controle op formaat team -> JO15-1
