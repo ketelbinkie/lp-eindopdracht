@@ -31,7 +31,7 @@ $(document).ready(function () {
 
         // Check verplichte velden
         let result = checkRequiredFields(vusername, vpassword, vroleid, vlastname, vdatebirth);
-        if(result!==""){
+        if(result!== null){
             $results.empty().append(result);
             return
         }
@@ -91,6 +91,8 @@ let result;
     }
     if ( datebirth == "") {
         result = "Geboortedatum is niet gevuld!";
+    }else{
+        result = null;
     }
 
     return result;
