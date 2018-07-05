@@ -83,9 +83,20 @@ p {
 .btn {
     color: maroon;
 }
-    .modal-content{
+
+.modal-content{
         background-color: #E65250;
     }
+
+.btn_reset{
+    background-color: #E65250;
+    border: #E65250;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+
+}
 
 
 

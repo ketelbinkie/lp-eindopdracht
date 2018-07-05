@@ -4,16 +4,21 @@
     <title>Opvoeren peroon periodes</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--external-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--own scripts:-->
     <script src="js/annuleren.js"></script>
     <script src="js/common.js"></script>
     <script src="js/date.format.js"></script>
-
     <script src="js/maintainPerson.js"></script>
+
+    <!--own CSS:-->
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -51,7 +56,7 @@
                                    name="filter-age">
                         </div>
                     </div>
-                    <p>* slechts één filter mogelijk</p>
+                    <p>* slechts één filter mogelijk (<button type="submit" class="btn_reset" onclick="resetFilters()" id="Reset">reset</button>)</p>
 
                     <h3 align="left">Selecteer personen</h3>
                     <div class="row">
@@ -61,24 +66,15 @@
                             </select>
                         </div>
                     </div>
-
-
-                    <!--</div>-->
                 </div>
-
-
                 <div class="col-md-8">
                     <div class="row">
                         <div class="col-md-offset-8  col-md-4">
                             <img class="visible-lg" src="images/vvHoogezand.png" width="50%"/>
                             <img class="visible-md" src="images/vvHoogezand.png"/>
-                            <!--<img class="visible-sm img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>-->
-                            <!--<img class="visible-xs img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>-->
                         </div>
                     </div>
                     <h3>Creëer Beoordelingspperiode</h3>
-                    <!--<div style="border:1px solid white;padding: 10px 5px">-->
-
                     <div class="form-group">
                         <label class="control-label col-md-4" for="sel-trainer">Trainer:</label>
                         <div class="col-md-6">
@@ -106,17 +102,6 @@
                             </select>
                         </div>
                     </div>
-                    <!--<div class="form-group">-->
-                    <!--<label class="control-label col-md-4" for="sel-period">Periode:</label>-->
-                    <!--<div class="col-md-6">-->
-                    <!--<select class="form-control" id="sel-period" data-live-search="true" name="season"-->
-                    <!--required="required">-->
-                    <!--<option selected disabled>Selecteer periode</option>-->
-                    <!--<option value="1">voorjaar</option>-->
-                    <!--<option value="2">najaar</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-                    <!--</div>-->
                     <div class="form-group">
                         <div class="col-md-offset-3 col-md-11">
                             <button type="cancel" class="btn btn-default" id="Annuleren">Annuleren</button>

@@ -168,3 +168,35 @@ $(document).ready(function () {
 
     });
 });
+$(document).ready(function () {
+
+    // enable/disable field 'filter-team' by fill 'filter-age'
+    $('#filter-age').change(function() {
+        if ($(this.value !== "" || this.value.length > 0)) {
+            $("#filter-team").attr("disabled", "disabled");
+        }else {
+            $("#filter-team").removeAttr("disabled");
+            $("#filter-team").focus();
+        }
+    });
+
+    $('#filter-age').trigger('change');
+
+    // enable/disable field 'filter-age' after select option in 'filter-team'
+    $('#filter-team').change(function() {
+        if ($(this).find('option:selected').text() !== 'Selecteer team') {
+            $('#filter-age').prop('disabled', true);
+        }
+    });
+    $('#filter-team').trigger('change');
+
+    // enable field 'filter-age' and 'filter-team' when page is loaded
+    resetFilters()
+
+});
+
+function resetFilters() {
+    $("#filter-team").removeAttr("disabled");
+    $("#filter-team").focus();
+    $('#filter-age').prop('disabled', false);
+}
