@@ -82,14 +82,18 @@ public class PersonController {
             personList = personService.findPersonByTeamName(team);
         }
 
-        List<Person>personListToRemove = new ArrayList<>();
+//        List<Person>personListToRemove = new ArrayList<>();
+//
+//        for (Person p:personList) {
+//            if (p.getUser()!=null && p.getUser().getRole().getId()!=4){
+//                personListToRemove.add(p);
+//            }
+//        }
+//        personList.removeAll(personListToRemove);
+//
 
-        for (Person p:personList) {
-            if (p.getUser()!=null && p.getUser().getRole().getId()!=4){
-                personListToRemove.add(p);
-            }
-        }
-        personList.removeAll(personListToRemove);
+        personList.removeIf(p -> p.getUser()!=null && p.getUser().getRole().getId()!=4);
+
         return new ResponseEntity<>(personList, HttpStatus.OK);
     }
 

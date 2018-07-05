@@ -16,6 +16,7 @@ public class PersonPeriod {
     @Column(name = "id", nullable = false)
     private int id;
 
+
     @Column(name = "startdate", nullable = true)
     private Date startdate;
 
