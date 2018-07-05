@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>AdminScreen</title>
+    <title>Opvoeren gebruiker</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -56,27 +56,24 @@
                 <div class="col-md-8">
                     <h2 style="margin-bottom: 30px">Opvoeren Gebruiker</h2>
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="user-username">Username:</label>
+                        <label class="control-label col-md-4" for="user-username">Gebruikersnaam:</label>
                         <div class="col-md-6">
-                            <input type="text" class="form-control" id="user-username"
+                            <input type="text" class="form-control" id="user-username" required="true"
                                    placeholder="Voer gebruikersnaam in"
                                    name="username">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="user-password">Password:</label>
+                        <label class="control-label col-md-4" for="user-password">Wachtwoord:</label>
                         <div class="col-md-6">
                             <input type="text" class="form-control" id="user-password"
-                                   placeholder="Voer password in"
+                                   placeholder="Voer wachtwoord in"
                                    name="password">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-4" for="user-sel-role">Rol:</label>
                         <div class="col-md-6">
-                            <!--<select type="text" class="form-control" id="sel-answertype"-->
-                            <!--name="answertype" required>-->
-                            <!--<option value="" selected disabled>Voer antwoordsoort in</option>>-->
                             <select class="form-control" id="user-sel-role" name="role" required="required">
                             </select>
                         </div>
@@ -98,7 +95,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-4" for="user-dateBirth">Geboorte datum:</label>
+                        <label class="control-label col-md-4" for="user-dateBirth">Geboortedatum:</label>
                         <div class="col-md-6">
                             <input type="date" class="form-control" id="user-dateBirth"
                                    placeholder=""
@@ -128,10 +125,10 @@
             </div> <!--row-->
         </form>
         <div id="message">
+            <em></em>
         </div>
     </div>
 </div>
-
 
 <!-- Footer -->
 <footer class="container-fluid bg-4 text-center">

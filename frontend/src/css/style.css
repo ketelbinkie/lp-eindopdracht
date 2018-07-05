@@ -72,6 +72,7 @@ p {
     background-color: #2f2f2f; /* Black Gray */
     color: #fff;
     margin-top: 15px;
+    text-align: center;
 }
 
 #multiselect_rightAll, #multiselect_rightSelected, #multiselect_leftSelected, #multiselect_leftAll

@@ -1,7 +1,7 @@
 function getUserRoles() {
     let select = $('#user-sel-role');
 
-    select.append('<option selected disabled>Voer rol on</option>');
+    select.append('<option selected disabled>Voer rol in</option>');
 
     $.ajax({
         url: "http://localhost:8080/users/roles",
@@ -20,13 +20,21 @@ $(document).ready(function () {
     $('#user-save').click(function (e) {
         e.preventDefault();
 
-        let vusername = $('#user-username').val(),
+        let $results = $('#message'),
+            vusername = $('#user-username').val(),
             vpassword = $('#user-password').val(),
             vroleid = $('#user-sel-role').val(),
             vfirstname = $('#user-firstname').val(),
             vlastname = $('#user-lastname').val(),
             vdatebirth = $('#user-dateBirth').val(),
             vgender = $("#user-gender input[type='radio']:checked").val();
+
+        // Check verplichte velden
+        let result = checkRequiredFields(vusername, vpassword, vroleid, vlastname, vdatebirth);
+        if(result!==""){
+            $results.empty().append(result);
+            return
+        }
 
         let body = {
             username: vusername,
@@ -42,13 +50,14 @@ $(document).ready(function () {
         };
         restPostUser("users/add",body)
 
+        $('#check_user')[0].reset();
+
     })
 });
 
 
 function restPostUser(url, body) {
 
-    alert(JSON.stringify(body));
     let $results = $('#message');
     $.ajax({
         url: "http://localhost:8080/" + url,
@@ -56,39 +65,33 @@ function restPostUser(url, body) {
         data: JSON.stringify(body),
         contentType: "application/json; charset=utf-8",
         async:true,
-        success: function(msg){
-            // alert( "Data Saved: " + msg );
-   //         $('#check_user').reset();
-            $results.empty().append(msg);
-
+        success: function(data){
+            $results.empty().append(data);
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert("some error" + errorThrown);
-            $results.html('<p>Error: results not updated</p>');
+            $results.empty().append("Er is iets misgegaan, gebruiker is niet opgeslagen!");
 
         }
     })
 }
-//
-// $(document).ready(function () {
-//
-//     $('#user-save').click(function (e) {
-//
-//         let $results = $('#message');
-//
-//         $.ajax({
-//             url: "http://localhost:8080/users/add",
-//             type: "POST",
-//             data: JSON.stringify(),
-//             contentType: "application/json; charset=utf-8",
-//             dataType: "text",
-//             success: function (data, textStatus, xhr) {
-//                 $results.empty().append(data);
-//             },
-//             error: function (data, textStatus, xhr) {
-//                 // alert(data.responseText);
-//                 $results.empty().append(data.responseText);
-//             }
-//         })
-//     })
-// });
+
+function checkRequiredFields(username, password, role_id, lastname, datebirth) {
+let result;
+    if (username == "") {
+        result = "Gebruikersnaam is niet gevuld!";
+    }
+    if (password == "") {
+        result = "Wachtwoord is niet gevuld!";
+    }
+    if (role_id == null) {
+        result = "Rol is niet gevuld!";
+    }
+    if (lastname == "") {
+        result = "Achternaam is niet gevuld!";
+    }
+    if ( datebirth == "") {
+        result = "Geboortedatum is niet gevuld!";
+    }
+
+    return result;
+}

@@ -75,10 +75,14 @@ public class UserController {
 
         try {
             if (user != null) {
-                userService.save(user);
-                return ResponseEntity.status(HttpStatus.OK).body("Gebruiker is succesvol toegevoegd!");
+                if(!user.getUsername().isEmpty()) {
+                    userService.save(user);
+                    return ResponseEntity.status(HttpStatus.OK).body("Gebruiker is succesvol toegevoegd!");
+                }else{
+                    return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Gebruikersnaam niet gevuld!");
+                }
             } else {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gebruker kon niet wordern toegevoegd!");
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gebruiker kan niet worden toegevoegd!");
             }
         } catch (Exception e) {
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
