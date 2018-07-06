@@ -2,12 +2,14 @@ package nl.hanze.application.service.impl;
 
 import nl.hanze.application.CombinedEnquete;
 import nl.hanze.application.domain.*;
-import nl.hanze.application.repositories.*;
+import nl.hanze.application.repositories.PersonEnqueteRepository;
+import nl.hanze.application.repositories.PersonPeriodRepository;
+import nl.hanze.application.repositories.PersonRepository;
+import nl.hanze.application.repositories.TeamNameRepository;
 import nl.hanze.application.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.annotation.Retention;
 import java.util.*;
 
 import static nl.hanze.application.util.ActivePeriodUtil.getStartDate;
@@ -29,9 +31,6 @@ public class PersonServiceImpl implements PersonService {
     }
 
 
-//    public List<PersonPeriod> findPersonPeriodByTeamPeriodId(Integer id) {
-//        return personPeriodRepository.findAllByTeamPeriodId(id);
-//    }
 
     @Override
     public List<Person> findAll() {
@@ -53,9 +52,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public List<PersonPeriod> findPersonByTrainerPeriodAndTeam(Integer trainerId, int teamNameId) {
-            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(teamNameId);
+        List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(teamNameId);
 
-                List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
+        List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
         PersonPeriod personPeriodToRemove = new PersonPeriod();
         for (PersonPeriod trainerPeriod : trainerPeriods) {
             if (trainerPeriod.getTeamName().getId() == teamNameId) {

@@ -19,8 +19,5 @@ public class TeamName {
     @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-//    @OneToMany(mappedBy = "teamName",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Column(nullable = true)
-//    @JsonManagedReference
-//    private List<TeamPeriod> teamPeriods;
+
 }

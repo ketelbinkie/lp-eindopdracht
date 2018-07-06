@@ -57,7 +57,5 @@ public class Response {
                 '}';
     }
 
-    //    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "pp_enquete_id", referencedColumnName = "id")
-//    private Person person;
+
 }

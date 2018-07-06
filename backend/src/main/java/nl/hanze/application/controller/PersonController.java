@@ -36,8 +36,9 @@ public class PersonController {
 
     /**
      * When given a trainer ID a list of persons which shares the same team period as the trainer wil be returned
-     * @param trainerId id of trainer
-     * @param sessionId session id
+     *
+     * @param trainerId  id of trainer
+     * @param sessionId  session id
      * @param teamNameId teamnameid
      * @return list of persons which shares the same period as the trainer with the requested ID
      */
@@ -47,11 +48,11 @@ public class PersonController {
     public ResponseEntity personByTrainerPeriod(
             @RequestParam(value = "trainerid") Integer trainerId,
             @RequestParam(value = "sessionid") String sessionId,
-            @RequestParam(value = "teamnameid",required = false) int teamNameId) {
+            @RequestParam(value = "teamnameid", required = false) int teamNameId) {
 
         if (isActiveSession(sessionId)) {
             try {
-                List<PersonPeriod> periods = personService.findPersonByTrainerPeriodAndTeam(trainerId,teamNameId);
+                List<PersonPeriod> periods = personService.findPersonByTrainerPeriodAndTeam(trainerId, teamNameId);
                 return new ResponseEntity<>(periods, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);

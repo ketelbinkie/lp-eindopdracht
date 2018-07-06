@@ -2,6 +2,8 @@ package nl.hanze.application.controller;
 
 import nl.hanze.application.domain.TeamName;
 import nl.hanze.application.service.TeamNameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -14,7 +16,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class TeamNameController {
-
+    private static final Logger log = LoggerFactory.getLogger(AnswerTypeController.class);
     private final TeamNameService teamNameService;
 
     @Autowired
@@ -36,17 +38,17 @@ public class TeamNameController {
     @PostMapping(value = "/teamname/add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<String> add(@Valid @RequestBody TeamName teamName) {
         try {
-            if(!teamName.getName().isEmpty()){
+            if (!teamName.getName().isEmpty()) {
                 teamNameService.save(teamName);
                 return ResponseEntity.status(HttpStatus.OK).body("Teamnaam is succesvol opgevoerd!");
             } else {
                 return ResponseEntity.status(HttpStatus.CONFLICT).body("Geen teamnaam ingevuld!");
             }
         } catch (Exception e) {
-
-         if(e.getMessage().contains("name_UNIQUE")){
-             return ResponseEntity.status(HttpStatus.CONFLICT).body("Teamnaam bestaat al!");
-         }
+            log.error("Errorn: Teamnaam bestaat al!" + e);
+            if (e.getMessage().contains("name_UNIQUE")) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("Teamnaam bestaat al!");
+            }
         }
         return ResponseEntity.status(HttpStatus.CONFLICT).body("Er is iets foutgegaan!");
     }

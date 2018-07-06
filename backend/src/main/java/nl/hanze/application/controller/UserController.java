@@ -3,6 +3,8 @@ package nl.hanze.application.controller;
 import nl.hanze.application.domain.Role;
 import nl.hanze.application.domain.User;
 import nl.hanze.application.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +19,7 @@ import static nl.hanze.application.util.Session.*;
 @RestController
 @CrossOrigin
 public class UserController {
-
+    private static final Logger log = LoggerFactory.getLogger(AnswerTypeController.class);
     private final UserService userService;
 
 
@@ -75,16 +77,17 @@ public class UserController {
 
         try {
             if (user != null) {
-                if(!user.getUsername().isEmpty()) {
+                if (!user.getUsername().isEmpty()) {
                     userService.save(user);
                     return ResponseEntity.status(HttpStatus.OK).body("Gebruiker is succesvol toegevoegd!");
-                }else{
+                } else {
                     return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Gebruikersnaam niet gevuld!");
                 }
             } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Gebruiker kan niet worden toegevoegd!");
             }
         } catch (Exception e) {
+            log.error("Error gaat niet goed: " + e);
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
@@ -97,6 +100,7 @@ public class UserController {
             userService.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("DELETE Success!");
         } catch (Exception e) {
+            log.error("Error gaat niet goed: " + e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }

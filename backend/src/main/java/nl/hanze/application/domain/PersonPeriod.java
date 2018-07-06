@@ -1,6 +1,5 @@
 package nl.hanze.application.domain;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -24,16 +23,13 @@ public class PersonPeriod {
     private Date enddate;
 
 
-//    @Column(name = "person_id")
-//    private int personId;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "person_id", referencedColumnName = "id")
     private Person person;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "team_period_id", referencedColumnName = "id")
-//    private TeamPeriod teamPeriod;
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_name_id", referencedColumnName = "id")
@@ -45,5 +41,5 @@ public class PersonPeriod {
     private Role role;
 
 
-//
+
 }

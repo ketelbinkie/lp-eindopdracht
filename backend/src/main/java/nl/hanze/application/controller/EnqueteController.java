@@ -181,7 +181,7 @@ public class EnqueteController {
             } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Helaas er ging wat mis.. Sorry ik ben ook maar een beginnend Java programmeur!");
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Error: could not proces Post: " + e);
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }

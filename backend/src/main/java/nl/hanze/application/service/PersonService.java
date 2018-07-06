@@ -15,7 +15,7 @@ public interface PersonService {
 
     List<Person> findAllTrainers();
 
-    List<PersonPeriod> findPersonByTrainerPeriodAndTeam(Integer trainerId,int teamNameId);
+    List<PersonPeriod> findPersonByTrainerPeriodAndTeam(Integer trainerId, int teamNameId);
 
     List<CombinedEnquete> findCombinedPersonEnqueteByPersonId(Integer personId);
 

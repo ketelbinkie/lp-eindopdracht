@@ -33,17 +33,6 @@ public class Question {
     @JoinColumn(name = "answertype_id", nullable = false, referencedColumnName = "id")
     @JsonBackReference
     private AnswerType answerType;
-//
-//    @OneToMany(mappedBy = "question", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    @Column(nullable = false)
-//    @JsonManagedReference
-//    private List<Rating> ratings;
-//
-//    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @JoinTable(name = "enquete_questions",
-//            joinColumns ={@JoinColumn(name = "question_id", referencedColumnName = "id")},
-//            inverseJoinColumns ={@JoinColumn(name = "enquete_id", referencedColumnName = "id")})
-//    @JsonManagedReference
-//    private List<Enquete> enquetes;
+
 
 }

@@ -1,6 +1,5 @@
 package nl.hanze.application.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
@@ -31,6 +30,5 @@ public class User {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false, referencedColumnName = "id")
-//    @JsonBackReference
     private Role role;
 }

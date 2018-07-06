@@ -21,7 +21,7 @@ public class PersonEnquete {
     @JoinColumn(name = "enquete_id", referencedColumnName = "id")
     private Enquete enquetes;
 
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "person_period_id", referencedColumnName = "id")
     private PersonPeriod personPeriod;
 
@@ -39,14 +39,4 @@ public class PersonEnquete {
                 '}';
     }
 
-
-    //
-//    @OneToMany
-//    @JoinTable(
-//            name="response",
-//            joinColumns = @JoinColumn( name="pp_enquete_id"),
-//            inverseJoinColumns = @JoinColumn( name="id")
-//
-//    )
-//    public Set<Response> responses;
 }

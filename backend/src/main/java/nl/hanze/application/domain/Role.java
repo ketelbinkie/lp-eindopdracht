@@ -21,8 +21,5 @@ public class Role {
     @Column(name = "role", nullable = false, length = 45)
     private String role;
 
-//    @OneToMany(mappedBy = "role", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    @Column(nullable = true)
-////    @JsonManagedReference
-//    private List<User> users;
+
 }
