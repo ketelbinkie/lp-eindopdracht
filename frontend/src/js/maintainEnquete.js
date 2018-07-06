@@ -8,7 +8,7 @@ $(document).ready(function () {
         let enqueteId = $('#sel-enquete').val();
         let enqueteNaam = $('#sel-enquete option:selected').text();
 
-        alert($('#sel-enquete'));
+        //alert($('#sel-enquete'));
             if(enqueteId!=null) {
 
                 var to = $('#multiselect_to')[0];
