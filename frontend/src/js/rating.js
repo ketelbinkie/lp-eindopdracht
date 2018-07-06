@@ -159,7 +159,7 @@ function navigate(direction) {
     if (direction !== 'none') {
         localStorage.setItem('toBeRatedId', nextid);
         localStorage.setItem("toBeRatedVoornaam", nextname.split(' ')[0]);
-        localStorage.setItem("toBeRatedAchternaam", nextname.split(' ')[1]);
+        localStorage.setItem("toBeRatedAchternaam", nextname.replace(localStorage.getItem("toBeRatedVoornaam")+ ' ',''));
     }
 
     createRatingTable();
