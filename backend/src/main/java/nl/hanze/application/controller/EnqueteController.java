@@ -151,6 +151,8 @@ public class EnqueteController {
                 enquete.getQuestions().get(i).getAnswerType().setId(answertypId);
             }
 
+            enqueteService.save(enquete);
+
             String messagePart;
             if (enquete.getQuestions().size() > 1) {
                 messagePart = "Vragen zijn ";
