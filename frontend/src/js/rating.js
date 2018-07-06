@@ -4,11 +4,11 @@ $(document).ready(function () {
         console.log("opslaan is clicked")
         //alert("click")
 
-        var pe = localStorage.getItem("personEnquete")
-        var personEnquete = $.parseJSON(pe);
-        var responses = personEnquete.responses;
-        var responsesNew = [];
-        let screenResponse  = {};
+        let pe = localStorage.getItem("personEnquete")
+        let personEnquete = $.parseJSON(pe);
+        let responses = personEnquete.responses;
+        let responsesNew = [];
+        let screenResponse = {};
 
 
         $('#rating-table > tbody  > tr').each(function () {
@@ -29,7 +29,7 @@ $(document).ready(function () {
 
                 console.log(JSON.stringify(responsesNew));
 
-                }else{
+            } else {
                 $.each(responses, function (index, value) {
                     if (value.questionId === questionId) {
                         responses[index].answer = answer;
@@ -38,9 +38,9 @@ $(document).ready(function () {
             }
         });
 
-        if(responsesNew.length === 0){
+        if (responsesNew.length === 0) {
             personEnquete.responses = responses;
-        }else{
+        } else {
             // responses.push(responsesNew);
             responses = responsesNew;
             personEnquete.responses = responses;
@@ -52,10 +52,10 @@ $(document).ready(function () {
         restUpdateRating("reponse/add", personEnquete)
     })
 
-    $('#Annuleren').click(function (e) {
+    $('#Terug').click(function (e) {
         e.preventDefault();
         window.open("../src/trainer.html", "_self")
-        })
+    })
 
 });
 
@@ -82,7 +82,7 @@ function createTable(data) {
 
 
     let bodyContent = $('#rating-table');
-    bodyContent.append('<thead><tr><th>id</th><th>Rating item</th><th>Score</th></tr></thead>');
+    bodyContent.empty().append('<thead><tr><th>id</th><th>Rating item</th><th>Score</th></tr></thead>');
     bodyContent.append('<tbody><form>');
 
     //loop through questions
@@ -120,7 +120,54 @@ function createTable(data) {
 
 }
 
+
+function navigate(direction) {
+    let ids = localStorage.getItem('idsToBeRated').split(',');
+    let names = localStorage.getItem('namesToBeRated').split(',');
+    let nextid = 0;
+    let nextname = ''
+    $.each(ids, function (i) {
+        if (localStorage.getItem('toBeRatedId') === ids[i]) {
+            if (direction === 'prev') {
+                nextid = ids[i - 1];
+                nextname = names[i - 1]
+            } else {
+                nextid = ids[i + 1];
+                nextname = names[i + 1];
+            }
+            if (direction === 'prev' && i - 1 === 0) {
+                $('#nav-prev').prop('disabled', true);
+            } else {
+                $('#nav-prev').prop('disabled', false);
+            }
+            if (direction === 'next' && i + 1 === ids.length - 1) {
+                $('#nav-next').prop('disabled', true);
+            } else {
+                $('#nav-next').prop('disabled', false);
+            }
+            if (direction === "none" && i === 0) {
+                $('#nav-prev').prop('disabled', true);
+            } else if (direction === "none" && i === ids.length - 1) {
+                $('#nav-next').prop('disabled', true);
+
+            }
+
+
+        }
+    });
+
+    if (direction !== 'none') {
+        localStorage.setItem('toBeRatedId', nextid);
+        localStorage.setItem("toBeRatedVoornaam", nextname.split(' ')[0]);
+        localStorage.setItem("toBeRatedAchternaam", nextname.split(' ')[1]);
+    }
+
+    createRatingTable();
+}
+
+
 function createRatingTable() {
+
     let $results = $('#message');
     $.ajax({
         url: 'http://localhost:8080/person/personenquete',
@@ -132,9 +179,12 @@ function createRatingTable() {
         success: function (data) {
             localStorage.setItem('personEnquete', JSON.stringify(data));
             createTable(data)
+            $('#ratingName').empty().append(localStorage.getItem('toBeRatedVoornaam') + ' ' + localStorage.getItem('toBeRatedAchternaam'));
         },
         error: function (requestObject, error, errorThrown) {
             console.log("error thrown, add handler to exit gracefully");
+            $('#ratingName').empty();
+            $('#rating-table').empty();
         },
         timeout: 3000 //to do: research and develop further in combination with error handling
     });

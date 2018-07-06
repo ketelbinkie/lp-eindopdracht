@@ -40,14 +40,8 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="form-group">
-                        <label class="control-label col-md-2" for="sel-team">Team:</label>
-                        <div class="col-md-2">
-                            <select class="form-control selectpicker" id="sel-team" data-live-search="true"
-                                    name="team"
-                                    required="required">
-                            </select>
-                        </div>
+                    <div class="h3">Team:
+                        <small>JO7-1</small>
                     </div>
                     <div class="h3">Periode:
                         <small>2017/2018-najaar</small>
@@ -60,16 +54,30 @@
             </div>
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+                    <ul class="nav nav-pills">
+                        <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+                        <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
+                    </ul>
 
-                    <table id="table-content" class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th data-field="person.id">Lid nr.</th>
-                            <th data-field="person.firstname">Voornaam</th>
-                            <th data-field="person.lastname">Achternaam</th>
-                        </tr>
-                        </thead>
-                    </table>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active">
+                            <table id="table-content" class="table table-hover">
+                                <thead>
+                                <tr>
+                                    <th data-field="person.id">Lid nr.</th>
+                                    <th data-field="person.firstname">Voornaam</th>
+                                    <th data-field="person.lastname">Achternaam</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div id="menu1" class="tab-pane fade">
+                            <h3>Menu 1</h3>
+                            <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                        </div>
+                    </div>
+
                 </div>
             </div> <!--row-->
         </form>

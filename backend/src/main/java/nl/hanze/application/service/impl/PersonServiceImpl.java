@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.annotation.Retention;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
+import static nl.hanze.application.util.ActivePeriodUtil.getStartDate;
 
 @Service("personService")
 public class PersonServiceImpl implements PersonService {
@@ -44,7 +43,7 @@ public class PersonServiceImpl implements PersonService {
         List<Person> personList = personRepository.findAll();
         List<Person> trainerList = new ArrayList<>();
         for (Person person : personList) {
-            if (null!=person.getUser()&&person.getUser().getRole().getId() == 3) {
+            if (null != person.getUser() && person.getUser().getRole().getId() == 3) {
                 trainerList.add(person);
             }
         }
@@ -53,16 +52,21 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public List<PersonPeriod> findPersonByTrainerPeriod(Integer trainerId) throws Exception {
-        List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
-        List<PersonPeriod> personPeriods = new ArrayList<>();
+    public List<PersonPeriod> findPersonByTrainerPeriodAndTeam(Integer trainerId, int teamNameId) {
+            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(teamNameId);
+
+                List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
+        PersonPeriod personPeriodToRemove = new PersonPeriod();
         for (PersonPeriod trainerPeriod : trainerPeriods) {
-            List<PersonPeriod> periods = personPeriodRepository.findAllByTeamNameId(trainerPeriod.getTeamName().getId());
-            periods.remove(trainerPeriod);
-            personPeriods.addAll(periods);
+            if (trainerPeriod.getTeamName().getId() == teamNameId) {
+                personPeriodToRemove = trainerPeriod;
+            }
         }
-        return personPeriods;
+        periods.remove(personPeriodToRemove);
+
+        return periods;
     }
+
 
     @Override
     public PersonEnquete findPersonEnqueteByPersonId(Integer personId) {
@@ -120,5 +124,19 @@ public class PersonServiceImpl implements PersonService {
         }
         return persons;
     }
+
+
+    @Override
+    public Set<TeamName> findTeamsByTrainerPeriod(Integer trainerId) {
+        List<PersonPeriod> trainerPeriods = personPeriodRepository.findAllByPersonId(trainerId);
+        Set<TeamName> teamNames = new HashSet<>();
+        for (PersonPeriod period : trainerPeriods) {
+            if (null != period.getStartdate() && period.getStartdate().equals(getStartDate())) {
+                teamNames.add(period.getTeamName());
+            }
+        }
+        return teamNames;
+    }
+
 
 }

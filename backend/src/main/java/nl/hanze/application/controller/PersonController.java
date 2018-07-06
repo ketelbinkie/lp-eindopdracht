@@ -3,6 +3,7 @@ package nl.hanze.application.controller;
 import nl.hanze.application.domain.Person;
 import nl.hanze.application.domain.PersonEnquete;
 import nl.hanze.application.domain.PersonPeriod;
+import nl.hanze.application.domain.TeamName;
 import nl.hanze.application.service.PersonService;
 import nl.hanze.application.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import static nl.hanze.application.util.Session.isActiveSession;
 
@@ -43,11 +45,12 @@ public class PersonController {
     @RequestMapping(value = "/getpersonsbytrainerid")
     public ResponseEntity personByTrainerPeriod(
             @RequestParam(value = "trainerid") Integer trainerId,
-            @RequestParam(value = "sessionid") String sessionId) {
+            @RequestParam(value = "sessionid") String sessionId,
+            @RequestParam(value = "teamnameid",required = false) int teamNameId) {
 
         if (isActiveSession(sessionId)) {
             try {
-                List<PersonPeriod> periods = personService.findPersonByTrainerPeriod(trainerId);
+                List<PersonPeriod> periods = personService.findPersonByTrainerPeriodAndTeam(trainerId,teamNameId);
                 return new ResponseEntity<>(periods, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e);
@@ -71,28 +74,18 @@ public class PersonController {
             @RequestParam(value = "currentTeam", required = false) String team) {
         List<Person> personList = new ArrayList<>();
         if (null == age && null == team) {
-            personList =personService.findAll();
+            personList = personService.findAll();
         } else if (null != age && null == team) {
             if (age >= 5) {
-                personList =personService.findPersonOnAge(age);
+                personList = personService.findPersonOnAge(age);
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Jonger dat 5 jaar wordt er niet gevoetbald!");
             }
-        }else if (null == age) {
+        } else if (null == age) {
             personList = personService.findPersonByTeamName(team);
         }
 
-//        List<Person>personListToRemove = new ArrayList<>();
-//
-//        for (Person p:personList) {
-//            if (p.getUser()!=null && p.getUser().getRole().getId()!=4){
-//                personListToRemove.add(p);
-//            }
-//        }
-//        personList.removeAll(personListToRemove);
-//
-
-        personList.removeIf(p -> p.getUser()!=null && p.getUser().getRole().getId()!=4);
+        personList.removeIf(p -> p.getUser() != null && p.getUser().getRole().getId() != 4);
 
         return new ResponseEntity<>(personList, HttpStatus.OK);
     }
@@ -100,11 +93,22 @@ public class PersonController {
 
     @RequestMapping(value = "/trainer/all")
     public ResponseEntity findAllTrainers() {
-      List<Person> trainers = personService.findAllTrainers();
+        List<Person> trainers = personService.findAllTrainers();
         return new ResponseEntity<>(trainers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/trainer/getteams")
+    public ResponseEntity findTeamsOfTrainer(
+            @RequestParam(value = "trainerid") Integer trainerId,
+            @RequestParam(value = "sessionid") String sessionId) {
+        if (isActiveSession(sessionId)) {
+            Set<TeamName> teamNames = personService.findTeamsByTrainerPeriod(trainerId);
+            return new ResponseEntity<>(teamNames, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: not authorized");
+        }
 
+    }
 
 
 }

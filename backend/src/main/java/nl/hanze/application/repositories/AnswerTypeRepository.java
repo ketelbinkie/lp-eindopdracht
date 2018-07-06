@@ -11,5 +11,6 @@ import org.springframework.stereotype.Repository;
 public interface AnswerTypeRepository extends JpaRepository<AnswerType, Integer> {
 
     AnswerType findById(int id);
+
 }
 

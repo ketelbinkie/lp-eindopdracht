@@ -8,6 +8,8 @@ import nl.hanze.application.service.EnqueteService;
 import nl.hanze.application.service.PersonService;
 import nl.hanze.application.service.QuestionService;
 import nl.hanze.application.service.ResponseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +28,7 @@ import static nl.hanze.application.util.ActivePeriodUtil.getStartDate;
 @RestController
 @CrossOrigin
 public class EnqueteController {
-
+    private static final Logger log = LoggerFactory.getLogger(EnqueteController.class);
 
     private final EnqueteService enqueteService;
     private final QuestionService questionService;
@@ -44,8 +46,7 @@ public class EnqueteController {
     }
 
     @GetMapping(value = "/enquete/all")
-    public @ResponseBody
-    List<Enquete> getAllEnquetes() {
+    public List<Enquete> getAllEnquetes() {
         List<Enquete> enqueteList = enqueteService.findAll();
         if (!enqueteList.isEmpty()) {
             return enqueteList;
@@ -55,8 +56,7 @@ public class EnqueteController {
     }
 
     @GetMapping(value = "/enquete/allchangeable")
-    public @ResponseBody
-    List<Enquete> getAllChangeableEnquetes() {
+    public List<Enquete> getAllChangeableEnquetes() {
 
         List<Enquete> alleEnquetes;
         List<Enquete> alleAanTePassenEnquetes = new ArrayList<>();
@@ -101,6 +101,7 @@ public class EnqueteController {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Enquete is niet toegevoegd!");
             }
         } catch (Exception e) {
+            log.error("Error: " + e);
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
@@ -121,6 +122,7 @@ public class EnqueteController {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Beoordeling kon niet worden verwerkt!");
             }
         } catch (Exception e) {
+            log.error("Error: could not proces Put: " + e);
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }
@@ -141,15 +143,13 @@ public class EnqueteController {
                 int questionId = enquete.getQuestions().get(i).getId();
 
                 // ophalen van de betreffende question uit de db om het bijbehorende anwertype te bepalen
-                Question enqueteQuestion = new Question();
+                Question enqueteQuestion;
                 enqueteQuestion = questionService.findById(questionId);
                 int answertypId = enqueteQuestion.getAnswerType().getId();
 
                 // het answertype toevoegen aan de question van de enquete
                 enquete.getQuestions().get(i).getAnswerType().setId(answertypId);
             }
-
-            final Enquete savedEnquete = enqueteService.save(enquete);
 
             String messagePart;
             if (enquete.getQuestions().size() > 1) {
@@ -179,10 +179,8 @@ public class EnqueteController {
             } else {
                 return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Helaas er ging wat mis.. Sorry ik ben ook maar een beginnend Java programmeur!");
             }
-        } catch (
-                Exception e)
-
-        {
+        } catch (Exception e){
+            log.error("Error: could not proces Post: " + e);
             return ResponseEntity.unprocessableEntity().body(e.getMessage());
         }
     }

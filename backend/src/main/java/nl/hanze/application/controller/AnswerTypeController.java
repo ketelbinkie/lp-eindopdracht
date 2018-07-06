@@ -3,6 +3,8 @@ package nl.hanze.application.controller;
 
 import nl.hanze.application.domain.AnswerType;
 import nl.hanze.application.service.AnswerTypeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +17,7 @@ import java.util.List;
 @RestController
 @CrossOrigin
 public class AnswerTypeController {
-
+    private static final Logger log = LoggerFactory.getLogger(AnswerTypeController.class);
     private final AnswerTypeService answerTypeService;
 
     @Autowired
@@ -24,8 +26,7 @@ public class AnswerTypeController {
     }
 
     @GetMapping(value = "/answertype/all")
-    public @ResponseBody
-    List<AnswerType> getAllAnswertypes() {
+    public List<AnswerType> getAllAnswertypes() {
         List<AnswerType> answerTypesList = answerTypeService.findAll();
         if (!answerTypesList.isEmpty()) {
             return answerTypesList;
@@ -53,9 +54,12 @@ public class AnswerTypeController {
             answerTypeService.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body("DELETE Success!");
         } catch (Exception e) {
+            log.error("Error: could not proces Delete: " + e);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
+
+
 
 }
 

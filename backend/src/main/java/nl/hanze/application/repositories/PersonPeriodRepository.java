@@ -16,5 +16,6 @@ public interface PersonPeriodRepository extends JpaRepository<PersonPeriod, Inte
     PersonPeriod findByPersonId(int personId);
 
 
+
     List<PersonPeriod> findByTeamName(TeamName byName);
 }

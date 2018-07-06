@@ -7,6 +7,6 @@ public class CombinedEnquete {
     private int questionId;
     private String question;
     private String questionCategory;
-    private String Answer;
+    private String answer;
 
 }

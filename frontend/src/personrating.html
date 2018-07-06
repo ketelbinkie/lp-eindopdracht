@@ -25,15 +25,6 @@
     <link rel="stylesheet" href="css/style.css">
 
 
-    <script>
-        $(function () {
-            $("#includedContent").load("navbar-trainer.html");
-        });
-        window.onload = function () {
-            document.getElementById('user-name').innerHTML = localStorage.getItem("name");
-        };
-        createRatingTable();
-    </script>
 </head>
 <body>
 
@@ -42,7 +33,7 @@
 
 </nav>
 <script>
-    $("#includedContent").load ("navbar-trainer.html", function () {
+    $("#includedContent").load("navbar-trainer.html", function () {
         document.getElementById('user-name').innerHTML = localStorage.getItem("name");
     });
 </script>
@@ -59,13 +50,18 @@
                     <img class="visible-xs img-fluid" src="images/vvHoogezandsmall.png" style="float: right"/>
                 </div>
                 <div class="col-sm-8">
+                    <h2 align="left" id="ratingName" style="margin-left:-30px;"></h2>
                     <table id="rating-table" class="table table-hover"></table>
                 </div>
                 <div class="row">
-                    <div class="col-md-offset-9 col-md-3">
-                        <button type="cancel" class="btn btn-default" id ="Annuleren" onclick="annuleren()">Annuleren</button>
-                        <button type="submit" class="btn btn-default" id="save-rating">Opslaan</button>
-                    </div>
+
+                    <button class="btn btn-default" onclick="navigate('prev'); return false;" id="nav-prev">&lt;
+                    </button>
+                    <button type="cancel" class="btn btn-default" id="Terug">Terug</button>
+                    <button type="submit" class="btn btn-default" id="save-rating">Opslaan</button>
+                    <button class="btn btn-default" onclick="navigate('next'); return false;" id="nav-next">&gt;
+                    </button>
+
                 </div>
             </div> <!--row-->
         </form>
@@ -82,4 +78,14 @@
 </footer>
 
 </body>
+<script>
+    $(function () {
+        $("#includedContent").load("navbar-trainer.html");
+    });
+    window.onload = function () {
+        document.getElementById('user-name').innerHTML = localStorage.getItem("name");
+    };
+
+    navigate('none');
+</script>
 </html>
