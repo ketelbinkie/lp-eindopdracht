@@ -11,7 +11,6 @@ $(document).ready(function () {
             name = $('#sel-team option:selected').text(),
             allTeams = $('#sel-all-teams').prop("checked");
 
-        alert(allTeams);
 
         // Check if Einddatum is before Startdatum
         if (startDate["0"].value > endDate["0"].value){
@@ -42,7 +41,6 @@ $(document).ready(function () {
         // Add teamName to team period
         teamPeriod.teamName = teamName;
 
-        alert(JSON.stringify(teamPeriod));
 
         $.ajax({
             url: "http://localhost:8080/teamperiod/add",
